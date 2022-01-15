@@ -95,6 +95,21 @@ local trainTrailsSpeed = {
   }
 }
 
+local trainTrailsBalance = {
+  type = "string-setting",
+  name = "train-trails-balance",
+  setting_type = "runtime-global",
+  order = "h",
+  default_value = "pretty",
+  allowed_values = {
+    -- "super-performance",
+    "performance",
+    "balanced",
+    "pretty",
+    "super-pretty"
+  }
+}
+
 data:extend({
   trainTrailsColor,
   trainTrailsGlow,
@@ -102,5 +117,6 @@ data:extend({
   trainTrailsLength,
   trainTrailsColorSync,
   trainTrailsPalette,
-  trainTrailsSpeed
+  trainTrailsSpeed,
+  trainTrailsBalance
 })
