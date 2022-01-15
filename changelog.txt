@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 14JAN2022
+  Changes:
+    - increased the default scale size
+    - added "performance mode" option to change the performance impact the mod demands of the game
+---------------------------------------------------------------------------------------------------
 Version: 0.0.1
 Date: 11JAN2022
   Changes:
