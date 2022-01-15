@@ -49,18 +49,23 @@ local function initialize_settings()
   global.settings["train-trails-color-type"] = settings["train-trails-color-type"].value
   global.settings["train-trails-speed"] = settings["train-trails-speed"].value
   global.settings["train-trails-palette"] = settings["train-trails-palette"].value
+  global.settings["train-trails-balance"] = settings["train-trails-balance"].value
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
   initialize_settings()
 end)
 
-script.on_event(defines.events.on_tick, function(event)
+script.on_configuration_changed(function()
+  initialize_settings()
+end)
+
+script.on_init(function()
+  initialize_settings()
+end)
+
+local function make_trails(settings, event)
   -- first we create or get our settings
-  if not global.settings then
-    initialize_settings()
-  end
-  local settings = global.settings
   local sprite = settings["train-trails-color"]
   local light = settings["train-trails-glow"]
   -- then we make any new lights or sprites as needed
@@ -122,4 +127,42 @@ script.on_event(defines.events.on_tick, function(event)
       end
     end
   end
+end
+
+script.on_event(defines.events.on_tick, function(event)
+  if not global.settings then
+    initialize_settings()
+  end
+  local settings = global.settings
+  if settings["train-trails-balance"] == "super-pretty" then
+    make_trails(settings, event)
+  end
 end)
+
+script.on_nth_tick(2, function(event)
+  local settings = global.settings
+  if settings["train-trails-balance"] == "pretty" then
+    make_trails(settings, event)
+  end
+end)
+
+script.on_nth_tick(3, function(event)
+  local settings = global.settings
+  if settings["train-trails-balance"] == "balanced" then
+    make_trails(settings, event)
+  end
+end)
+
+script.on_nth_tick(4, function(event)
+  local settings = global.settings
+  if settings["train-trails-balance"] == "performance" then
+    make_trails(settings, event)
+  end
+end)
+--
+-- script.on_nth_tick(6, function(event)
+--   local settings = global.settings
+--   if settings["train-trails-balance"] == "super-performance" then
+--     make_trails(settings, event)
+--   end
+-- end)
