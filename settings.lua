@@ -15,11 +15,19 @@ local trainTrailsGlow = {
   default_value = true
 }
 
+local trainTrailsPassengersOnly = {
+  type = "bool-setting",
+  name = "train-trails-passengers-only",
+  setting_type = "runtime-global",
+  order = "c",
+  default_value = false
+}
+
 local trainTrailsScale = {
   type = "string-setting",
   name = "train-trails-scale",
   setting_type = "runtime-global",
-  order = "c",
+  order = "d",
   default_value = "5",
   allowed_values = {
     "1",
@@ -38,7 +46,7 @@ local trainTrailsLength = {
   type = "string-setting",
   name = "train-trails-length",
   setting_type = "runtime-global",
-  order = "d",
+  order = "e",
   default_value = "120",
   allowed_values = {
     "15",
@@ -57,7 +65,7 @@ local trainTrailsColorSync = {
   type = "string-setting",
   name = "train-trails-color-type",
   setting_type = "runtime-global",
-  order = "e",
+  order = "f",
   default_value = "train",
   allowed_values = {
     "train",
@@ -69,7 +77,7 @@ local trainTrailsPalette = {
   type = "string-setting",
   name = "train-trails-palette",
   setting_type = "runtime-global",
-  order = "f",
+  order = "g",
   default_value = "default",
   allowed_values = {
     "light",
@@ -84,7 +92,7 @@ local trainTrailsSpeed = {
   type = "string-setting",
   name = "train-trails-speed",
   setting_type = "runtime-global",
-  order = "g",
+  order = "h",
   default_value = "default",
   allowed_values = {
     "veryslow",
@@ -99,7 +107,7 @@ local trainTrailsBalance = {
   type = "string-setting",
   name = "train-trails-balance",
   setting_type = "runtime-global",
-  order = "h",
+  order = "i",
   default_value = "pretty",
   allowed_values = {
     -- "super-performance",
@@ -113,6 +121,7 @@ local trainTrailsBalance = {
 data:extend({
   trainTrailsColor,
   trainTrailsGlow,
+  trainTrailsPassengersOnly,
   trainTrailsScale,
   trainTrailsLength,
   trainTrailsColorSync,

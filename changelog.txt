@@ -1,4 +1,21 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.5
+Date: 15JAN2022
+  Changes:
+    - hotfix to allow passenger mode to work even when train has default color
+---------------------------------------------------------------------------------------------------
+Version: 0.0.4
+Date: 15JAN2022
+  Changes:
+    - fixed spelling in some setting descriptions
+    - train trails can now be the locomotive color when using passenger mode
+---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 15JAN2022
+  Changes:
+    - fixed that trains moving slowly would cause very bright glow. trail creation now considers train speed as a factor
+    - added setting to only make trails for trains with passengers on them
+---------------------------------------------------------------------------------------------------
 Version: 0.0.2
 Date: 14JAN2022
   Changes:
