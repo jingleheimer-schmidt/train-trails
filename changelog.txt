@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.6
+Date: 16JAN2022
+  Changes:
+    - minor change to rainbow generation script to reduce the total number of calculations needed at runtime
+    - added setting to allow trains with the default color to create trails (disabled by default)
+    - updated mod description
+---------------------------------------------------------------------------------------------------
 Version: 0.0.5
 Date: 15JAN2022
   Changes:

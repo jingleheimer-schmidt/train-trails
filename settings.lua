@@ -118,6 +118,31 @@ local trainTrailsBalance = {
   }
 }
 
+local trainTrailsDefaultTrailColor = {
+  type = "string-setting",
+  name = "train-trails-default-color",
+  setting_type = "runtime-global",
+  order = "j",
+  default_value = "nil",
+  allowed_values = {
+    "nil",
+    "rainbow",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "black",
+    "white",
+    "pink",
+    "gray",
+    "cyan",
+    "brown",
+    "acid"
+  }
+}
+
 data:extend({
   trainTrailsColor,
   trainTrailsGlow,
@@ -127,5 +152,6 @@ data:extend({
   trainTrailsColorSync,
   trainTrailsPalette,
   trainTrailsSpeed,
-  trainTrailsBalance
+  trainTrailsBalance,
+  trainTrailsDefaultTrailColor
 })

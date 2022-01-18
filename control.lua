@@ -19,8 +19,44 @@ local palette = {
   deep = {amplitude = 25, center = 50},             -- dark
 }
 
+local default_player_colors = {
+  red = { r = 0.815, g = 0.024, b = 0.0  , a = 0.5 },
+  orange = { r = 0.869, g = 0.5  , b = 0.130, a = 0.5 },
+  yellow = { r = 0.835, g = 0.666, b = 0.077, a = 0.5 },
+  green = { r = 0.093, g = 0.768, b = 0.172, a = 0.5 },
+  blue = { r = 0.155, g = 0.540, b = 0.898, a = 0.5 },
+  purple = { r = 0.485, g = 0.111, b = 0.659, a = 0.5 },
+  black = { r = 0.1  , g = 0.1  , b = 0.1,   a = 0.5 },
+  white = { r = 0.8  , g = 0.8  , b = 0.8  , a = 0.5 },
+  pink = { r = 0.929, g = 0.386, b = 0.514, a = 0.5 },
+  gray = { r = 0.4  , g = 0.4  , b = 0.4,   a = 0.5 },
+  cyan = { r = 0.275, g = 0.755, b = 0.712, a = 0.5 },
+  brown = { r = 0.300, g = 0.117, b = 0.0,   a = 0.5 },
+  acid = { r = 0.559, g = 0.761, b = 0.157, a = 0.5 },
+  rainbow = "rainbow",
+}
+
+local default_chat_colors = {
+  red = { r = 1.000, g = 0.166, b = 0.141 },
+  orange = { r = 1.000, g = 0.630, b = 0.259 },
+  yellow = { r = 1.000, g = 0.828, b = 0.231 },
+  green = { r = 0.173, g = 0.824, b = 0.250 },
+  blue = { r = 0.343, g = 0.683, b = 1.000 },
+  purple = { r = 0.821, g = 0.440, b = 0.998 },
+  black = { r = 0.1  , g = 0.1  , b = 0.1   },
+  white = { r = 0.9  , g = 0.9  , b = 0.9   },
+  pink = { r = 1.000, g = 0.520, b = 0.633 },
+  gray = { r = 0.7  , g = 0.7  , b = 0.7   },
+  cyan = { r = 0.335, g = 0.918, b = 0.866 },
+  brown = { r = 0.757, g = 0.522, b = 0.371 },
+  acid = { r = 0.708, g = 0.996, b = 0.134 },
+  rainbow = "rainbow",
+}
+
 local sin = math.sin
-local pi_div_3 = math.pi / 3
+local pi_0 = 0 * math.pi / 3
+local pi_2 = 2 * math.pi / 3
+local pi_4 = 4 * math.pi / 3
 
 function make_rainbow(created_tick, train_id, settings)
   local frequency = speeds[settings["train-trails-speed"]]
@@ -29,9 +65,9 @@ function make_rainbow(created_tick, train_id, settings)
   local amplitude = palette[palette_key].amplitude
   local center = palette[palette_key].center
   return {
-    r = sin(frequency*(modifier)+(0*pi_div_3))*amplitude+center,
-    g = sin(frequency*(modifier)+(2*pi_div_3))*amplitude+center,
-    b = sin(frequency*(modifier)+(4*pi_div_3))*amplitude+center,
+    r = sin(frequency*(modifier)+pi_0)*amplitude+center,
+    g = sin(frequency*(modifier)+pi_2)*amplitude+center,
+    b = sin(frequency*(modifier)+pi_4)*amplitude+center,
     a = 255,
   }
 end
@@ -51,6 +87,7 @@ local function initialize_settings()
   global.settings["train-trails-palette"] = settings["train-trails-palette"].value
   global.settings["train-trails-balance"] = settings["train-trails-balance"].value
   global.settings["train-trails-passengers-only"] = settings["train-trails-passengers-only"].value
+  global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
@@ -71,6 +108,10 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id)
   local color = stock.color
   if settings["train-trails-color-type"] == "rainbow" then
     color = "rainbow"
+  end
+  local color_override = settings["train-trails-default-color"]
+  if ((not color) and (color_override ~= "nil")) then
+    color = default_chat_colors[color_override]
   end
   if color or settings["train-trails-passengers-only"] then
     if sprite then
@@ -145,7 +186,7 @@ local function make_trails(settings, event)
               local speed_less_than_25 = ((speed < 25) and (speed > 0)) or ((speed > -25) and (speed < 0))
               local speed_less_than_15 = ((speed < 15) and (speed > 0)) or ((speed > -15) and (speed < 0))
               local speed_less_than_10 = ((speed < 10) and (speed > 0)) or ((speed > -10) and (speed < 0))
-              local speed_less_than_05 = ((speed < 05) and (speed > 0)) or ((speed > -05) and (speed < 0))
+              -- local speed_less_than_05 = ((speed < 05) and (speed > 0)) or ((speed > -05) and (speed < 0))
               if not global.trains[train_id] then
                 global.trains[train_id] = 0
               end

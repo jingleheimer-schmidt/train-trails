@@ -1,11 +1,11 @@
 {
   "name": "train-trails",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "title": "Train Trails",
   "author": "asher_sky",
   "contact": "",
   "homepage": "",
-  "description": "Trains create a glowing trail wherever they go \n- Only affects trains with a color other than default \n- Very configurable",
+  "description": "Trains create a glowing colored trail wherever they go \n- Very configurable",
   "factorio_version": "1.1",
   "dependencies": [
 	"base"
