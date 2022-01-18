@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.7
+Date: TBD
+  Changes:
+    - minor change to rainbow generation script to reduce the total number of calculations needed at runtime
+---------------------------------------------------------------------------------------------------
 Version: 0.0.6
 Date: 16JAN2022
   Changes:
