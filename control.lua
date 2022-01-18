@@ -105,6 +105,7 @@ end)
 local function draw_trails(settings, stock, sprite, light, event_tick, train_id)
   local length = tonumber(settings["train-trails-length"])
   local scale = tonumber(settings["train-trails-scale"])
+  local passengers_only = settings["train-trails-passengers-only"]
   local color = stock.color
   if settings["train-trails-color-type"] == "rainbow" then
     color = "rainbow"
@@ -113,7 +114,7 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id)
   if ((not color) and (color_override ~= "nil")) then
     color = default_chat_colors[color_override]
   end
-  if color or settings["train-trails-passengers-only"] then
+  if color or passengers_only then
     if sprite then
       sprite = rendering.draw_sprite{
         sprite = "train-trail",
@@ -124,7 +125,7 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id)
         render_layer = "radius-visualization",
         time_to_live = length,
       }
-      if ((color == "rainbow") or ((not color) and settings["train-trails-passengers-only"])) then
+      if ((color == "rainbow") or ((not color) and passengers_only)) then
         color = make_rainbow(event_tick, train_id, settings)
       end
       rendering.set_color(sprite, color)
@@ -139,7 +140,7 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id)
         render_layer = "light-effect",
         time_to_live = length,
       }
-      if ((color == "rainbow") or ((not color) and settings["train-trails-passengers-only"])) then
+      if ((color == "rainbow") or ((not color) and passengers_only)) then
         color = make_rainbow(event_tick, train_id, settings)
       end
       rendering.set_color(light, color)
