@@ -90,16 +90,40 @@ local function initialize_settings()
   global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value
 end
 
+local function reset_trains_global()
+  global.lua_trains = {}
+  for each, surface in pairs(game.surfaces) do
+    for every, train in pairs(surface.get_trains()) do
+      global.lua_trains[train.id] = train
+    end
+  end
+end
+
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
   initialize_settings()
 end)
 
 script.on_configuration_changed(function()
   initialize_settings()
+  reset_trains_global()
 end)
 
 script.on_init(function()
   initialize_settings()
+  reset_trains_global()
+end)
+
+script.on_event(defines.events.on_train_created, function(event)
+  if not global.lua_trains then
+    global.lua_trains = {}
+  end
+  global.lua_trains[event.train.id] = event.train
+  if event.old_train_id_1 then
+    global.lua_trains[event.old_train_id_1] = nil
+  end
+  if event.old_train_id_2 then
+    global.lua_trains[event.old_train_id_2] = nil
+  end
 end)
 
 local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
@@ -113,10 +137,10 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id,
   if ((not color) and (color_override ~= "nil")) then
     color = default_chat_colors[color_override]
   end
-  if ((color_type == "rainbow") or ((not color) and passengers_only)) then
+  if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
     color = make_rainbow(event_tick, train_id, settings)
   end
-  if color or passengers_only then
+  if color then
     local position = stock.position
     local surface = stock.surface
     if sprite then
@@ -165,9 +189,14 @@ local function make_trails(settings, event)
   local color_type = settings["train-trails-color-type"]
   -- then we make any new lights or sprites as needed
   if sprite or light then
-    for every, surface in pairs(game.surfaces) do
-      local trains = surface.get_trains()
-      for each, train in pairs(trains) do
+    -- for every, surface in pairs(game.surfaces) do
+      -- local trains = surface.get_trains()
+    local trains = global.lua_trains
+    if not trains then return end
+    for each, train in pairs(trains) do
+      if not train.valid then
+        global.lua_trains[each] = nil
+      else
         local passengers = false
         if passengers_only then
           if train.passengers[1] then
@@ -186,9 +215,6 @@ local function make_trails(settings, event)
             if stock then
               local event_tick = event.tick
               local train_id = train.id
-              if not global.trains then
-                global.trains = {}
-              end
               speed = speed * 216
               local speed_less_than_200 = ((speed < 200) and (speed > 0)) or ((speed > -200) and (speed < 0))
               local speed_less_than_150 = ((speed < 150) and (speed > 0)) or ((speed > -150) and (speed < 0))
@@ -199,11 +225,14 @@ local function make_trails(settings, event)
               local speed_less_than_15 = ((speed < 15) and (speed > 0)) or ((speed > -15) and (speed < 0))
               local speed_less_than_10 = ((speed < 10) and (speed > 0)) or ((speed > -10) and (speed < 0))
               -- local speed_less_than_05 = ((speed < 05) and (speed > 0)) or ((speed > -05) and (speed < 0))
-              if not global.trains[train_id] then
-                global.trains[train_id] = 0
+              if not global.delay_counter then
+                global.delay_counter = {}
               end
-              global.trains[train_id] = global.trains[train_id] + 1
-              local delay_counter = global.trains[train_id]
+              if not global.delay_counter[train_id] then
+                global.delay_counter[train_id] = 0
+              end
+              local delay_counter = global.delay_counter[train_id]
+              global.delay_counter[train_id] = delay_counter + 1
               -- if speed_less_than_05 and (delay_counter >= 9) then
               --   draw_trails(settings, stock, sprite, light, event_tick, train_id)
               --   global.trains[train_id] = 0
@@ -214,31 +243,31 @@ local function make_trails(settings, event)
               --   -- game.print("speed less than 10")
               if not speed_less_than_200 then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = false
+                global.delay_counter[train_id] = false
               elseif (not speed_less_than_150) and speed_less_than_200 and (delay_counter >= 1) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif (not speed_less_than_105) and speed_less_than_150 and (delay_counter >= 2) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 3) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 4) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 5) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 6) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 7) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               elseif speed_less_than_10 and (delay_counter >= 8) then
                 draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.trains[train_id] = 0
+                global.delay_counter[train_id] = 0
               end
             end
           end
