@@ -102,10 +102,10 @@ script.on_init(function()
   initialize_settings()
 end)
 
-local function draw_trails(settings, stock, sprite, light, event_tick, train_id)
+local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
   local length = tonumber(settings["train-trails-length"])
   local scale = tonumber(settings["train-trails-scale"])
-  local passengers_only = settings["train-trails-passengers-only"]
+  -- local passengers_only = settings["train-trails-passengers-only"]
   local color = stock.color
   if settings["train-trails-color-type"] == "rainbow" then
     color = "rainbow"
@@ -152,18 +152,19 @@ local function make_trails(settings, event)
   -- first we create or get our settings
   local sprite = settings["train-trails-color"]
   local light = settings["train-trails-glow"]
+  local passengers_only = settings["train-trails-passengers-only"]
   -- then we make any new lights or sprites as needed
   if sprite or light then
     for every, surface in pairs(game.surfaces) do
       local trains = surface.get_trains()
       for each, train in pairs(trains) do
         local passengers = false
-        if settings["train-trails-passengers-only"] then
+        if passengers_only then
           if train.passengers[1] then
             passengers = true
           end
         end
-        if passengers or (not settings["train-trails-passengers-only"]) then
+        if passengers or (not passengers_only) then
           local speed = train.speed
           if not (speed == 0) then
             local stock = false
@@ -202,39 +203,39 @@ local function make_trails(settings, event)
               --   global.trains[train_id] = 0
               --   -- game.print("speed less than 10")
               if speed_less_than_10 and (delay_counter >= 8) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 10")
               elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 7) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 15")
               elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 6) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 25")
               elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 5) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 40")
               elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 4) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 65")
               elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 3) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 105")
               elseif (not speed_less_than_105) and speed_less_than_150 and (delay_counter >= 2) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 150")
               elseif (not speed_less_than_150) and speed_less_than_200 and (delay_counter >= 1) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = 0
                 -- game.print("speed less than 150")
               elseif not speed_less_than_200 then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id)
+                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only)
                 global.trains[train_id] = false
                 -- game.print("speed greater than 170")
               end
