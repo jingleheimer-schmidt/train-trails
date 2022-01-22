@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.8
+Date: 20JAN2022
+  Changes:
+    - implemented custom tracking and storage of train data to reduce the number of API calls
+    - minor changes to train generation script to reduce the number of calculations needed on maps with trains mostly traveling at higher speeds
+---------------------------------------------------------------------------------------------------
 Version: 0.0.7
 Date: 20JAN2022
   Changes:
