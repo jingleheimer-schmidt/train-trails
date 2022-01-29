@@ -58,12 +58,12 @@ local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
 
-function make_rainbow(created_tick, train_id, settings)
-  local frequency = speeds[settings["train-trails-speed"]]
+function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
+  -- local frequency = speeds[settings["train-trails-speed"]]
   local modifier = train_id + created_tick
-  local palette_key = settings["train-trails-palette"]
-  local amplitude = palette[palette_key].amplitude
-  local center = palette[palette_key].center
+  -- local palette_key = settings["train-trails-palette"]
+  -- local amplitude = palette[palette_key].amplitude
+  -- local center = palette[palette_key].center
   return {
     r = sin(frequency*(modifier)+pi_0)*amplitude+center,
     g = sin(frequency*(modifier)+pi_2)*amplitude+center,
@@ -126,7 +126,7 @@ script.on_event(defines.events.on_train_created, function(event)
   end
 end)
 
-local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
+local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
   -- local length = tonumber(settings["train-trails-length"])
   -- local scale = tonumber(settings["train-trails-scale"])
   -- local passengers_only = settings["train-trails-passengers-only"]
@@ -138,7 +138,7 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id,
     color = default_chat_colors[color_override]
   end
   if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
-    color = make_rainbow(event_tick, train_id, settings)
+    color = make_rainbow(event_tick, train_id, settings, frequency, amplitude, center)
   end
   if color then
     local position = stock.position
@@ -166,7 +166,7 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id,
         surface = surface,
         color = color,
         intensity = .175,
-        scale = scale * 2,
+        scale = scale * 1.75,
         render_layer = "light-effect",
         time_to_live = length,
       }
@@ -182,13 +182,17 @@ local function make_trails(settings, event)
   -- first we create or get our settings
   local sprite = settings["train-trails-color"]
   local light = settings["train-trails-glow"]
-  local passengers_only = settings["train-trails-passengers-only"]
-  local color_override = settings["train-trails-default-color"]
-  local length = tonumber(settings["train-trails-length"])
-  local scale = tonumber(settings["train-trails-scale"])
-  local color_type = settings["train-trails-color-type"]
   -- then we make any new lights or sprites as needed
   if sprite or light then
+    local passengers_only = settings["train-trails-passengers-only"]
+    local color_override = settings["train-trails-default-color"]
+    local length = tonumber(settings["train-trails-length"])
+    local scale = tonumber(settings["train-trails-scale"])
+    local color_type = settings["train-trails-color-type"]
+    local frequency = speeds[settings["train-trails-speed"]]
+    local palette_key = settings["train-trails-palette"]
+    local amplitude = palette[palette_key].amplitude
+    local center = palette[palette_key].center
     -- for every, surface in pairs(game.surfaces) do
       -- local trains = surface.get_trains()
     local trains = global.lua_trains
@@ -241,33 +245,46 @@ local function make_trails(settings, event)
               --   draw_trails(settings, stock, sprite, light, event_tick, train_id)
               --   global.trains[train_id] = 0
               --   -- game.print("speed less than 10")
-              if not speed_less_than_200 then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = false
-              elseif (not speed_less_than_150) and speed_less_than_200 and (delay_counter >= 1) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif (not speed_less_than_105) and speed_less_than_150 and (delay_counter >= 2) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 3) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 4) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 5) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 6) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 7) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
-              elseif speed_less_than_10 and (delay_counter >= 8) then
-                draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
-                global.delay_counter[train_id] = 0
+              if sprite then
+                local light_override = false
+                draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+              end
+              if light then
+                local sprite_override = false
+                -- if not speed_less_than_200 then
+                --   draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
+                --   global.delay_counter[train_id] = false
+                -- elseif (not speed_less_than_150) and speed_less_than_200 and (delay_counter >= 1) then
+                --   draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
+                --   global.delay_counter[train_id] = 0
+                -- elseif (not speed_less_than_105) and speed_less_than_150 and (delay_counter >= 2) then
+                --   draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
+                --   global.delay_counter[train_id] = 0
+                -- elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 3) then
+                --   draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type)
+                --   global.delay_counter[train_id] = 0
+                if (not speed_less_than_105) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 3) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 4) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 6) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                elseif speed_less_than_10 and (delay_counter >= 9) then
+                  draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+                  global.delay_counter[train_id] = 0
+                end
               end
             end
           end
