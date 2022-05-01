@@ -61,6 +61,7 @@ local balance_to_ticks = {
 }
 
 local mod_settings
+local lua_trains
 
 local sin = math.sin
 local pi_0 = 0 * math.pi / 3
@@ -107,6 +108,7 @@ local function reset_trains_global()
       global.lua_trains[train.id] = train
     end
   end
+  lua_trains = global.lua_trains
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
@@ -125,6 +127,7 @@ end)
 
 script.on_load(function()
   mod_settings = global.settings
+  lua_trains = global.lua_trains
 end)
 
 script.on_event(defines.events.on_train_created, function(event)
@@ -138,6 +141,7 @@ script.on_event(defines.events.on_train_created, function(event)
   if event.old_train_id_2 then
     global.lua_trains[event.old_train_id_2] = nil
   end
+  lua_trains = global.lua_trains
 end)
 
 local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
@@ -359,7 +363,8 @@ local function make_trails(settings, event)
         end
       end
     else
-      local trains = global.lua_trains
+      -- local trains = global.lua_trains
+      local trains = lua_trains
       if not trains then return end
       for id, train in pairs(trains) do
         if not train.valid then
