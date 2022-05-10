@@ -232,7 +232,7 @@ local function draw_trails_based_on_speed(event, train, settings, sprite, light,
       local light_delay_counter = delay_counter
       local sprite_delay_counter = delay_counter
       local train_length = #train.carriages
-      length = length + ((train_length - 1) * 10)
+      length = length + ((train_length - 1) * 15)
       -- global.delay_counter[train_id] = delay_counter
       -- if speed_less_than_05 and (delay_counter >= 9) then
       --   draw_trails(settings, stock, sprite, light, event_tick, train_id)
