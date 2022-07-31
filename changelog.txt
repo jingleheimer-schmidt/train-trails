@@ -1,8 +1,10 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.10
-Date: 09MAY2022
+Date: 31JUL2022
   Changes:
     - trail length is now somewhat affected by train length
+    - removed info tooltip from mod setting names since it is now added automatically
+    - fixed crash when trans color trails were selected while the trans train trails mod was enabled
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.9
 Date: 30APR2022
