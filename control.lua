@@ -155,8 +155,9 @@ end)
 
 local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
   local color = stock.color
+  -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
   if ((not color) and (color_override ~= "nil")) then
-    color = default_chat_colors[color_override]
+    color = default_chat_colors[color_override] -- color_override is just the mod setting for default loco color
   end
   if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
     color = make_rainbow(event_tick, train_id, settings, frequency, amplitude, center)
