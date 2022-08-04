@@ -1,4 +1,20 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.10
+Date: 31JUL2022
+  Changes:
+    - trail length is now somewhat affected by train length
+    - removed info tooltip from mod setting names since it is now added automatically
+    - fixed crash when trans color trails were selected while the trans train trails mod was enabled
+---------------------------------------------------------------------------------------------------
+Version: 0.0.9
+Date: 30APR2022
+  Changes:
+    - trains with no color now generate rainbow trials by default
+    - significantly reduced script impact when passenger mode is enabled
+    - rewrote mod settings tracking and storage to slightly increase performance
+    - rewrote train tracking and storage to slightly increase performance
+    - slightly improved trail smoothing for trains at low and very low speeds
+---------------------------------------------------------------------------------------------------
 Version: 0.0.8
 Date: 28JAN2022
   Changes:

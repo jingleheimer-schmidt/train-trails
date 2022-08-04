@@ -123,7 +123,7 @@ local trainTrailsDefaultTrailColor = {
   name = "train-trails-default-color",
   setting_type = "runtime-global",
   order = "j",
-  default_value = "nil",
+  default_value = "rainbow",
   allowed_values = {
     "nil",
     "rainbow",
