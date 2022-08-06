@@ -68,6 +68,7 @@ local sin = math.sin
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
+local more_palettes
 
 function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
   -- local frequency = speeds[settings["train-trails-speed"]]
@@ -118,6 +119,10 @@ local function trains_rights()
   end
 end
 
+local function more_palettes()
+  global.more_palettes = {}
+end
+
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
   initialize_settings()
 end)
@@ -126,17 +131,20 @@ script.on_configuration_changed(function()
   initialize_settings()
   reset_trains_global()
   trains_rights()
+  more_palettes()
 end)
 
 script.on_init(function()
   initialize_settings()
   reset_trains_global()
   trains_rights()
+  more_palettes()
 end)
 
 script.on_load(function()
   mod_settings = global.settings
   lua_trains = global.lua_trains
+  more_palettes = global.more_palettes
 end)
 
 script.on_event(defines.events.on_train_created, function(event)
