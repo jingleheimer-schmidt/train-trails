@@ -68,7 +68,7 @@ local sin = math.sin
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
-local more_palettes
+local more_colors
 
 function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
   -- local frequency = speeds[settings["train-trails-speed"]]
@@ -119,8 +119,8 @@ local function trains_rights()
   end
 end
 
-local function more_palettes()
-  global.more_palettes = {}
+local function more_colors()
+  global.more_colors = {}
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
@@ -131,20 +131,20 @@ script.on_configuration_changed(function()
   initialize_settings()
   reset_trains_global()
   trains_rights()
-  more_palettes()
+  more_colors()
 end)
 
 script.on_init(function()
   initialize_settings()
   reset_trains_global()
   trains_rights()
-  more_palettes()
+  more_colors()
 end)
 
 script.on_load(function()
   mod_settings = global.settings
   lua_trains = global.lua_trains
-  more_palettes = global.more_palettes
+  more_colors = global.more_colors
 end)
 
 script.on_event(defines.events.on_train_created, function(event)
@@ -169,6 +169,9 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id,
   end
   if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
     color = make_rainbow(event_tick, train_id, settings, frequency, amplitude, center)
+  end
+  if (not ((color_type == "rainbow") or (color_type == "train")) then
+    color = more_colors[color_type](event_tick, train_id, settings, frequency, amplitude, center)
   end
   if color then
     local position = stock.position
@@ -369,3 +372,50 @@ script.on_event(defines.events.on_tick, function(event)
     make_trails(mod_settings, event)
   end
 end)
+
+--[[
+this is the interface that other mods can use to add custom color functions.
+it needs two things, a `color_type_name` and a `string_of_color_function`:
+  `color_type_name` is the name of the "train-trails-color-type" setting value (this should be added during setting-updates or data stage)
+  `string_of_color_function` is a string version of the new color function. in this mod that is the `make_rainbow(...)` function, but it can be any function that returns a valid color.
+    this string version of the color_function will be loaded and used by train trails to determine what color to use when the `color_type_name` setting value is selected.
+the color_function will be passed the following arguments:
+  color_function(event_tick, train_id, settings, frequency, amplitude, center)
+    event_tick: the current game tick
+    train_id: the unique id of the train that the trail is being drawn for
+    settings: a version of the train-trails mod settings
+    frequency: a value used by train trails to make the rainbow
+    amplitude: a value used by train trails to make the rainbow
+    center: a value used by train trails to make the rainbow
+  note: the color function must return a valid color (https://wiki.factorio.com/Types/Color)
+
+example of use:
+  local color_type_name = "new_color_type_name"
+  local color_function = "return function(created_tick, train_id, settings, frequency, amplitude, center)
+    local modifier = train_id + created_tick
+    return {
+      r = sin(frequency*(modifier)+pi_0)*amplitude+center,
+      g = sin(frequency*(modifier)+pi_2)*amplitude+center,
+      b = sin(frequency*(modifier)+pi_4)*amplitude+center,
+      a = 255,
+    }
+  end"
+  script.on_init(function()
+    remote.call("train-trails-color-type", "add_color_function", color_type_name, color_function)
+  end)
+  script.on_configuration_changed(function()
+    remote.call("train-trails-color-type", "add_color_function", color_type_name, color_function)
+  end)
+--]]
+remote.add_interface("train-trails-color-type",
+  {add_color_function = function(color_type_name, string_of_color_function)
+    local color_function, err = load(string_of_color_function)
+    if color_function then
+      global.more_colors[color_type_name] = color_function
+      more_colors = global.more_colors
+      return true
+    else
+      return false
+    end
+  end}
+)
