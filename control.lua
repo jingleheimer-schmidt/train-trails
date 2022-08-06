@@ -119,8 +119,8 @@ local function trains_rights()
   end
 end
 
-local function more_colors()
-  global.more_colors = {}
+local function initialize_more_colors()
+  global.more_colors = global.more_colors or {}
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
@@ -131,14 +131,14 @@ script.on_configuration_changed(function()
   initialize_settings()
   reset_trains_global()
   trains_rights()
-  more_colors()
+  initialize_more_colors()
 end)
 
 script.on_init(function()
   initialize_settings()
   reset_trains_global()
   trains_rights()
-  more_colors()
+  initialize_more_colors()
 end)
 
 script.on_load(function()
@@ -170,7 +170,7 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id,
   if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
     color = make_rainbow(event_tick, train_id, settings, frequency, amplitude, center)
   end
-  if (not ((color_type == "rainbow") or (color_type == "train")) then
+  if (not ((color_type == "rainbow") or (color_type == "train"))) then
     color = more_colors[color_type](event_tick, train_id, settings, frequency, amplitude, center)
   end
   if color then
@@ -377,6 +377,9 @@ end)
 this is the interface that other mods can use to add custom color functions.
 it needs two things, a `color_type_name` and a `string_of_color_function`:
   `color_type_name` is the name of the "train-trails-color-type" setting value (this should be added during setting-updates or data stage)
+    example of settings-updates.lua:
+      table.insert(data.raw["string-setting"]["train-trails-color-type"].allowed_values, "new_color"
+      data.raw["string-setting"]["train-trails-color-type"].default_value = "new_color"
   `string_of_color_function` is a string version of the new color function. in this mod that is the `make_rainbow(...)` function, but it can be any function that returns a valid color.
     this string version of the color_function will be loaded and used by train trails to determine what color to use when the `color_type_name` setting value is selected.
 the color_function will be passed the following arguments:
@@ -391,7 +394,7 @@ the color_function will be passed the following arguments:
 
 example of use:
   local color_type_name = "new_color_type_name"
-  local color_function = "return function(created_tick, train_id, settings, frequency, amplitude, center)
+  local color_function = "function(created_tick, train_id, settings, frequency, amplitude, center)
     local modifier = train_id + created_tick
     return {
       r = sin(frequency*(modifier)+pi_0)*amplitude+center,
