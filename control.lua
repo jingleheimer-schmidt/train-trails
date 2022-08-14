@@ -110,13 +110,13 @@ local function reset_trains_global()
   end
   lua_trains = global.lua_trains
 end
-
-local function trains_rights()
-  -- turn off the main script if the trans trails mod is active so that this one doesn't crash and cause problems, trans trails mod will handle everything :)
-  if game.active_mods["trains-rights"] then
-    script.on_event(defines.events.on_tick, nil)
-  end
-end
+--
+-- local function trains_rights()
+--   -- turn off the main script if the trans trails mod is active so that this one doesn't crash and cause problems, trans trails mod will handle everything :)
+--   if game.active_mods["trains-rights"] then
+--     script.on_event(defines.events.on_tick, nil)
+--   end
+-- end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function()
   initialize_settings()
@@ -125,13 +125,13 @@ end)
 script.on_configuration_changed(function()
   initialize_settings()
   reset_trains_global()
-  trains_rights()
+  -- trains_rights()
 end)
 
 script.on_init(function()
   initialize_settings()
   reset_trains_global()
-  trains_rights()
+  -- trains_rights()
 end)
 
 script.on_load(function()
@@ -356,8 +356,10 @@ local function make_trails(settings, event)
   end
 end
 
-script.on_event(defines.events.on_tick, function(event)
-  if event.tick % mod_settings["train-trails-balance"] == 0 then
-    make_trails(mod_settings, event)
-  end
-end)
+if not script.active_mods["trains-rights"] then
+  script.on_event(defines.events.on_tick, function(event)
+    if event.tick % mod_settings["train-trails-balance"] == 0 then
+      make_trails(mod_settings, event)
+    end
+  end)
+end
