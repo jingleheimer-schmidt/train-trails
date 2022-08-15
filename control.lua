@@ -71,14 +71,15 @@ local pi_4 = 4 * math.pi / 3
 
 function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
   -- local frequency = speeds[settings["train-trails-speed"]]
-  local modifier = train_id + created_tick
+  -- local modifier = train_id + created_tick
+  local freq_mod = (train_id + created_tick) * frequency
   -- local palette_key = settings["train-trails-palette"]
   -- local amplitude = palette[palette_key].amplitude
   -- local center = palette[palette_key].center
   return {
-    r = sin(frequency*(modifier)+pi_0)*amplitude+center,
-    g = sin(frequency*(modifier)+pi_2)*amplitude+center,
-    b = sin(frequency*(modifier)+pi_4)*amplitude+center,
+    r = sin(freq_mod+pi_0)*amplitude+center,
+    g = sin(freq_mod+pi_2)*amplitude+center,
+    b = sin(freq_mod+pi_4)*amplitude+center,
     a = 255,
   }
 end
