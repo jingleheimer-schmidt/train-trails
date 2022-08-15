@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.11
+Date: 14AUG2022
+  Changes:
+    - added train trails to the main menu simulations
+    - fix crash when loading a save with the trans pride palette setting enabled
+---------------------------------------------------------------------------------------------------
 Version: 0.0.10
 Date: 31JUL2022
   Changes:
