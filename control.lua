@@ -69,7 +69,14 @@ local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
 
-function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
+---@param created_tick number
+---@param train_id uint
+---@param settings table<string, ModSetting>
+---@param frequency number
+---@param amplitude number
+---@param center number
+---@return Color
+local function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
   local modifier = (train_id + created_tick) * frequency
   return {
     r = sin(modifier + pi_0) * amplitude + center,
@@ -98,6 +105,7 @@ local function initialize_settings()
 end
 
 local function reset_trains_global()
+  ---@type table<uint, LuaTrain>
   global.lua_trains = {}
   for each, surface in pairs(game.surfaces) do
     for every, train in pairs(surface.get_trains()) do
@@ -149,6 +157,20 @@ script.on_event(defines.events.on_train_created, function(event)
   lua_trains = global.lua_trains
 end)
 
+---@param settings table<string, ModSetting>
+---@param stock LuaEntity
+---@param sprite any
+---@param light any
+---@param event_tick uint
+---@param train_id any
+---@param passengers_only boolean
+---@param color_override any
+---@param length any
+---@param scale any
+---@param color_type any
+---@param frequency any
+---@param amplitude any
+---@param center any
 local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
   local color = stock.color
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
@@ -189,6 +211,19 @@ local function draw_trails(settings, stock, sprite, light, event_tick, train_id,
 end
 
 -- this one tries to reduce the weird ballooning and frying that happens when trains go really slowly, by making slower trains draw trails less frequently than faster ones
+---@param event EventData.on_tick
+---@param train LuaTrain
+---@param settings table<string, ModSetting>
+---@param sprite any
+---@param light any
+---@param color_override any
+---@param length any
+---@param scale any
+---@param color_type any
+---@param frequency any
+---@param amplitude any
+---@param center any
+---@param passengers_only any
 local function draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
   local speed = train.speed
   if not (speed == 0) then
@@ -313,6 +348,8 @@ local function draw_trails_based_on_speed(event, train, settings, sprite, light,
   end
 end
 
+---@param settings table<string, ModSetting>
+---@param event EventData.on_tick
 local function make_trails(settings, event)
   -- first we create or get our settings
   local sprite = settings["train-trails-color"]
