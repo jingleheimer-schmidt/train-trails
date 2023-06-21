@@ -86,8 +86,8 @@ local function make_rainbow(created_tick, train_id, settings, frequency, amplitu
   }
 end
 
+-- save mod settings to global so we don't have to ask the game for them all the time
 local function initialize_settings()
-  -- save mod settings to global so we don't have to ask the game for them all the time
   local settings = settings.global
   global.settings = {}
   global.settings["train-trails-color"] = settings["train-trails-color"].value
