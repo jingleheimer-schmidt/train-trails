@@ -134,20 +134,13 @@ script.on_init(initialize_and_reset)
 script.on_load(on_load)
 
 script.on_event(defines.events.on_train_created, function(event)
-  if not global.lua_trains then
-    global.lua_trains = {}
-  end
+  global.lua_trains = global.lua_trains or {}
   global.lua_trains[event.train.id] = event.train
-  if event.old_train_id_1 then
-    global.lua_trains[event.old_train_id_1] = nil
-  end
-  if event.old_train_id_2 then
-    global.lua_trains[event.old_train_id_2] = nil
-  end
   lua_trains = global.lua_trains
 end)
 
 ---@param settings table<string, ModSetting>
+script.on_event(defines.events.on_train_created, on_train_created)
 ---@param stock LuaEntity
 ---@param sprite boolean
 ---@param light boolean
