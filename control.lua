@@ -388,10 +388,13 @@ local function make_trails(settings, event)
   end
 end
 
+---@param event EventData.on_tick
+local function on_tick(event)
+  if event.tick % mod_settings["train-trails-balance"] == 0 then
+    make_trails(mod_settings, event)
+  end
+end
+
 if not script.active_mods["trains-rights"] then
-  script.on_event(defines.events.on_tick, function(event)
-    if event.tick % mod_settings["train-trails-balance"] == 0 then
-      make_trails(mod_settings, event)
-    end
-  end)
+  script.on_event(defines.events.on_tick, on_tick)
 end
