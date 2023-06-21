@@ -70,7 +70,7 @@ local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
 
 ---@param created_tick number
----@param train_id uint
+---@param train_id number
 ---@param settings table<string, ModSetting>
 ---@param frequency number
 ---@param amplitude number
@@ -158,10 +158,10 @@ end)
 
 ---@param settings table<string, ModSetting>
 ---@param stock LuaEntity
----@param sprite any
----@param light any
----@param event_tick uint
----@param train_id any
+---@param sprite boolean
+---@param light boolean
+---@param event_tick number
+---@param train_id number
 ---@param passengers_only boolean
 ---@param color_override any
 ---@param length any
@@ -213,8 +213,8 @@ end
 ---@param event EventData.on_tick
 ---@param train LuaTrain
 ---@param settings table<string, ModSetting>
----@param sprite any
----@param light any
+---@param sprite boolean
+---@param light boolean
 ---@param color_override any
 ---@param length any
 ---@param scale any
@@ -347,7 +347,7 @@ local function draw_trails_based_on_speed(event, train, settings, sprite, light,
   end
 end
 
----@param settings table<string, ModSetting>
+---@param settings table
 ---@param event EventData.on_tick
 local function make_trails(settings, event)
   -- first we create or get our settings
