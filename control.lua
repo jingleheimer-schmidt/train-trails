@@ -77,9 +77,9 @@ function make_rainbow(created_tick, train_id, settings, frequency, amplitude, ce
   -- local amplitude = palette[palette_key].amplitude
   -- local center = palette[palette_key].center
   return {
-    r = sin(freq_mod+pi_0)*amplitude+center,
-    g = sin(freq_mod+pi_2)*amplitude+center,
-    b = sin(freq_mod+pi_4)*amplitude+center,
+    r = sin(freq_mod + pi_0) * amplitude + center,
+    g = sin(freq_mod + pi_2) * amplitude + center,
+    b = sin(freq_mod + pi_4) * amplitude + center,
     a = 255,
   }
 end
