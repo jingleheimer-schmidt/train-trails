@@ -133,14 +133,15 @@ script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
 script.on_load(on_load)
 
-script.on_event(defines.events.on_train_created, function(event)
+---@param event EventData.on_train_created
+local function on_train_created(event)
   global.lua_trains = global.lua_trains or {}
   global.lua_trains[event.train.id] = event.train
   lua_trains = global.lua_trains
-end)
+end
 
----@param settings table<string, ModSetting>
 script.on_event(defines.events.on_train_created, on_train_created)
+
 ---@param stock LuaEntity
 ---@param sprite boolean
 ---@param light boolean
