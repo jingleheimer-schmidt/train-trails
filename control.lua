@@ -114,24 +114,24 @@ local function reset_trains_global()
   lua_trains = global.lua_trains
 end
 
-script.on_event(defines.events.on_runtime_mod_setting_changed, function()
+local function on_runtime_mod_setting_changed()
   initialize_settings()
-end)
+end
 
-script.on_configuration_changed(function()
-  initialize_settings()
-  reset_trains_global()
-end)
-
-script.on_init(function()
+local function initialize_and_reset()
   initialize_settings()
   reset_trains_global()
-end)
+end
 
-script.on_load(function()
+local function on_load()
   mod_settings = global.settings
   lua_trains = global.lua_trains
-end)
+end
+
+script.on_event(defines.events.on_runtime_mod_setting_changed, on_runtime_mod_setting_changed)
+script.on_configuration_changed(initialize_and_reset)
+script.on_init(initialize_and_reset)
+script.on_load(on_load)
 
 script.on_event(defines.events.on_train_created, function(event)
   if not global.lua_trains then
