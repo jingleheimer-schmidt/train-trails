@@ -90,17 +90,16 @@ end
 local function initialize_settings()
   local settings = settings.global
   global.settings = {}
-  global.settings["train-trails-color"] = settings["train-trails-color"].value
-  global.settings["train-trails-glow"] = settings["train-trails-glow"].value
-  global.settings["train-trails-length"] = settings["train-trails-length"].value
-  global.settings["train-trails-scale"] = settings["train-trails-scale"].value
-  global.settings["train-trails-color-type"] = settings["train-trails-color-type"].value
-  global.settings["train-trails-speed"] = settings["train-trails-speed"].value
-  global.settings["train-trails-palette"] = settings["train-trails-palette"].value
-  global.settings["train-trails-balance"] = balance_to_ticks[settings["train-trails-balance"].value]
-  global.settings["train-trails-passengers-only"] = settings["train-trails-passengers-only"].value
-  global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value
-  -- now transfer them to a local, i guess finding and accessing a local is a little bit faster than a global.. idk
+  global.settings["train-trails-color"] = settings["train-trails-color"].value --[[@as boolean]]
+  global.settings["train-trails-glow"] = settings["train-trails-glow"].value --[[@as boolean]]
+  global.settings["train-trails-length"] = settings["train-trails-length"].value --[[@as string]]
+  global.settings["train-trails-scale"] = settings["train-trails-scale"].value --[[@as string]]
+  global.settings["train-trails-color-type"] = settings["train-trails-color-type"].value --[[@as string]]
+  global.settings["train-trails-speed"] = settings["train-trails-speed"].value --[[@as string]]
+  global.settings["train-trails-palette"] = settings["train-trails-palette"].value --[[@as string]]
+  global.settings["train-trails-balance"] = balance_to_ticks[settings["train-trails-balance"].value] --[[@as string]]
+  global.settings["train-trails-passengers-only"] = settings["train-trails-passengers-only"].value --[[@as boolean]]
+  global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value --[[@as string]]
   mod_settings = global.settings
 end
 
