@@ -76,16 +76,16 @@ end
 local function initialize_settings()
   local settings = settings.global
   global.settings = {}
-  global.settings["train-trails-color"] = settings["train-trails-color"].value --[[@as boolean]]
-  global.settings["train-trails-glow"] = settings["train-trails-glow"].value --[[@as boolean]]
-  global.settings["train-trails-length"] = settings["train-trails-length"].value --[[@as string]]
-  global.settings["train-trails-scale"] = settings["train-trails-scale"].value --[[@as string]]
-  global.settings["train-trails-color-type"] = settings["train-trails-color-type"].value --[[@as string]]
-  global.settings["train-trails-speed"] = settings["train-trails-speed"].value --[[@as string]]
-  global.settings["train-trails-palette"] = settings["train-trails-palette"].value --[[@as string]]
-  global.settings["train-trails-balance"] = balance_to_ticks[settings["train-trails-balance"].value] --[[@as string]]
-  global.settings["train-trails-passengers-only"] = settings["train-trails-passengers-only"].value --[[@as boolean]]
-  global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value --[[@as string]]
+  global.settings.color = settings["train-trails-color"].value
+  global.settings.glow = settings["train-trails-glow"].value
+  global.settings.length = settings["train-trails-length"].value
+  global.settings.scale = settings["train-trails-scale"].value
+  global.settings.color_type = settings["train-trails-color-type"].value
+  global.settings.speed = settings["train-trails-speed"].value
+  global.settings.palette = settings["train-trails-palette"].value
+  global.settings.balance = balance_to_ticks[settings["train-trails-balance"].value]
+  global.settings.passengers_only = settings["train-trails-passengers-only"].value
+  global.settings.default_color = settings["train-trails-default-color"].value
   -- mod_settings = global.settings
 end
 
@@ -263,17 +263,17 @@ end
 ---@param event EventData.on_tick
 local function make_trails(mod_settings, event)
   -- first we create or get our settings
-  local sprite = mod_settings["train-trails-color"]
-  local light = mod_settings["train-trails-glow"]
+  local sprite = mod_settings.color
+  local light = mod_settings.glow
   -- then we make any new lights or sprites as needed
   if sprite or light then
-    local passengers_only = mod_settings["train-trails-passengers-only"]
-    local color_override = mod_settings["train-trails-default-color"]
-    local length = tonumber(mod_settings["train-trails-length"])
-    local scale = tonumber(mod_settings["train-trails-scale"])
-    local color_type = mod_settings["train-trails-color-type"]
-    local frequency = speeds[mod_settings["train-trails-speed"]]
-    local palette_key = mod_settings["train-trails-palette"]
+    local passengers_only = mod_settings.passengers_only
+    local color_override = mod_settings.default_color
+    local length = tonumber(mod_settings.length)
+    local scale = tonumber(mod_settings.scale)
+    local color_type = mod_settings.color_type
+    local frequency = speeds[mod_settings.speed]
+    local palette_key = mod_settings.palette
     --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
     if passengers_only then
       for _, player in pairs(game.connected_players) do
@@ -300,7 +300,7 @@ end
 ---@param event EventData.on_tick
 local function on_tick(event)
   local mod_settings = global.settings
-  if event.tick % mod_settings["train-trails-balance"] == 0 then
+  if event.tick % mod_settings.balance == 0 then
     make_trails(mod_settings, event)
   end
 end
