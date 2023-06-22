@@ -49,8 +49,8 @@ local balance_to_ticks = {
 }
 
 -- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
-local mod_settings
-local lua_trains
+-- local mod_settings
+-- local lua_trains
 local sin = math.sin
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
@@ -86,7 +86,7 @@ local function initialize_settings()
   global.settings["train-trails-balance"] = balance_to_ticks[settings["train-trails-balance"].value] --[[@as string]]
   global.settings["train-trails-passengers-only"] = settings["train-trails-passengers-only"].value --[[@as boolean]]
   global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value --[[@as string]]
-  mod_settings = global.settings
+  -- mod_settings = global.settings
 end
 
 local function reset_trains_global()
@@ -97,11 +97,11 @@ local function reset_trains_global()
       global.lua_trains[train.id] = train
     end
   end
-  lua_trains = global.lua_trains
 end
 
 local function on_runtime_mod_setting_changed()
   initialize_settings()
+  -- lua_trains = global.lua_trains
 end
 
 local function initialize_and_reset()
@@ -109,21 +109,21 @@ local function initialize_and_reset()
   reset_trains_global()
 end
 
-local function on_load()
-  mod_settings = global.settings
-  lua_trains = global.lua_trains
-end
+-- local function on_load()
+--   mod_settings = global.settings
+--   lua_trains = global.lua_trains
+-- end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, on_runtime_mod_setting_changed)
 script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
-script.on_load(on_load)
+-- script.on_load(on_load)
 
 ---@param event EventData.on_train_created
 local function on_train_created(event)
   global.lua_trains = global.lua_trains or {}
   global.lua_trains[event.train.id] = event.train
-  lua_trains = global.lua_trains
+  -- lua_trains = global.lua_trains
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
@@ -345,8 +345,7 @@ local function make_trails(settings, event)
       end
     --[[ passenger mode is not on. look through all the trains and then start drawing trails --]]
     else
-      -- local trains = global.lua_trains
-      local trains = lua_trains -- unsure if this is necessary...
+      local trains = global.lua_trains
       if not trains then return end
       for id, train in pairs(trains) do
         if not train.valid then
@@ -361,6 +360,7 @@ end
 
 ---@param event EventData.on_tick
 local function on_tick(event)
+  local mod_settings = global.settings
   if event.tick % mod_settings["train-trails-balance"] == 0 then
     make_trails(mod_settings, event)
   end
