@@ -208,13 +208,8 @@ local function draw_trails_based_on_speed(event, train, sprite, light, color_ove
         { threshold = 5, delay = 4 },
       }
 
-      if not global.delay_counter then
-        global.delay_counter = {}
-      end
-
-      if not global.delay_counter[train_id] then
-        global.delay_counter[train_id] = 0
-      end
+      global.delay_counter = global.delay_counter or {}
+      global.delay_counter[train_id] = global.delay_counter[train_id] or 0
 
       local delay_counter = global.delay_counter[train_id] + 1
       local light_delay_counter = delay_counter
