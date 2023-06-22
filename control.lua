@@ -183,7 +183,6 @@ end
 -- this one tries to reduce the weird ballooning and frying that happens when trains go really slowly, by making slower trains draw trails less frequently than faster ones
 ---@param event EventData.on_tick
 ---@param train LuaTrain
----@param settings table<string, ModSetting>
 ---@param sprite boolean
 ---@param light boolean
 ---@param color_override string
