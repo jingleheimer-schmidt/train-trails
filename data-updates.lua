@@ -212,7 +212,10 @@ local simulation_script =
   global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value
   mod_settings = global.settings
 
+  local original_handler = script.get_event_handler(defines.events.on_tick)
+
   script.on_event(defines.events.on_tick, function(event)
+    if original_handler then original_handler() end
     if event.tick % mod_settings["train-trails-balance"] == 0 then
       for _, surface in pairs(game.surfaces) do
         for _, train in pairs(surface.get_trains()) do
