@@ -75,7 +75,7 @@ end
 -- save mod settings to global so we don't have to ask the game for them all the time
 local function initialize_settings()
   local settings = settings.global
-  global.settings = {}
+  global.settings = {} ---@type train_trails_settings
   global.settings.color = settings["train-trails-color"].value
   global.settings.glow = settings["train-trails-glow"].value
   global.settings.length = settings["train-trails-length"].value
@@ -259,7 +259,7 @@ local function draw_trails_based_on_speed(event, train, sprite, light, color_ove
   end
 end
 
----@param mod_settings table
+---@param mod_settings train_trails_settings
 ---@param event EventData.on_tick
 local function make_trails(mod_settings, event)
   -- first we create or get our settings
@@ -308,3 +308,15 @@ end
 if not script.active_mods["trains-rights"] then
   script.on_event(defines.events.on_tick, on_tick)
 end
+
+---@class train_trails_settings
+  ---@field color boolean
+  ---@field glow boolean
+  ---@field length string
+  ---@field scale string
+  ---@field color_type string
+  ---@field speed string
+  ---@field palette string
+  ---@field balance uint
+  ---@field passengers_only boolean
+  ---@field default_color string
