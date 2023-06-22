@@ -272,9 +272,9 @@ local function make_trails(mod_settings, event)
     --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
     if passengers_only then
       for _, player in pairs(game.connected_players) do
-        if player.vehicle and player.vehicle.train then
-          local train = player.vehicle.train
           draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
+        local train = player.vehicle and player.vehicle.train
+        if train then
         end
       end
     --[[ passenger mode is not on. look through all the trains and then start drawing trails --]]
