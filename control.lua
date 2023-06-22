@@ -39,7 +39,7 @@ local default_chat_colors = {
   rainbow = "rainbow",
 }
 
----@type table<string, number>
+---@type table<string, uint>
 local balance_to_ticks = {
   -- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
   ['super-pretty'] = 1,
@@ -259,23 +259,21 @@ local function draw_trails_based_on_speed(event, train, sprite, light, color_ove
   end
 end
 
----@param settings table
+---@param mod_settings table
 ---@param event EventData.on_tick
-local function make_trails(settings, event)
+local function make_trails(mod_settings, event)
   -- first we create or get our settings
-  local sprite = settings["train-trails-color"]
-  local light = settings["train-trails-glow"]
+  local sprite = mod_settings["train-trails-color"]
+  local light = mod_settings["train-trails-glow"]
   -- then we make any new lights or sprites as needed
   if sprite or light then
-    local passengers_only = settings["train-trails-passengers-only"]
-    local color_override = settings["train-trails-default-color"]
-    local length = tonumber(settings["train-trails-length"])
-    local scale = tonumber(settings["train-trails-scale"])
-    local color_type = settings["train-trails-color-type"]
-    local frequency = speeds[settings["train-trails-speed"]]
-    local palette_key = settings["train-trails-palette"]
-    local amplitude = palette[palette_key].amplitude
-    local center = palette[palette_key].center
+    local passengers_only = mod_settings["train-trails-passengers-only"]
+    local color_override = mod_settings["train-trails-default-color"]
+    local length = tonumber(mod_settings["train-trails-length"])
+    local scale = tonumber(mod_settings["train-trails-scale"])
+    local color_type = mod_settings["train-trails-color-type"]
+    local frequency = speeds[mod_settings["train-trails-speed"]]
+    local palette_key = mod_settings["train-trails-palette"]
     --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
     if passengers_only then
       for _, player in pairs(game.connected_players) do
