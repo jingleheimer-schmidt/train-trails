@@ -191,116 +191,61 @@ end
 ---@param passengers_only boolean
 local function draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
   local speed = train.speed
-  if not (speed == 0) then
-    local stock = false
-    if speed < 0 then
-      stock = train.back_stock
-    elseif speed > 0 then
-      stock = train.front_stock
-    end
+  if speed ~= 0 then
+    local stock = speed < 0 and train.back_stock or train.front_stock
     if stock then
       local event_tick = event.tick
       local train_id = train.id
-      speed = speed * 216
-      --[[
-      216 is the conversion factor between tiles per tick and kilometers per hour; 60 * 3600 / 1000
-      --]]
+      speed = speed * 216  -- Conversion factor between tiles per tick and kilometers per hour
 
-      -- local speed_less_than_200 = ((speed < 200) and (speed > 0)) or ((speed > -200) and (speed < 0))
-      -- local speed_less_than_150 = ((speed < 150) and (speed > 0)) or ((speed > -150) and (speed < 0))
-      local speed_less_than_105 = ((speed < 105) and (speed > 0)) or ((speed > -105) and (speed < 0))
-      local speed_less_than_65 = ((speed < 65) and (speed > 0)) or ((speed > -65) and (speed < 0))
-      local speed_less_than_40 = ((speed < 40) and (speed > 0)) or ((speed > -40) and (speed < 0))
-      local speed_less_than_25 = ((speed < 25) and (speed > 0)) or ((speed > -25) and (speed < 0))
-      local speed_less_than_15 = ((speed < 15) and (speed > 0)) or ((speed > -15) and (speed < 0))
-      local speed_less_than_10 = ((speed < 10) and (speed > 0)) or ((speed > -10) and (speed < 0))
-      local speed_less_than_05 = ((speed < 05) and (speed > 0)) or ((speed > -05) and (speed < 0))
-      -- game.print(speed)
+      local speed_thresholds = {
+        { threshold = 105, delay = 0 },
+        { threshold = 65, delay = 1 },
+        { threshold = 40, delay = 2 },
+        { threshold = 25, delay = 2 },
+        { threshold = 15, delay = 3 },
+        { threshold = 10, delay = 3 },
+        { threshold = 5, delay = 4 },
+      }
+
       if not global.delay_counter then
         global.delay_counter = {}
       end
+
       if not global.delay_counter[train_id] then
         global.delay_counter[train_id] = 0
       end
+
       local delay_counter = global.delay_counter[train_id] + 1
       local light_delay_counter = delay_counter
       local sprite_delay_counter = delay_counter
       local train_length = #train.carriages
       length = length + ((train_length - 1) * 15)
-      -- global.delay_counter[train_id] = delay_counter
+
       if sprite then
         local light_override = false
-        -- draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-        if (not speed_less_than_105) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed > 105")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed between 65 and 105")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed between 40 and 65")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed between 25 and 40")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed between 15 and 25")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed between 10 and 15")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_05) and speed_less_than_10 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed less than 10")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif speed_less_than_05 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          -- game.print(game.tick.." speed less than 05")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
+
+        for _, threshold in ipairs(speed_thresholds) do
+          if math.abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
+            draw_trails(stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            sprite_delay_counter = 0
+            break
+          end
         end
       end
+
       if light then
         local sprite_override = false
-        if (not speed_less_than_105) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif (not speed_less_than_05) and speed_less_than_10 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
-        elseif speed_less_than_05 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-          light_delay_counter = 0
+
+        for _, threshold in ipairs(speed_thresholds) do
+          if math.abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
+            draw_trails(stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            light_delay_counter = 0
+            break
+          end
         end
       end
+
       if sprite and light then
         delay_counter = sprite_delay_counter
       elseif sprite then
@@ -308,6 +253,7 @@ local function draw_trails_based_on_speed(event, train, sprite, light, color_ove
       elseif light then
         delay_counter = light_delay_counter
       end
+
       global.delay_counter[train_id] = delay_counter
     end
   end
