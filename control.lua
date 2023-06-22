@@ -3,6 +3,7 @@
 Trian Trails control script © 2023 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International. See LICENSE.txt for additional information
 --]]
 
+---@type table<string, number>
 local speeds = {
   veryslow = 0.010,
   slow = 0.025,
@@ -11,6 +12,7 @@ local speeds = {
   veryfast = 0.200,
 }
 
+---@type table<string, table<string, number>>
 local palette = {
   light = {amplitude = 15, center = 240},           -- light
   pastel = {amplitude = 55, center = 200},          -- pastel <3
@@ -19,6 +21,7 @@ local palette = {
   deep = {amplitude = 25, center = 50},             -- dark
 }
 
+---@type table<string, Color|string>
 local default_chat_colors = {
   red = { r = 1.000, g = 0.166, b = 0.141 },
   orange = { r = 1.000, g = 0.630, b = 0.259 },
@@ -36,6 +39,7 @@ local default_chat_colors = {
   rainbow = "rainbow",
 }
 
+---@type table<string, number>
 local balance_to_ticks = {
   -- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
   ['super-pretty'] = 1,
@@ -183,15 +187,15 @@ end
 ---@param settings table<string, ModSetting>
 ---@param sprite boolean
 ---@param light boolean
----@param color_override any
----@param length any
----@param scale any
----@param color_type any
----@param frequency any
----@param amplitude any
----@param center any
----@param passengers_only any
 local function draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
+---@param color_override string
+---@param length number
+---@param scale float
+---@param color_type string
+---@param frequency number
+---@param amplitude number
+---@param center number
+---@param passengers_only boolean
   local speed = train.speed
   if not (speed == 0) then
     local stock = false
