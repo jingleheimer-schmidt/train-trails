@@ -58,12 +58,11 @@ local pi_4 = 4 * math.pi / 3
 
 ---@param created_tick number
 ---@param train_id number
----@param settings table<string, ModSetting>
 ---@param frequency number
 ---@param amplitude number
 ---@param center number
 ---@return Color
-local function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
+local function make_rainbow(created_tick, train_id, frequency, amplitude, center)
   local modifier = (train_id + created_tick) * frequency
   return {
     r = sin(modifier + pi_0) * amplitude + center,
@@ -142,14 +141,14 @@ script.on_event(defines.events.on_train_created, on_train_created)
 ---@param frequency any
 ---@param amplitude any
 ---@param center any
-local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+local function draw_trails(stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
   local color = stock.color
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
   if ((not color) and (color_override ~= "nil")) then
     color = default_chat_colors[color_override] -- color_override is just the mod setting for default loco color
   end
   if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
-    color = make_rainbow(event_tick, train_id, settings, frequency, amplitude, center)
+    color = make_rainbow(event_tick, train_id, frequency, amplitude, center)
   end
   if color then
     local position = stock.position
@@ -187,7 +186,6 @@ end
 ---@param settings table<string, ModSetting>
 ---@param sprite boolean
 ---@param light boolean
-local function draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
 ---@param color_override string
 ---@param length number
 ---@param scale float
@@ -196,6 +194,7 @@ local function draw_trails_based_on_speed(event, train, settings, sprite, light,
 ---@param amplitude number
 ---@param center number
 ---@param passengers_only boolean
+local function draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
   local speed = train.speed
   if not (speed == 0) then
     local stock = false
@@ -341,7 +340,7 @@ local function make_trails(settings, event)
       for _, player in pairs(game.connected_players) do
         if player.vehicle and player.vehicle.train then
           local train = player.vehicle.train
-          draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
+          draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
         end
       end
     --[[ passenger mode is not on. look through all the trains and then start drawing trails --]]
@@ -353,7 +352,7 @@ local function make_trails(settings, event)
         if not train.valid then
           global.lua_trains[id] = nil
         else
-          draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
+          draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
         end
       end
     end
