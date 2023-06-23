@@ -299,8 +299,9 @@ end
 ---@param event EventData.on_tick
 local function on_tick(event)
   local mod_settings = global.settings
-  if event.tick % mod_settings.balance == 0 then
     make_trails(mod_settings, event)
+  local event_tick = event.tick
+  if event_tick % mod_settings.balance == 0 then
   end
 end
 
