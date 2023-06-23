@@ -128,7 +128,7 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
   if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
     color = make_rainbow(event_tick, train_id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
   end
-  if color then
+  if not color then return end
   if mod_settings.sprite then
     local position = stock.position
     local surface = stock.surface
