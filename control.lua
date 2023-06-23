@@ -95,7 +95,6 @@ local function reset_trains_global()
       global.lua_trains[train.id] = train
     end
   end
-  -- lua_trains = global.lua_trains
 end
 
 local function initialize_and_reset()
@@ -103,21 +102,14 @@ local function initialize_and_reset()
   reset_trains_global()
 end
 
--- local function on_load()
---   mod_settings = global.settings
---   lua_trains = global.lua_trains
--- end
-
 script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_settings)
 script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
--- script.on_load(on_load)
 
 ---@param event EventData.on_train_created
 local function on_train_created(event)
   global.lua_trains = global.lua_trains or {}
   global.lua_trains[event.train.id] = event.train
-  -- lua_trains = global.lua_trains
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
