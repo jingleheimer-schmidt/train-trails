@@ -159,19 +159,10 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
 end
 
 -- this one tries to reduce the weird ballooning and frying that happens when trains go really slowly, by making slower trains draw trails less frequently than faster ones
----@param event EventData.on_tick
+---@param event_tick uint
+---@param mod_settings mod_settings
 ---@param train LuaTrain
----@param sprite boolean
----@param light boolean
----@param color_override string
----@param length number
----@param scale float
----@param color_type string
----@param frequency number
----@param amplitude number
----@param center number
----@param passengers_only boolean
-local function draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
+local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   local speed = train.speed
   if speed ~= 0 then
     local stock = speed < 0 and train.back_stock or train.front_stock
