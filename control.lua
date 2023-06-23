@@ -235,20 +235,6 @@ local function make_trails(event_tick, mod_settings)
   local light = mod_settings.light
   -- then we make any new lights or sprites as needed
   if sprite or light then
-    -- local palette_key = mod_settings.palette
-    -- local passengers_only = mod_settings.passengers_only
-    -- local processed_settings_data = { ---@type processed_settings_data
-    --   sprite = sprite,
-    --   light = light,
-    --   passengers_only = passengers_only,
-    --   color_override = mod_settings.default_color,
-    --   length = tonumber(mod_settings.length),
-    --   scale = tonumber(mod_settings.scale),
-    --   color_type = mod_settings.color_type,
-    --   frequency = speeds[mod_settings.speed],
-    --   amplitude = palette[palette_key].amplitude,
-    --   center = palette[palette_key].center,
-    -- }
     --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
     if mod_settings.passengers_only then
       for _, player in pairs(game.connected_players) do
