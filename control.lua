@@ -164,11 +164,11 @@ end
 ---@param train LuaTrain
 local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   local speed = train.speed
-  if speed ~= 0 then
-    local stock = speed < 0 and train.back_stock or train.front_stock
-    if stock then
-      local train_id = train.id
-      speed = speed * 216  -- Conversion factor between tiles per tick and kilometers per hour
+  if speed == 0 then return end
+  local stock = speed < 0 and train.back_stock or train.front_stock
+  if not stock then return end
+  local train_id = train.id
+  speed = speed * 216  -- Conversion factor between tiles per tick and kilometers per hour
 
       local speed_thresholds = {
         { threshold = 105, delay = 0 },
