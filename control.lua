@@ -71,18 +71,19 @@ end
 -- save mod settings to global so we don't have to ask the game for them all the time
 local function initialize_settings()
   local settings = settings.global
-  global.settings = {} ---@type train_trails_settings
-  global.settings.color = settings["train-trails-color"].value
-  global.settings.glow = settings["train-trails-glow"].value
-  global.settings.length = settings["train-trails-length"].value
-  global.settings.scale = settings["train-trails-scale"].value
-  global.settings.color_type = settings["train-trails-color-type"].value
-  global.settings.speed = settings["train-trails-speed"].value
-  global.settings.palette = settings["train-trails-palette"].value
-  global.settings.balance = balance_to_ticks[settings["train-trails-balance"].value]
-  global.settings.passengers_only = settings["train-trails-passengers-only"].value
-  global.settings.default_color = settings["train-trails-default-color"].value
-  -- mod_settings = global.settings
+  global.settings = {
+    sprite = settings["train-trails-color"].value --[[@as boolean]],
+    light = settings["train-trails-glow"].value --[[@as boolean]],
+    length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
+    scale = tonumber(settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
+    color_type = settings["train-trails-color-type"].value --[[@as "rainbow"|"train"]],
+    balance = balance_to_ticks[settings["train-trails-balance"].value --[[@as string]]],
+    passengers_only = settings["train-trails-passengers-only"].value --[[@as boolean]],
+    default_color = default_chat_colors[settings["train-trails-default-color"].value --[[@as string]]],
+    frequency = speeds[settings["train-trails-speed"].value --[[@as string]]],
+    amplitude = palette[settings["train-trails-palette"].value --[[@as string]]].amplitude,
+    center = palette[settings["train-trails-palette"].value --[[@as string]]].center,
+  }
 end
 
 local function reset_trains_global()
@@ -254,17 +255,24 @@ end
 ---@param event EventData.on_tick
 local function make_trails(mod_settings, event)
   -- first we create or get our settings
-  local sprite = mod_settings.color
-  local light = mod_settings.glow
+  local sprite = mod_settings.sprite
+  local light = mod_settings.light
   -- then we make any new lights or sprites as needed
   if sprite or light then
-    local passengers_only = mod_settings.passengers_only
-    local color_override = mod_settings.default_color
-    local length = tonumber(mod_settings.length)
-    local scale = tonumber(mod_settings.scale)
-    local color_type = mod_settings.color_type
-    local frequency = speeds[mod_settings.speed]
-    local palette_key = mod_settings.palette
+    -- local palette_key = mod_settings.palette
+    -- local passengers_only = mod_settings.passengers_only
+    -- local processed_settings_data = { ---@type processed_settings_data
+    --   sprite = sprite,
+    --   light = light,
+    --   passengers_only = passengers_only,
+    --   color_override = mod_settings.default_color,
+    --   length = tonumber(mod_settings.length),
+    --   scale = tonumber(mod_settings.scale),
+    --   color_type = mod_settings.color_type,
+    --   frequency = speeds[mod_settings.speed],
+    --   amplitude = palette[palette_key].amplitude,
+    --   center = palette[palette_key].center,
+    -- }
     --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
     if passengers_only then
       for _, player in pairs(game.connected_players) do
