@@ -271,14 +271,15 @@ if not script.active_mods["trains-rights"] then
   script.on_event(defines.events.on_tick, on_tick)
 end
 
----@class train_trails_settings
-  ---@field color boolean
-  ---@field glow boolean
-  ---@field length string
-  ---@field scale string
-  ---@field color_type string
-  ---@field speed string
-  ---@field palette string
-  ---@field balance uint
-  ---@field passengers_only boolean
-  ---@field default_color string
+---@class mod_settings
+---@field sprite boolean
+---@field light boolean
+---@field length uint 15|30|60|90|120|180|210|300|600
+---@field scale float 1|2|3|4|5|6|8|11|20
+---@field color_type "train"|"rainbow"
+---@field balance uint 1|2|3|4
+---@field passengers_only boolean
+---@field default_color Color|"rainbow"|"train"
+---@field frequency float 0.010|0.025|0.050|0.100|0.200
+---@field amplitude float 127.5|15|25|50|55
+---@field center float 100|127.5|200|240|50
