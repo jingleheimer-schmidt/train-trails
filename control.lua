@@ -47,6 +47,7 @@ local balance_to_ticks = {
 
 -- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
 local sin = math.sin
+local abs = math.abs
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
@@ -189,7 +190,7 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   local length = mod_settings.length + ((train_length - 1) * 15)
 
   for _, threshold in ipairs(speed_thresholds) do
-    if math.abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
+    if abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
       draw_trails(event_tick, mod_settings, stock, train_id, length)
       delay_counter = 0
       break
