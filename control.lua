@@ -132,9 +132,9 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
   if mod_settings.sprite then
     local position = stock.position
     local surface = stock.surface
-      sprite = rendering.draw_sprite{
     local scale = mod_settings.scale
     if mod_settings.sprite then
+      rendering.draw_sprite{
         sprite = "train-trail",
         target = position,
         surface = surface,
@@ -145,8 +145,8 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
         time_to_live = length,
       }
     end
-      light = rendering.draw_light{
     if mod_settings.light then
+      rendering.draw_light{
         sprite = "train-trail",
         target = position,
         surface = surface,
