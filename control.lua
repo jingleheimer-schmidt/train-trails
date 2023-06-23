@@ -34,6 +34,7 @@ local default_chat_colors = {
   ["brown"] = { r = 0.757, g = 0.522, b = 0.371 } --[[@type Color]],
   ["acid"] = { r = 0.708, g = 0.996, b = 0.134 } --[[@type Color]],
   ["rainbow"] = "rainbow",
+  ["nil"] = "nil",
 }
 
 local balance_to_ticks = {
