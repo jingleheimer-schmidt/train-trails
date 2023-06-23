@@ -170,19 +170,22 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   local train_id = train.id
   speed = speed * 216  -- Conversion factor between tiles per tick and kilometers per hour
 
-      local speed_thresholds = {
-        { threshold = 105, delay = 0 },
-        { threshold = 65, delay = 1 },
-        { threshold = 40, delay = 2 },
-        { threshold = 25, delay = 2 },
-        { threshold = 15, delay = 3 },
-        { threshold = 10, delay = 3 },
-        { threshold = 5, delay = 4 },
-      }
 
       local train_length = #train.carriages
       length = length + ((train_length - 1) * 15)
 
+  local speed_thresholds = {
+    { threshold = 105, delay = 0 },
+    { threshold = 65, delay = 1 },
+    { threshold = 40, delay = 2 },
+    -- { threshold = 25, delay = 2 },
+    { threshold = 15, delay = 3 },
+    -- { threshold = 10, delay = 3 },
+    { threshold = 5, delay = 4 },
+    { threshold = 1, delay = 5 },
+    { threshold = 0.25, delay = 6 },
+    { threshold = 0.125, delay = 7 },
+  }
 
   local delay_counters = global.delay_counter or {}
   local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
