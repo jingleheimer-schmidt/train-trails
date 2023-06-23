@@ -251,9 +251,9 @@ local function draw_trails_based_on_speed(event, train, sprite, light, color_ove
   end
 end
 
----@param mod_settings train_trails_settings
----@param event EventData.on_tick
-local function make_trails(mod_settings, event)
+---@param event_tick uint
+---@param mod_settings mod_settings
+local function make_trails(event_tick, mod_settings)
   -- first we create or get our settings
   local sprite = mod_settings.sprite
   local light = mod_settings.light
@@ -299,9 +299,9 @@ end
 ---@param event EventData.on_tick
 local function on_tick(event)
   local mod_settings = global.settings
-    make_trails(mod_settings, event)
   local event_tick = event.tick
   if event_tick % mod_settings.balance == 0 then
+    make_trails(event_tick, mod_settings)
   end
 end
 
