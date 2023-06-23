@@ -114,20 +114,12 @@ end
 
 script.on_event(defines.events.on_train_created, on_train_created)
 
+---@param event_tick uint
+---@param mod_settings mod_settings
 ---@param stock LuaEntity
----@param sprite boolean
----@param light boolean
----@param event_tick number
----@param train_id number
----@param passengers_only boolean
----@param color_override string
+---@param train_id uint
 ---@param length uint
----@param scale float
----@param color_type string
----@param frequency number
----@param amplitude number
----@param center number
-local function draw_trails(stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+local function draw_trails(event_tick, mod_settings, stock, train_id, length)
   local color = stock.color
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
   if ((not color) and (color_override ~= "nil")) then
