@@ -128,34 +128,32 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
     color = make_rainbow(event_tick, train_id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
   end
   if not color then return end
+  local position = stock.position
+  local surface = stock.surface
+  local scale = mod_settings.scale
   if mod_settings.sprite then
-    local position = stock.position
-    local surface = stock.surface
-    local scale = mod_settings.scale
-    if mod_settings.sprite then
-      rendering.draw_sprite{
-        sprite = "train-trail",
-        target = position,
-        surface = surface,
-        tint = color,
-        x_scale = scale,
-        y_scale = scale,
-        render_layer = "radius-visualization",
-        time_to_live = length,
-      }
-    end
-    if mod_settings.light then
-      rendering.draw_light{
-        sprite = "train-trail",
-        target = position,
-        surface = surface,
-        color = color,
-        intensity = .175,
-        scale = scale * 1.75,
-        render_layer = "light-effect",
-        time_to_live = length,
-      }
-    end
+    rendering.draw_sprite{
+      sprite = "train-trail",
+      target = position,
+      surface = surface,
+      tint = color,
+      x_scale = scale,
+      y_scale = scale,
+      render_layer = "radius-visualization",
+      time_to_live = length,
+    }
+  end
+  if mod_settings.light then
+    rendering.draw_light{
+      sprite = "train-trail",
+      target = position,
+      surface = surface,
+      color = color,
+      intensity = .175,
+      scale = scale * 1.75,
+      render_layer = "light-effect",
+      time_to_live = length,
+    }
   end
 end
 
