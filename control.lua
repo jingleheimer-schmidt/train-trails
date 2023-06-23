@@ -46,8 +46,6 @@ local balance_to_ticks = {
 }
 
 -- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
--- local mod_settings
--- local lua_trains
 local sin = math.sin
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
