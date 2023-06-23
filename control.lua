@@ -180,50 +180,18 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
         { threshold = 5, delay = 4 },
       }
 
-      global.delay_counter = global.delay_counter or {}
-      global.delay_counter[train_id] = global.delay_counter[train_id] or 0
-
-      local delay_counter = global.delay_counter[train_id] + 1
-      local light_delay_counter = delay_counter
-      local sprite_delay_counter = delay_counter
       local train_length = #train.carriages
       length = length + ((train_length - 1) * 15)
 
-      if sprite then
-        local light_override = false
 
-        for _, threshold in ipairs(speed_thresholds) do
-          if math.abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
-            draw_trails(stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-            sprite_delay_counter = 0
-            break
-          end
-        end
-      end
+  local delay_counters = global.delay_counter or {}
+  local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
 
-      if light then
-        local sprite_override = false
-
-        for _, threshold in ipairs(speed_thresholds) do
-          if math.abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
-            draw_trails(stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
-            light_delay_counter = 0
-            break
-          end
-        end
-      end
-
-      if sprite and light then
-        delay_counter = sprite_delay_counter
-      elseif sprite then
-        delay_counter = sprite_delay_counter
-      elseif light then
-        delay_counter = light_delay_counter
-      end
-
-      global.delay_counter[train_id] = delay_counter
+      delay_counter = 0
     end
   end
+
+  global.delay_counter[train_id] = delay_counter
 end
 
 ---@param event_tick uint
