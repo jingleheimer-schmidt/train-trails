@@ -167,7 +167,6 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   if speed ~= 0 then
     local stock = speed < 0 and train.back_stock or train.front_stock
     if stock then
-      local event_tick = event.tick
       local train_id = train.id
       speed = speed * 216  -- Conversion factor between tiles per tick and kilometers per hour
 
