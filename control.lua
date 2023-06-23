@@ -215,10 +215,10 @@ local function make_trails(event_tick, mod_settings)
       local trains = global.lua_trains
       if not trains then return end
       for id, train in pairs(trains) do
-        if not train.valid then
-          global.lua_trains[id] = nil
-        else
+        if train.valid then
           draw_trails_based_on_speed(event_tick, mod_settings, train)
+        else
+          global.lua_trains[id] = nil
         end
       end
     end
