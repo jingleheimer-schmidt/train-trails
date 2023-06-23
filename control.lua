@@ -122,17 +122,19 @@ script.on_event(defines.events.on_train_created, on_train_created)
 local function draw_trails(event_tick, mod_settings, stock, train_id, length)
   local color = stock.color
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
-  if ((not color) and (color_override ~= "nil")) then
-    color = default_chat_colors[color_override] -- color_override is just the mod setting for default loco color
+  if ((not color) and (mod_settings.default_color ~= "nil")) then
+    color = default_chat_colors[mod_settings.default_color] --[[@as Color]] -- the mod setting for default loco color
   end
-  if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
-    color = make_rainbow(event_tick, train_id, frequency, amplitude, center)
+  if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
+    color = make_rainbow(event_tick, train_id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
   end
   if color then
+  if mod_settings.sprite then
     local position = stock.position
     local surface = stock.surface
-    if sprite then
       sprite = rendering.draw_sprite{
+    local scale = mod_settings.scale
+    if mod_settings.sprite then
         sprite = "train-trail",
         target = position,
         surface = surface,
@@ -143,8 +145,8 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
         time_to_live = length,
       }
     end
-    if light then
       light = rendering.draw_light{
+    if mod_settings.light then
         sprite = "train-trail",
         target = position,
         surface = surface,
