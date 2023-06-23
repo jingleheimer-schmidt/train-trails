@@ -188,7 +188,11 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   local train_length = #train.carriages
   local length = mod_settings.length + ((train_length - 1) * 15)
 
+  for _, threshold in ipairs(speed_thresholds) do
+    if math.abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
+      draw_trails(event_tick, mod_settings, stock, train_id, length)
       delay_counter = 0
+      break
     end
   end
 
