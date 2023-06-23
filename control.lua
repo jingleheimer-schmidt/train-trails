@@ -274,11 +274,11 @@ local function make_trails(event_tick, mod_settings)
     --   center = palette[palette_key].center,
     -- }
     --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
-    if passengers_only then
+    if mod_settings.passengers_only then
       for _, player in pairs(game.connected_players) do
-          draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
         local train = player.vehicle and player.vehicle.train
         if train then
+          draw_trails_based_on_speed(event_tick, mod_settings, train)
         end
       end
     --[[ passenger mode is not on. look through all the trains and then start drawing trails --]]
@@ -289,7 +289,7 @@ local function make_trails(event_tick, mod_settings)
         if not train.valid then
           global.lua_trains[id] = nil
         else
-          draw_trails_based_on_speed(event, train, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
+          draw_trails_based_on_speed(event_tick, mod_settings, train)
         end
       end
     end
