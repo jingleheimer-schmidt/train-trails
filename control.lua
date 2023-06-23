@@ -203,23 +203,22 @@ end
 local function make_trails(event_tick, mod_settings)
   local sprite = mod_settings.sprite
   local light = mod_settings.light
-  if sprite or light then
-    if mod_settings.passengers_only then -- if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains
-      for _, player in pairs(game.connected_players) do
-        local train = player.vehicle and player.vehicle.train
-        if train then
-          draw_trails_based_on_speed(event_tick, mod_settings, train)
-        end
+  if not (sprite or light) then return end
+  if mod_settings.passengers_only then -- if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains
+    for _, player in pairs(game.connected_players) do
+      local train = player.vehicle and player.vehicle.train
+      if train then
+        draw_trails_based_on_speed(event_tick, mod_settings, train)
       end
-    else -- passenger mode is not on. look through all the trains and then start drawing trails
-      local trains = global.lua_trains
-      if not trains then return end
-      for id, train in pairs(trains) do
-        if train.valid then
-          draw_trails_based_on_speed(event_tick, mod_settings, train)
-        else
-          global.lua_trains[id] = nil
-        end
+    end
+  else -- passenger mode is not on. look through all the trains and then start drawing trails
+    local trains = global.lua_trains
+    if not trains then return end
+    for id, train in pairs(trains) do
+      if train.valid then
+        draw_trails_based_on_speed(event_tick, mod_settings, train)
+      else
+        global.lua_trains[id] = nil
       end
     end
   end
