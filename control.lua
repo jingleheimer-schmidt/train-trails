@@ -3,49 +3,45 @@
 Trian Trails control script © 2023 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International. See LICENSE.txt for additional information
 --]]
 
----@type table<string, number>
 local speeds = {
-  veryslow = 0.010,
-  slow = 0.025,
-  default = 0.050,
-  fast = 0.100,
-  veryfast = 0.200,
+  ["veryslow"] = 0.010,
+  ["slow"] = 0.025,
+  ["default"] = 0.050,
+  ["fast"] = 0.100,
+  ["veryfast"] = 0.200,
 }
 
----@type table<string, table<string, number>>
 local palette = {
-  light = {amplitude = 15, center = 240},           -- light
-  pastel = {amplitude = 55, center = 200},          -- pastel <3
-  default = {amplitude = 127.5, center = 127.5},    -- default (nyan)
-  vibrant = {amplitude = 50, center = 100},         -- muted
-  deep = {amplitude = 25, center = 50},             -- dark
+  ["light"] = {amplitude = 15, center = 240},
+  ["pastel"] = {amplitude = 55, center = 200},
+  ["default"] = {amplitude = 127.5, center = 127.5},
+  ["vibrant"] = {amplitude = 50, center = 100},
+  ["deep"] = {amplitude = 25, center = 50},
 }
 
----@type table<string, Color|string>
 local default_chat_colors = {
-  red = { r = 1.000, g = 0.166, b = 0.141 },
-  orange = { r = 1.000, g = 0.630, b = 0.259 },
-  yellow = { r = 1.000, g = 0.828, b = 0.231 },
-  green = { r = 0.173, g = 0.824, b = 0.250 },
-  blue = { r = 0.343, g = 0.683, b = 1.000 },
-  purple = { r = 0.821, g = 0.440, b = 0.998 },
-  black = { r = 0.1  , g = 0.1  , b = 0.1   },
-  white = { r = 0.9  , g = 0.9  , b = 0.9   },
-  pink = { r = 1.000, g = 0.520, b = 0.633 },
-  gray = { r = 0.7  , g = 0.7  , b = 0.7   },
-  cyan = { r = 0.335, g = 0.918, b = 0.866 },
-  brown = { r = 0.757, g = 0.522, b = 0.371 },
-  acid = { r = 0.708, g = 0.996, b = 0.134 },
-  rainbow = "rainbow",
+  ["red"] = { r = 1.000, g = 0.166, b = 0.141 } --[[@type Color]],
+  ["orange"] = { r = 1.000, g = 0.630, b = 0.259 } --[[@type Color]],
+  ["yellow"] = { r = 1.000, g = 0.828, b = 0.231 } --[[@type Color]],
+  ["green"] = { r = 0.173, g = 0.824, b = 0.250 } --[[@type Color]],
+  ["blue"] = { r = 0.343, g = 0.683, b = 1.000 } --[[@type Color]],
+  ["purple"] = { r = 0.821, g = 0.440, b = 0.998 } --[[@type Color]],
+  ["black"] = { r = 0.1, g = 0.1, b = 0.1 } --[[@type Color]],
+  ["white"] = { r = 0.9, g = 0.9, b = 0.9 } --[[@type Color]],
+  ["pink"] = { r = 1.000, g = 0.520, b = 0.633 } --[[@type Color]],
+  ["gray"] = { r = 0.7, g = 0.7, b = 0.7 } --[[@type Color]],
+  ["cyan"] = { r = 0.335, g = 0.918, b = 0.866 } --[[@type Color]],
+  ["brown"] = { r = 0.757, g = 0.522, b = 0.371 } --[[@type Color]],
+  ["acid"] = { r = 0.708, g = 0.996, b = 0.134 } --[[@type Color]],
+  ["rainbow"] = "rainbow",
 }
 
----@type table<string, uint>
 local balance_to_ticks = {
   -- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
-  ['super-pretty'] = 1,
-  ['pretty'] = 2,
-  ['balanced'] = 3,
-  ['performance'] = 4
+  ["super-pretty"] = 1,
+  ["pretty"] = 2,
+  ["balanced"] = 3,
+  ["performance"] = 4
 }
 
 -- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
