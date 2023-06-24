@@ -57,6 +57,20 @@ local speed_thresholds = {
   { threshold = 0.0625, delay = 8 }
 }
 
+local active_states = {
+  [defines.train_state.arrive_signal] = true,
+  [defines.train_state.arrive_station] = true,
+  [defines.train_state.destination_full] = false,
+  [defines.train_state.manual_control] = true,
+  [defines.train_state.manual_control_stop] = true,
+  [defines.train_state.no_path] = false,
+  [defines.train_state.no_schedule] = false,
+  [defines.train_state.on_the_path] = true,
+  [defines.train_state.path_lost] = true,
+  [defines.train_state.wait_signal] = false,
+  [defines.train_state.wait_station] = false,
+}
+
 local sin = math.sin
 local abs = math.abs
 local max = math.max
