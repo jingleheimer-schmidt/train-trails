@@ -180,8 +180,8 @@ script.on_event(defines.events.on_train_created, on_train_created)
 ---@param length uint
 ---@param scale float
 local function draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
-  local color = stock.color -- when 1.1.85 becomes stable, this can be replaced with a lookup table that gets updated on_entity_color_changed
-  -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
+  local color = stock.color -- when 1.1.85 becomes stable, replace with a lookup table updated on_entity_color_changed
+  -- since default color locomotives have "nil" color, we need to pick a color
   if ((not color) and (mod_settings.default_color ~= "nil")) then
     color = default_chat_colors[mod_settings.default_color] --[[@as Color]] -- the mod setting for default loco color
   end
