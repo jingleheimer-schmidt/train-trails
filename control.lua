@@ -46,16 +46,23 @@ local balance_to_ticks = {
 }
 
 local speed_thresholds = {
-  { threshold = 105, delay = 0 },
-  { threshold = 65, delay = 1 },
-  { threshold = 40, delay = 2 },
+  -- { threshold = 105, delay = 0 },
+  -- { threshold = 85, delay = 0},
+  -- { threshold = 75, delay = 0},
+  { threshold = 60, delay = 0 },
+  -- { threshold = 65, delay = 1 },
+  { threshold = 30, delay = 1 },
+  -- { threshold = 40, delay = 2 },
   -- { threshold = 25, delay = 2 },
-  { threshold = 15, delay = 3 },
+  { threshold = 15, delay = 2 },
+  -- { threshold = 15, delay = 3 },
   -- { threshold = 10, delay = 3 },
-  { threshold = 5, delay = 4 },
+  { threshold = 7, delay = 3},
+  { threshold = 3, delay = 4 },
   { threshold = 1, delay = 5 },
   { threshold = 0.25, delay = 6 },
   { threshold = 0.125, delay = 7 },
+  { threshold = 0.0625, delay = 8 }
 }
 
 -- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
