@@ -64,6 +64,8 @@ local max = math.max
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
+local draw_light = rendering.draw_light
+local draw_sprite = rendering.draw_sprite
 
 ---@param created_tick number
 ---@param train_id number
@@ -150,7 +152,7 @@ local function draw_trails(event_tick, mod_settings, train_id, stock, length, sc
   local position = stock.position
   local surface = stock.surface
   if mod_settings.sprite then
-    rendering.draw_sprite{
+    draw_sprite {
       sprite = "train-trail",
       target = position,
       surface = surface,
@@ -162,7 +164,7 @@ local function draw_trails(event_tick, mod_settings, train_id, stock, length, sc
     }
   end
   if mod_settings.light then
-    rendering.draw_light{
+    draw_light {
       sprite = "train-trail",
       target = position,
       surface = surface,
