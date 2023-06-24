@@ -141,11 +141,11 @@ script.on_event(defines.events.on_train_created, on_train_created)
 
 ---@param event_tick uint
 ---@param mod_settings mod_settings
----@param stock LuaEntity
 ---@param train_id uint
+---@param stock LuaEntity
 ---@param length uint
 ---@param scale float
-local function draw_trails(event_tick, mod_settings, stock, train_id, length, scale)
+local function draw_trails(event_tick, mod_settings, train_id, stock, length, scale)
   local color = stock.color
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
   if ((not color) and (mod_settings.default_color ~= "nil")) then
@@ -187,12 +187,12 @@ end
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train LuaTrain
-local function draw_trails_based_on_speed(event_tick, mod_settings, train)
+---@param train_id uint
+local function draw_trails_based_on_speed(event_tick, mod_settings, train, train_id)
   local speed = train.speed
   if speed == 0 then return end
   local stock = speed < 0 and train.back_stock or train.front_stock
   if not stock then return end
-  local train_id = train.id
   speed = abs(speed * 216)  -- 216 is the conversion factor between tiles per tick and kilometers per hour
 
   local delay_counters = global.delay_counters or {}
@@ -203,7 +203,7 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
 
   for _, threshold in ipairs(speed_thresholds) do
     if abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
-      draw_trails(event_tick, mod_settings, stock, train_id, length, scale)
+      draw_trails(event_tick, mod_settings, train_id, stock, length, scale)
       delay_counter = 0
       break
     end
@@ -223,7 +223,7 @@ local function make_trails(event_tick, mod_settings)
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
       if train then
-        draw_trails_based_on_speed(event_tick, mod_settings, train)
+        draw_trails_based_on_speed(event_tick, mod_settings, train, train.id)
       end
     end
   else -- passenger mode is not on. look through all the trains and then start drawing trails
@@ -231,7 +231,7 @@ local function make_trails(event_tick, mod_settings)
     if not trains then return end
     for id, train in pairs(trains) do
       if train.valid then
-        draw_trails_based_on_speed(event_tick, mod_settings, train)
+        draw_trails_based_on_speed(event_tick, mod_settings, train, id)
       else
         global.lua_trains[id] = nil
       end
