@@ -253,7 +253,7 @@ local function make_trails(event_tick, mod_settings)
   local light = mod_settings.light
   if not (sprite or light) then return end
   global.delay_counters = global.delay_counters or {}
-  local train_datas = global.train_datas
+  local train_datas = global.active_trains
   if not train_datas then return end
   if mod_settings.passengers_only then -- if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains
     for _, player in pairs(game.connected_players) do
@@ -268,7 +268,7 @@ local function make_trails(event_tick, mod_settings)
       if train_data.train.valid then
         draw_trails_based_on_speed(event_tick, mod_settings, train_data)
       else
-        global.train_datas[train_id] = nil
+        global.active_trains[train_id] = nil
       end
     end
   end
