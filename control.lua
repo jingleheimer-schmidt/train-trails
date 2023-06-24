@@ -252,9 +252,9 @@ local function make_trails(event_tick, mod_settings)
   local sprite = mod_settings.sprite
   local light = mod_settings.light
   if not (sprite or light) then return end
-  global.delay_counters = global.delay_counters or {}
   local train_datas = global.active_trains
   if not train_datas then return end
+  global.delay_counters = global.delay_counters or {}
   if mod_settings.passengers_only then -- if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
