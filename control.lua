@@ -46,17 +46,9 @@ local balance_to_ticks = {
 }
 
 local speed_thresholds = {
-  -- { threshold = 105, delay = 0 },
-  -- { threshold = 85, delay = 0},
-  -- { threshold = 75, delay = 0},
   { threshold = 60, delay = 0 },
-  -- { threshold = 65, delay = 1 },
   { threshold = 30, delay = 1 },
-  -- { threshold = 40, delay = 2 },
-  -- { threshold = 25, delay = 2 },
   { threshold = 15, delay = 2 },
-  -- { threshold = 15, delay = 3 },
-  -- { threshold = 10, delay = 3 },
   { threshold = 7, delay = 3},
   { threshold = 3, delay = 4 },
   { threshold = 1, delay = 5 },
