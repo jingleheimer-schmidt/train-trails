@@ -129,6 +129,12 @@ local function add_active_train(train)
   }
 end
 
+---@param train LuaTrain
+local function remove_active_train(train)
+  global.active_trains = global.active_trains or {}
+  global.active_trains[train.id] = nil
+end
+
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
       global.train_datas[train.id] = {
