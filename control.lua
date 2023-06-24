@@ -110,9 +110,11 @@ end
 local function reset_trains_global()
   ---@type table<uint, LuaTrain>
   global.lua_trains = {}
+  global.train_lengths = {}
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
       global.lua_trains[train.id] = train
+      global.train_lengths[train.id] = #train.carriages
     end
   end
 end
