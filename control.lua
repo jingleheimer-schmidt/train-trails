@@ -114,9 +114,6 @@ local function initialize_settings()
   }
 end
 
-local function reset_trains_global()
-  ---@type table<uint, train_data>
-  global.train_datas = {}
 ---@param train LuaTrain
 local function add_active_train(train)
   local train_id = train.id
@@ -147,21 +144,19 @@ end
 
 script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
+local function reset_active_trains()
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
-      global.train_datas[train.id] = {
-        length = #train.carriages,
-        surface_index = train.carriages[1].surface_index,
-        train = train,
-        id = train.id,
-      }
+      if active_states[train.state] then
+        add_active_train(train)
+      end
     end
   end
 end
 
 local function initialize_and_reset()
   initialize_settings()
-  reset_trains_global()
+  reset_active_trains()
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_settings)
