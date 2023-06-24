@@ -231,7 +231,7 @@ local function make_trails(event_tick, mod_settings)
     end
   else -- passenger mode is not on. look through all the trains and then start drawing trails
     for train_id, train_data in pairs(train_datas) do
-      if data.train and data.train.valid then
+      if train_data.train.valid then
         draw_trails_based_on_speed(event_tick, mod_settings, train_data)
       else
         global.train_datas[train_id] = nil
