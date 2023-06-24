@@ -12,11 +12,11 @@ local speeds = {
 }
 
 local palette = {
-  ["light"] = {amplitude = 15, center = 240},
-  ["pastel"] = {amplitude = 55, center = 200},
-  ["default"] = {amplitude = 127.5, center = 127.5},
-  ["vibrant"] = {amplitude = 50, center = 100},
-  ["deep"] = {amplitude = 25, center = 50},
+  ["light"] = { amplitude = 15, center = 240 },
+  ["pastel"] = { amplitude = 55, center = 200 },
+  ["default"] = { amplitude = 127.5, center = 127.5 },
+  ["vibrant"] = { amplitude = 50, center = 100 },
+  ["deep"] = { amplitude = 25, center = 50 },
 }
 
 local default_chat_colors = {
@@ -49,7 +49,7 @@ local speed_thresholds = {
   { threshold = 60, delay = 0 },
   { threshold = 30, delay = 1 },
   { threshold = 15, delay = 2 },
-  { threshold = 7, delay = 3},
+  { threshold = 7, delay = 3 },
   { threshold = 3, delay = 4 },
   { threshold = 1, delay = 5 },
   { threshold = 0.25, delay = 6 },
@@ -105,12 +105,12 @@ local function initialize_settings()
     length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
     scale = tonumber(settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
     color_type = settings["train-trails-color-type"].value --[[@as "rainbow"|"train"]],
-    balance = balance_to_ticks[settings["train-trails-balance"].value --[[@as string]]],
+    balance = balance_to_ticks[ settings["train-trails-balance"].value --[[@as string]] ],
     passengers_only = settings["train-trails-passengers-only"].value --[[@as boolean]],
-    default_color = default_chat_colors[settings["train-trails-default-color"].value --[[@as string]]],
-    frequency = speeds[settings["train-trails-speed"].value --[[@as string]]],
-    amplitude = palette[settings["train-trails-palette"].value --[[@as string]]].amplitude,
-    center = palette[settings["train-trails-palette"].value --[[@as string]]].center,
+    default_color = default_chat_colors[ settings["train-trails-default-color"].value --[[@as string]] ],
+    frequency = speeds[ settings["train-trails-speed"].value --[[@as string]] ],
+    amplitude = palette[ settings["train-trails-palette"].value --[[@as string]] ].amplitude,
+    center = palette[ settings["train-trails-palette"].value --[[@as string]] ].center,
   }
 end
 
