@@ -37,8 +37,8 @@ local default_chat_colors = {
   ["nil"] = "nil",
 }
 
+-- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
 local balance_to_ticks = {
-  -- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
   ["super-pretty"] = 1,
   ["pretty"] = 2,
   ["balanced"] = 3,
