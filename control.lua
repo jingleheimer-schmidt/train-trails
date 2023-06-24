@@ -135,6 +135,18 @@ local function remove_active_train(train)
   global.active_trains[train.id] = nil
 end
 
+---@param event EventData.on_train_changed_state
+local function on_train_changed_state(event)
+  local train = event.train
+  if active_states[train.state] then
+    add_active_train(train)
+  else
+    remove_active_train(train)
+  end
+end
+
+script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
+
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
       global.train_datas[train.id] = {
