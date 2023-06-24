@@ -117,6 +117,18 @@ end
 local function reset_trains_global()
   ---@type table<uint, train_data>
   global.train_datas = {}
+---@param train LuaTrain
+local function add_active_train(train)
+  local train_id = train.id
+  global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
+  global.active_trains[train_id] = {
+    length = #train.carriages,
+    surface_index = train.carriages[1].surface_index,
+    train = train,
+    id = train.id,
+  }
+end
+
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
       global.train_datas[train.id] = {
