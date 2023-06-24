@@ -144,7 +144,8 @@ script.on_event(defines.events.on_train_created, on_train_created)
 ---@param stock LuaEntity
 ---@param train_id uint
 ---@param length uint
-local function draw_trails(event_tick, mod_settings, stock, train_id, length)
+---@param scale float
+local function draw_trails(event_tick, mod_settings, stock, train_id, length, scale)
   local color = stock.color
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
   if ((not color) and (mod_settings.default_color ~= "nil")) then
@@ -156,7 +157,6 @@ local function draw_trails(event_tick, mod_settings, stock, train_id, length)
   if not color then return end
   local position = stock.position
   local surface = stock.surface
-  local scale = mod_settings.scale
   if mod_settings.sprite then
     rendering.draw_sprite{
       sprite = "train-trail",
@@ -193,16 +193,17 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
   local stock = speed < 0 and train.back_stock or train.front_stock
   if not stock then return end
   local train_id = train.id
-  speed = speed * 216  -- Conversion factor between tiles per tick and kilometers per hour
+  speed = abs(speed * 216)  -- 216 is the conversion factor between tiles per tick and kilometers per hour
 
   local delay_counters = global.delay_counters or {}
   local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
   local train_length = #train.carriages
   local length = mod_settings.length + ((train_length - 1) * 15)
+  local scale = max(mod_settings.scale * (speed / 216), mod_settings.scale / 1.75)
 
   for _, threshold in ipairs(speed_thresholds) do
     if abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
-      draw_trails(event_tick, mod_settings, stock, train_id, length)
+      draw_trails(event_tick, mod_settings, stock, train_id, length, scale)
       delay_counter = 0
       break
     end
