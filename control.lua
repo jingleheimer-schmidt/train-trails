@@ -102,13 +102,16 @@ local function initialize_settings()
 end
 
 local function reset_trains_global()
-  ---@type table<uint, LuaTrain>
-  global.lua_trains = {}
-  global.train_lengths = {}
+  ---@type table<uint, train_data>
+  global.train_datas = {}
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
-      global.lua_trains[train.id] = train
-      global.train_lengths[train.id] = #train.carriages
+      global.train_datas[train.id] = {
+        length = #train.carriages,
+        surface_index = train.carriages[1].surface_index,
+        train = train,
+        id = train.id,
+      }
     end
   end
 end
@@ -125,32 +128,35 @@ script.on_init(initialize_and_reset)
 ---@param event EventData.on_train_created
 local function on_train_created(event)
   local train = event.train
-  global.lua_trains = global.lua_trains or {}
-  global.lua_trains[train.id] = train
-  global.train_lengths = global.train_lengths or {}
-  global.train_lengths[train.id] = #train.carriages
+  global.train_datas = global.train_datas or {}
+  global.train_datas[train.id] = {
+    length = #train.carriages,
+    surface_index = train.carriages[1].surface_index,
+    train = train,
+    id = train.id,
+  }
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
 
 ---@param event_tick uint
 ---@param mod_settings mod_settings
----@param train_id uint
+---@param train_data train_data
 ---@param stock LuaEntity
 ---@param length uint
 ---@param scale float
-local function draw_trails(event_tick, mod_settings, train_id, stock, length, scale)
+local function draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
   local color = stock.color -- when 1.1.85 becomes stable, this can be replaced with a lookup table that gets updated on_entity_color_changed
   -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
   if ((not color) and (mod_settings.default_color ~= "nil")) then
     color = default_chat_colors[mod_settings.default_color] --[[@as Color]] -- the mod setting for default loco color
   end
   if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
-    color = make_rainbow(event_tick, train_id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
+    color = make_rainbow(event_tick, train_data.id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
   end
   if not color then return end
   local position = stock.position
-  local surface = stock.surface
+  local surface = train_data.surface_index
   if mod_settings.sprite then
     draw_sprite {
       sprite = "train-trail",
@@ -180,9 +186,10 @@ end
 -- this one tries to reduce the weird ballooning and frying that happens when trains go really slowly, by making slower trains draw trails less frequently than faster ones
 ---@param event_tick uint
 ---@param mod_settings mod_settings
----@param train LuaTrain
----@param train_id uint
-local function draw_trails_based_on_speed(event_tick, mod_settings, train, train_id)
+---@param train_data train_data
+local function draw_trails_based_on_speed(event_tick, mod_settings, train_data)
+  local train_id = train_data.id
+  local train = train_data.train
   local speed = train.speed
   if speed == 0 then return end
   local stock = speed < 0 and train.back_stock or train.front_stock
@@ -191,13 +198,12 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train, train
 
   local delay_counters = global.delay_counters or {}
   local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
-  local train_length = global.train_lengths[train_id]
-  local length = mod_settings.length + ((train_length - 1) * 15)
+  local length = mod_settings.length + ((train_data.length - 1) * 15)
   local scale = max(mod_settings.scale * (speed / 216), mod_settings.scale / 1.75)
 
   for _, threshold in ipairs(speed_thresholds) do
-    if abs(speed) >= threshold.threshold and delay_counter >= threshold.delay then
-      draw_trails(event_tick, mod_settings, train_id, stock, length, scale)
+    if speed >= threshold.threshold and delay_counter >= threshold.delay then
+      draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
       delay_counter = 0
       break
     end
@@ -213,21 +219,22 @@ local function make_trails(event_tick, mod_settings)
   local light = mod_settings.light
   if not (sprite or light) then return end
   global.delay_counters = global.delay_counters or {}
+  local train_datas = global.train_datas
+  if not train_datas then return end
   if mod_settings.passengers_only then -- if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
-      if train then
-        draw_trails_based_on_speed(event_tick, mod_settings, train, train.id)
+      local train_data = train and train_datas and train_datas[train.id]
+      if train_data then
+        draw_trails_based_on_speed(event_tick, mod_settings, train_data)
       end
     end
   else -- passenger mode is not on. look through all the trains and then start drawing trails
-    local trains = global.lua_trains
-    if not trains then return end
-    for id, train in pairs(trains) do
-      if train.valid then
-        draw_trails_based_on_speed(event_tick, mod_settings, train, id)
+    for train_id, train_data in pairs(train_datas) do
+      if data.train and data.train.valid then
+        draw_trails_based_on_speed(event_tick, mod_settings, train_data)
       else
-        global.lua_trains[id] = nil
+        global.train_datas[train_id] = nil
       end
     end
   end
@@ -258,3 +265,5 @@ end
 ---@field frequency float 0.010|0.025|0.050|0.100|0.200
 ---@field amplitude float 127.5|15|25|50|55
 ---@field center float 100|127.5|200|240|50
+
+---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint}
