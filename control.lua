@@ -166,13 +166,9 @@ script.on_init(initialize_and_reset)
 ---@param event EventData.on_train_created
 local function on_train_created(event)
   local train = event.train
-  global.train_datas = global.train_datas or {}
-  global.train_datas[train.id] = {
-    length = #train.carriages,
-    surface_index = train.carriages[1].surface_index,
-    train = train,
-    id = train.id,
-  }
+  if active_states[train.state] then
+    add_active_train(train)
+  end
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
