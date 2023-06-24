@@ -60,7 +60,7 @@ local simulation_script =
     }
   end
 
-  local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+  local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
     local color = stock.color
     -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
     if ((not color) and (color_override ~= "nil")) then
@@ -72,14 +72,15 @@ local simulation_script =
     if color then
       local position = stock.position
       local surface = stock.surface
+      local speedScale = speed / 216
       if sprite then
         sprite = rendering.draw_sprite{
           sprite = "train-trail",
           target = position,
           surface = surface,
           tint = color,
-          x_scale = scale,
-          y_scale = scale,
+          x_scale = scale * speedScale,
+          y_scale = scale * speedScale,
           render_layer = "radius-visualization",
           time_to_live = length,
         }
@@ -91,7 +92,7 @@ local simulation_script =
           surface = surface,
           color = color,
           intensity = .175,
-          scale = scale * 1.75,
+          scale = scale * 1.75 * speedScale,
           render_layer = "light-effect",
           time_to_live = length,
         }
@@ -132,56 +133,56 @@ local simulation_script =
         if sprite then
           local light_override = false
           if (not speed_less_than_105) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 2) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 3) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 3) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif (not speed_less_than_05) and speed_less_than_10 and (delay_counter >= 4) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           elseif speed_less_than_05 and (delay_counter >= 4) then
-            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             sprite_delay_counter = 0
           end
         end
         if light then
           local sprite_override = false
           if (not speed_less_than_105) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 2) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 3) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 3) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif (not speed_less_than_05) and speed_less_than_10 and (delay_counter >= 4) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           elseif speed_less_than_05 and (delay_counter >= 4) then
-            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center)
+            draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
             light_delay_counter = 0
           end
         end
@@ -247,3 +248,13 @@ for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].ma
     end
   end
 end
+
+-- for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
+--   if main_menu_simulation then
+--     if main_menu_simulation.update then
+--       main_menu_simulation.update = main_menu_simulation.update .. simulation_script
+--     else
+--       main_menu_simulation.update = simulation_script
+--     end
+--   end
+-- end
