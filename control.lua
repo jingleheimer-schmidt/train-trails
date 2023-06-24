@@ -130,8 +130,9 @@ script.on_init(initialize_and_reset)
 
 ---@param event EventData.on_train_created
 local function on_train_created(event)
+  local train = event.train
   global.lua_trains = global.lua_trains or {}
-  global.lua_trains[event.train.id] = event.train
+  global.lua_trains[train.id] = train
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
