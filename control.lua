@@ -57,7 +57,6 @@ local speed_thresholds = {
   { threshold = 0.0625, delay = 8 }
 }
 
--- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
 local sin = math.sin
 local abs = math.abs
 local max = math.max
