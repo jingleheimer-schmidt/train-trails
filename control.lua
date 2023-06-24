@@ -197,7 +197,8 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train)
 
   local delay_counters = global.delay_counters or {}
   local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
-  local train_length = #train.carriages
+  -- local train_length = #train.carriages
+  local train_length = global.train_lengths[train_id]
   local length = mod_settings.length + ((train_length - 1) * 15)
   local scale = max(mod_settings.scale * (speed / 216), mod_settings.scale / 1.75)
 
