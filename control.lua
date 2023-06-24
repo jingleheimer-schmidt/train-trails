@@ -133,6 +133,8 @@ local function on_train_created(event)
   local train = event.train
   global.lua_trains = global.lua_trains or {}
   global.lua_trains[train.id] = train
+  global.train_lengths = global.train_lengths or {}
+  global.train_lengths[train.id] = #train.carriages
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
