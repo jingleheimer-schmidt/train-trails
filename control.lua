@@ -222,7 +222,6 @@ end
 ---@param mod_settings mod_settings
 ---@param train_data train_data
 local function draw_trails_based_on_speed(event_tick, mod_settings, train_data)
-  local train_id = train_data.id
   local train = train_data.train
   local speed = train.speed
   if speed == 0 then return end
@@ -230,6 +229,7 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train_data)
   if not stock then return end
   speed = abs(speed * 216)  -- 216 is the conversion factor between tiles per tick and kilometers per hour
 
+  local train_id = train_data.id
   local delay_counters = global.delay_counters or {}
   local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
   local length = mod_settings.length + ((train_data.length - 1) * 15)
