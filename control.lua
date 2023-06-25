@@ -37,7 +37,6 @@ local default_chat_colors = {
   ["nil"] = "nil",
 }
 
--- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
 local balance_to_ticks = {
   ["super-pretty"] = 1,
   ["pretty"] = 2,
@@ -68,6 +67,7 @@ local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
+-- add static data to the active_trains table to reduce lookup time
 ---@param train LuaTrain
 local function add_active_train(train)
   local train_id = train.id
@@ -88,6 +88,8 @@ local function remove_active_train(train)
   global.active_trains[train.id] = nil
 end
 
+-- add new trains to the active_trains table when they are created
+-- add or remove trains from the active_trains table when their state changes
 ---@param event EventData.on_train_changed_state
 local function on_train_changed_state(event)
   local train = event.train
@@ -161,6 +163,7 @@ end
 
 script.on_event(defines.events.on_train_created, on_train_created)
 
+-- draw a trail segment for a given train
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
@@ -168,6 +171,7 @@ script.on_event(defines.events.on_train_created, on_train_created)
 local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   local stock = speed > 0 and train_data.front_stock or train_data.back_stock
   if not stock then return end
+
   local color = stock.color -- when 1.1.85 becomes stable, replace with a lookup table updated on_entity_color_changed
   if ((not color) and (mod_settings.default_color ~= "nil")) then -- since default color locomotives have "nil" color, we need to pick a color
     color = default_chat_colors[mod_settings.default_color] --[[@as Color]]
@@ -176,10 +180,12 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     color = make_rainbow(event_tick, train_data.id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
   end
   if not color then return end
+
   local position = stock.position
   local surface = train_data.surface_index
   local length = mod_settings.length + ((train_data.length - 1) * 60)
   local scale = mod_settings.scale * max( abs(speed), 0.5 )
+
   if mod_settings.sprite then
     draw_sprite {
       sprite = "train-trail",
@@ -206,7 +212,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   end
 end
 
--- normalize the number of trails drawn per tile
+-- normalize the number of trails drawn per tile to make trails look consistent at all speeds
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
@@ -226,6 +232,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
   global.distance_counters[train_id] = tiles_since_last_trail
 end
 
+-- create a lookup table of surfaces that players can see
 ---@return table<uint, boolean>
 local function get_visible_surfaces()
   local visible_surfaces = {}
@@ -235,15 +242,19 @@ local function get_visible_surfaces()
   return visible_surfaces
 end
 
+-- draw trail segments for any visible active trains
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 local function draw_trails(event_tick, mod_settings)
   local sprite = mod_settings.sprite
   local light = mod_settings.light
   if not (sprite or light) then return end
+
   local active_train_datas = global.active_trains
   if not active_train_datas then return end
+
   global.distance_counters = global.distance_counters or {}
+
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
@@ -252,6 +263,7 @@ local function draw_trails(event_tick, mod_settings)
         draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       end
     end
+
   else
     local visible_surfaces = get_visible_surfaces()
     for train_id, train_data in pairs(active_train_datas) do
