@@ -111,6 +111,8 @@ local function add_active_train(train)
     surface_index = train.carriages[1].surface_index,
     train = train,
     id = train.id,
+    front_stock = train.front_stock,
+    back_stock = train.back_stock,
   }
 end
 
@@ -297,4 +299,4 @@ end
 ---@field amplitude float 127.5|15|25|50|55
 ---@field center float 100|127.5|200|240|50
 
----@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint}
+---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?}
