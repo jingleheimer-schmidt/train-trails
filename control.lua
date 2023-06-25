@@ -166,10 +166,12 @@ script.on_event(defines.events.on_train_created, on_train_created)
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
----@param stock LuaEntity
----@param length uint
----@param scale float
-local function draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
+---@param speed int
+local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
+  local length = mod_settings.length + ((train_data.length - 1) * 60)
+  local scale = max(mod_settings.scale * speed, mod_settings.scale * 0.5)
+  local stock = speed > 0 and train_data.front_stock or train_data.back_stock
+  if not stock then return end
   local color = stock.color -- when 1.1.85 becomes stable, replace with a lookup table updated on_entity_color_changed
   -- since default color locomotives have "nil" color, we need to pick a color
   if ((not color) and (mod_settings.default_color ~= "nil")) then
@@ -215,18 +217,13 @@ end
   local speed = train.speed
 local function draw_normalized_trail_segment(event_tick, mod_settings, train_data)
   if speed == 0 then return end
-  local stock = speed > 0 and train.front_stock or train.back_stock
-  if not stock then return end
-  speed = abs(speed)
 
   local train_id = train_data.id
-  local length = mod_settings.length + ((train_data.length - 1) * 60)
-  local scale = max(mod_settings.scale * speed, mod_settings.scale * 0.5)
   local distance_counters = global.distance_counters or {}
   local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed)
 
-    draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
   if tiles_since_last_trail >= 1/3 then
+    draw_trail_segment(event_tick, mod_settings, train_data, speed)
     tiles_since_last_trail = 0
   end
 
