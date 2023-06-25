@@ -246,20 +246,20 @@ local function make_trails(event_tick, mod_settings)
   local sprite = mod_settings.sprite
   local light = mod_settings.light
   if not (sprite or light) then return end
-  local train_datas = global.active_trains
-  if not train_datas then return end
+  local active_train_datas = global.active_trains
+  if not active_train_datas then return end
   global.delay_counters = global.delay_counters or {}
   local visible_surfaces = get_visible_surfaces()
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
-      local train_data = train and train_datas and train_datas[train.id]
+      local train_data = train and active_train_datas and active_train_datas[train.id]
       if train_data then
         draw_trails_based_on_speed(event_tick, mod_settings, train_data)
       end
     end
-    for train_id, train_data in pairs(train_datas) do
   else
+    for train_id, train_data in pairs(active_train_datas) do
       if train_data.train.valid then
         if not visible_surfaces[train_data.surface_index] then break end
         draw_trails_based_on_speed(event_tick, mod_settings, train_data)
