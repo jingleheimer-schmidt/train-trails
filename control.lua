@@ -232,6 +232,7 @@ local function draw_normalized_trails(event_tick, mod_settings, train_data)
   global.delay_counters[train_id] = tiles_since_last_trail
 end
 
+---@return table<uint, boolean>
 local function get_visible_surfaces()
   local visible_surfaces = {}
   for _, player in pairs(game.connected_players) do
