@@ -245,7 +245,7 @@ end
 
 ---@param event_tick uint
 ---@param mod_settings mod_settings
-local function make_trails(event_tick, mod_settings)
+local function draw_trails(event_tick, mod_settings)
   local sprite = mod_settings.sprite
   local light = mod_settings.light
   if not (sprite or light) then return end
@@ -278,7 +278,7 @@ local function on_tick(event)
   local mod_settings = global.settings
   local event_tick = event.tick
   if event_tick % mod_settings.balance == 0 then
-    make_trails(event_tick, mod_settings)
+    draw_trails(event_tick, mod_settings)
   end
 end
 
