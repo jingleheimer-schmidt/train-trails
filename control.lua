@@ -45,18 +45,6 @@ local balance_to_ticks = {
   ["performance"] = 4
 }
 
-local speed_thresholds = {
-  { threshold = 60, delay = 0 },
-  { threshold = 30, delay = 1 },
-  { threshold = 15, delay = 2 },
-  { threshold = 7, delay = 3 },
-  { threshold = 3, delay = 4 },
-  { threshold = 1, delay = 5 },
-  { threshold = 0.25, delay = 6 },
-  { threshold = 0.125, delay = 7 },
-  { threshold = 0.0625, delay = 8 }
-}
-
 local active_states = {
   [defines.train_state.arrive_signal] = true,
   [defines.train_state.arrive_station] = true,
