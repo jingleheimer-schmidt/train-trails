@@ -220,14 +220,13 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
   speed = abs(speed)
 
   local train_id = train_data.id
-  local tiles_per_trail = 1/3
   local length = mod_settings.length + ((train_data.length - 1) * 60)
   local scale = max(mod_settings.scale * speed, mod_settings.scale * 0.5)
   local distance_counters = global.distance_counters or {}
   local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed)
 
-  if tiles_since_last_trail >= tiles_per_trail then
     draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
+  if tiles_since_last_trail >= 1/3 then
     tiles_since_last_trail = 0
   end
 
