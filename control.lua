@@ -255,7 +255,7 @@ local function draw_trails(event_tick, mod_settings)
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
-      local train_data = train and active_train_datas and active_train_datas[train.id]
+      local train_data = train and (active_train_datas and active_train_datas[train.id])
       if train_data then
         draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       end
