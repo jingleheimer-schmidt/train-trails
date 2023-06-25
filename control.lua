@@ -246,6 +246,14 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train_data)
   global.delay_counters[train_id] = delay_counter
 end
 
+local function get_visible_surfaces()
+  local visible_surfaces = {}
+  for _, player in pairs(game.connected_players) do
+    visible_surfaces[player.surface_index] = true
+  end
+  return visible_surfaces
+end
+
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 local function make_trails(event_tick, mod_settings)
@@ -255,6 +263,7 @@ local function make_trails(event_tick, mod_settings)
   local train_datas = global.active_trains
   if not train_datas then return end
   global.delay_counters = global.delay_counters or {}
+  local visible_surfaces = get_visible_surfaces()
   if mod_settings.passengers_only then -- if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
@@ -266,6 +275,7 @@ local function make_trails(event_tick, mod_settings)
   else -- passenger mode is not on. look through all the trains and then start drawing trails
     for train_id, train_data in pairs(train_datas) do
       if train_data.train.valid then
+        if not visible_surfaces[train_data.surface_index] then break end
         draw_trails_based_on_speed(event_tick, mod_settings, train_data)
       else
         global.active_trains[train_id] = nil
