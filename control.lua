@@ -164,7 +164,7 @@ script.on_init(initialize_and_reset)
 ---@param amplitude number
 ---@param center number
 ---@return Color
-local function make_rainbow(created_tick, train_id, frequency, amplitude, center)
+local function get_rainbow_color(created_tick, train_id, frequency, amplitude, center)
   local modifier = (train_id + created_tick) * frequency
   return {
     r = sin(modifier + pi_0) * amplitude + center,
@@ -188,7 +188,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     color = default_chat_colors[mod_settings.default_color] --[[@as Color]]
   end
   if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
-    color = make_rainbow(event_tick, train_data.id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
+    color = get_rainbow_color(event_tick, train_data.id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
   end
   if not color then return end
 
