@@ -211,9 +211,9 @@ end
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
-local function draw_normalized_trails(event_tick, mod_settings, train_data)
   local train = train_data.train
   local speed = train.speed
+local function draw_normalized_trail_segment(event_tick, mod_settings, train_data)
   if speed == 0 then return end
   local stock = speed > 0 and train.front_stock or train.back_stock
   if not stock then return end
@@ -257,7 +257,7 @@ local function draw_trails(event_tick, mod_settings)
       local train = player.vehicle and player.vehicle.train
       local train_data = train and active_train_datas and active_train_datas[train.id]
       if train_data then
-        draw_normalized_trails(event_tick, mod_settings, train_data)
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       end
     end
   else
@@ -265,7 +265,7 @@ local function draw_trails(event_tick, mod_settings)
     for train_id, train_data in pairs(active_train_datas) do
       if train_data.train.valid then
         if not visible_surfaces[train_data.surface_index] then break end
-        draw_normalized_trails(event_tick, mod_settings, train_data)
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       else
         global.active_trains[train_id] = nil
       end
