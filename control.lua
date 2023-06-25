@@ -220,18 +220,18 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
   speed = abs(speed)
 
   local train_id = train_data.id
-  local delay_counters = global.delay_counters or {}
-  local tiles_since_last_trail = delay_counters[train_id] and delay_counters[train_id] + speed or speed
   local tiles_per_trail = 1/3
   local length = mod_settings.length + ((train_data.length - 1) * 60)
   local scale = max(mod_settings.scale * speed, mod_settings.scale * 0.5)
+  local distance_counters = global.distance_counters or {}
+  local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed)
 
   if tiles_since_last_trail >= tiles_per_trail then
     draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
     tiles_since_last_trail = 0
   end
 
-  global.delay_counters[train_id] = tiles_since_last_trail
+  global.distance_counters[train_id] = tiles_since_last_trail
 end
 
 ---@return table<uint, boolean>
@@ -251,7 +251,7 @@ local function draw_trails(event_tick, mod_settings)
   if not (sprite or light) then return end
   local active_train_datas = global.active_trains
   if not active_train_datas then return end
-  global.delay_counters = global.delay_counters or {}
+  global.distance_counters = global.distance_counters or {}
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
