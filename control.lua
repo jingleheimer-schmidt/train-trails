@@ -70,9 +70,8 @@ local draw_sprite = rendering.draw_sprite
 -- add static data to the active_trains table to reduce lookup time
 ---@param train LuaTrain
 local function add_active_train(train)
-  local train_id = train.id
   global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
-  global.active_trains[train_id] = {
+  global.active_trains[train.id] = {
     length = #train.carriages,
     surface_index = train.carriages[1].surface_index,
     train = train,
