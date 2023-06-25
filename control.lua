@@ -173,9 +173,8 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   local stock = speed > 0 and train_data.front_stock or train_data.back_stock
   if not stock then return end
   local color = stock.color -- when 1.1.85 becomes stable, replace with a lookup table updated on_entity_color_changed
-  -- since default color locomotives have "nil" color, we need to pick a color
-  if ((not color) and (mod_settings.default_color ~= "nil")) then
-    color = default_chat_colors[mod_settings.default_color] --[[@as Color]] -- the mod setting for default loco color
+  if ((not color) and (mod_settings.default_color ~= "nil")) then -- since default color locomotives have "nil" color, we need to pick a color
+    color = default_chat_colors[mod_settings.default_color] --[[@as Color]]
   end
   if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
     color = make_rainbow(event_tick, train_data.id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
@@ -209,7 +208,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   end
 end
 
--- this one tries to reduce the weird ballooning and frying that happens when trains go really slowly, by making slower trains draw trails less frequently than faster ones
+-- normalize the number of trails drawn per tile
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
