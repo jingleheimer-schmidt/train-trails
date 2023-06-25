@@ -215,23 +215,21 @@ local function draw_trails_based_on_speed(event_tick, mod_settings, train_data)
   if speed == 0 then return end
   local stock = speed > 0 and train.front_stock or train.back_stock
   if not stock then return end
-  speed = abs(speed * 216)  -- 216 is the conversion factor between tiles per tick and kilometers per hour
+  speed = abs(speed)
 
   local train_id = train_data.id
   local delay_counters = global.delay_counters or {}
-  local delay_counter = delay_counters[train_id] and delay_counters[train_id] + 1 or 0
-  local length = mod_settings.length + ((train_data.length - 1) * 15)
-  local scale = max(mod_settings.scale * (speed / 216), mod_settings.scale / 1.75)
+  local tiles_since_last_trail = delay_counters[train_id] and delay_counters[train_id] + speed or speed
+  local tiles_per_trail = 1/3
+  local length = mod_settings.length + ((train_data.length - 1) * 60)
+  local scale = max(mod_settings.scale * speed, mod_settings.scale * 0.5)
 
-  for _, threshold in ipairs(speed_thresholds) do
-    if speed >= threshold.threshold and delay_counter >= threshold.delay then
-      draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
-      delay_counter = 0
-      break
-    end
+  if tiles_since_last_trail >= tiles_per_trail then
+    draw_trails(event_tick, mod_settings, train_data, stock, length, scale)
+    tiles_since_last_trail = 0
   end
 
-  global.delay_counters[train_id] = delay_counter
+  global.delay_counters[train_id] = tiles_since_last_trail
 end
 
 local function get_visible_surfaces()
