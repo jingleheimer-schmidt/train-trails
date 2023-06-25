@@ -250,7 +250,6 @@ local function make_trails(event_tick, mod_settings)
   local active_train_datas = global.active_trains
   if not active_train_datas then return end
   global.delay_counters = global.delay_counters or {}
-  local visible_surfaces = get_visible_surfaces()
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
       local train = player.vehicle and player.vehicle.train
@@ -260,6 +259,7 @@ local function make_trails(event_tick, mod_settings)
       end
     end
   else
+    local visible_surfaces = get_visible_surfaces()
     for train_id, train_data in pairs(active_train_datas) do
       if train_data.train.valid then
         if not visible_surfaces[train_data.surface_index] then break end
