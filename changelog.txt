@@ -2,6 +2,7 @@
 Version: 0.0.12
 Date: ????
   Changes:
+    - combined "Color" and "Glow" mod settings into a single dropdown selection
     - added compatibility for other mods that add on_tick functions to the main menu simulations
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.11

@@ -44,6 +44,17 @@ local balance_to_ticks = {
   ["performance"] = 4
 }
 
+local trail_types = {
+  sprite = {
+    ["color-only"] = true,
+    ["color-and-glow"] = true
+  },
+  light = {
+    ["glow-only"] = true,
+    ["color-and-glow"] = true
+  }
+}
+
 local active_states = {
   [defines.train_state.arrive_signal] = true,
   [defines.train_state.arrive_station] = true,
@@ -114,8 +125,8 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 local function initialize_settings()
   local settings = settings.global
   global.settings = {
-    sprite = settings["train-trails-color"].value --[[@as boolean]],
-    light = settings["train-trails-glow"].value --[[@as boolean]],
+    sprite = trail_types.sprite[ settings["train-trails-color-and-glow"].value --[[@as "color-and-glow"|"color-only"|"glow-only"|"none"]] ],
+    light = trail_types.light[ settings["train-trails-color-and-glow"].value --[[@as "color-and-glow"|"color-only"|"glow-only"|"none"]] ],
     length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
     scale = tonumber(settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
     color_type = settings["train-trails-color-type"].value --[[@as "rainbow"|"train"]],

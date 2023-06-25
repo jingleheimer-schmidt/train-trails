@@ -15,6 +15,20 @@ local trainTrailsGlow = {
   default_value = true
 }
 
+local trainTrailsColorAndGLow = {
+  type = "string-setting",
+  name = "train-trails-color-and-glow",
+  setting_type = "runtime-global",
+  order = "a",
+  default_value = "color-and-glow",
+  allowed_values = {
+    "color-and-glow",
+    "color-only",
+    "glow-only",
+    "none"
+  }
+}
+
 local trainTrailsPassengersOnly = {
   type = "bool-setting",
   name = "train-trails-passengers-only",
@@ -144,8 +158,9 @@ local trainTrailsDefaultTrailColor = {
 }
 
 data:extend({
-  trainTrailsColor,
-  trainTrailsGlow,
+  -- trainTrailsColor,
+  -- trainTrailsGlow,
+  trainTrailsColorAndGLow,
   trainTrailsPassengersOnly,
   trainTrailsScale,
   trainTrailsLength,
