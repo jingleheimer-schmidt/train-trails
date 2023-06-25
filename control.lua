@@ -68,22 +68,6 @@ local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
----@param created_tick number
----@param train_id number
----@param frequency number
----@param amplitude number
----@param center number
----@return Color
-local function make_rainbow(created_tick, train_id, frequency, amplitude, center)
-  local modifier = (train_id + created_tick) * frequency
-  return {
-    r = sin(modifier + pi_0) * amplitude + center,
-    g = sin(modifier + pi_2) * amplitude + center,
-    b = sin(modifier + pi_4) * amplitude + center,
-    a = 255,
-  }
-end
-
 -- save mod settings to global so we don't have to ask the game for them all the time
 local function initialize_settings()
   local settings = settings.global
@@ -159,6 +143,20 @@ local function on_train_created(event)
   if active_states[train.state] then
     add_active_train(train)
   end
+---@param created_tick number
+---@param train_id number
+---@param frequency number
+---@param amplitude number
+---@param center number
+---@return Color
+local function make_rainbow(created_tick, train_id, frequency, amplitude, center)
+  local modifier = (train_id + created_tick) * frequency
+  return {
+    r = sin(modifier + pi_0) * amplitude + center,
+    g = sin(modifier + pi_2) * amplitude + center,
+    b = sin(modifier + pi_4) * amplitude + center,
+    a = 255,
+  }
 end
 
 script.on_event(defines.events.on_train_created, on_train_created)
