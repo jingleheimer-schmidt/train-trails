@@ -213,7 +213,7 @@ end
 ---@param mod_settings mod_settings
 ---@param train_data train_data
 local function draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-  local speed = train_data.train.speed
+  local speed = train_data.train.speed -- tiles per tick
   if speed == 0 then return end
 
   local train_id = train_data.id
