@@ -89,6 +89,14 @@ local function remove_active_train(train)
 end
 
 -- add new trains to the active_trains table when they are created
+---@param event EventData.on_train_created
+local function on_train_created(event)
+  local train = event.train
+  if active_states[train.state] then
+    add_active_train(train)
+  end
+end
+
 -- add or remove trains from the active_trains table when their state changes
 ---@param event EventData.on_train_changed_state
 local function on_train_changed_state(event)
@@ -100,6 +108,7 @@ local function on_train_changed_state(event)
   end
 end
 
+script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
 -- save mod settings to global to reduce lookup time
@@ -139,12 +148,6 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_settin
 script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
 
----@param event EventData.on_train_created
-local function on_train_created(event)
-  local train = event.train
-  if active_states[train.state] then
-    add_active_train(train)
-  end
 ---@param created_tick number
 ---@param train_id number
 ---@param frequency number
@@ -160,8 +163,6 @@ local function make_rainbow(created_tick, train_id, frequency, amplitude, center
     a = 255,
   }
 end
-
-script.on_event(defines.events.on_train_created, on_train_created)
 
 -- draw a trail segment for a given train
 ---@param event_tick uint
