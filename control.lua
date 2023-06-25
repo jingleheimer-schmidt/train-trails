@@ -168,8 +168,6 @@ script.on_event(defines.events.on_train_created, on_train_created)
 ---@param train_data train_data
 ---@param speed int
 local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
-  local length = mod_settings.length + ((train_data.length - 1) * 60)
-  local scale = max(mod_settings.scale * speed, mod_settings.scale * 0.5)
   local stock = speed > 0 and train_data.front_stock or train_data.back_stock
   if not stock then return end
   local color = stock.color -- when 1.1.85 becomes stable, replace with a lookup table updated on_entity_color_changed
@@ -182,6 +180,8 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   if not color then return end
   local position = stock.position
   local surface = train_data.surface_index
+  local length = mod_settings.length + ((train_data.length - 1) * 60)
+  local scale = max(mod_settings.scale * abs(speed), mod_settings.scale * 0.5)
   if mod_settings.sprite then
     draw_sprite {
       sprite = "train-trail",
