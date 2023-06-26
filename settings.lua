@@ -98,7 +98,16 @@ local trainTrailsPalette = {
     "pastel",
     "default",
     "vibrant",
-    "deep"
+    "deep",
+    "lesbian",
+    "gay",
+    "bi",
+    "trans",
+    "pan",
+    "ace",
+    "nonbinary",
+    "agender",
+    "rainbow"
   }
 }
 

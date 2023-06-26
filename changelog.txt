@@ -7,6 +7,8 @@ Date: ????
     - reduced train processing to only iterate trains with an active state
     - trails are only rendered for trains on surfaces that are visible to a player
     - combined "Color" and "Glow" mod settings into a single dropdown selection
+    - renamed rainbow palette and rainbow speed mod settings to animation palette and animation speed
+    - added pride flag color palettes for animated train trails
     - modified setting descriptions for clarity
     - added compatibility for other mods that add on_tick functions to the main menu simulations
 ---------------------------------------------------------------------------------------------------

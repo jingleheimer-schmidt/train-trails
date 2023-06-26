@@ -17,6 +17,91 @@ local palette = {
   ["default"] = { amplitude = 127.5, center = 127.5 },
   ["vibrant"] = { amplitude = 50, center = 100 },
   ["deep"] = { amplitude = 25, center = 50 },
+  ["trans"] = { amplitude = 1, center = 1 },
+  ["lesbian"] = { amplitude = 2, center = 2 },
+  ["bi"] = { amplitude = 3, center = 3 },
+  ["nonbinary"] = { amplitude = 4, center = 4 },
+  ["pan"] = { amplitude = 5, center = 5 },
+  ["ace"] = { amplitude = 6, center = 6 },
+  ["rainbow"] = { amplitude = 7, center = 7 },
+  ["agender"] = { amplitude = 8, center = 8 },
+  ["gay"] = { amplitude = 9, center = 9 },
+}
+
+require("util")
+--- @type table<int, Color[]>
+local pride_flags = {
+  [1] = {                 -- trans pride
+    util.color("#5BCEFA"), -- light blue
+    util.color("#F5A9B8"), -- light pink
+    util.color("#FFFFFF"), -- white
+    util.color("#F5A9B8"), -- light pink
+    -- util.color("#5BCEFA"), -- light blue
+  },
+  [2] = {                 -- lesbian pride
+    util.color("#D52D00"), -- dark orange
+    util.color("#EF7627"), -- mid orange
+    util.color("#FF9A56"), -- light orange
+    util.color("#FFFFFF"), -- white
+    util.color("#D162A4"), -- light pink
+    util.color("#B55690"), -- mid pink
+    util.color("#A30262"), -- dark pink
+  },
+  [3] = {                 -- bi pride
+    util.color("#D60270"), -- pink
+    util.color("#D60270"), -- pink
+    util.color("#9B4F96"), -- purple
+    util.color("#0038A8"), -- blue
+    util.color("#0038A8"), -- blue
+  },
+  [4] = {                 -- nonbinary pride
+    util.color("#FCF434"), -- yellow
+    util.color("#FFFFFF"), -- white
+    util.color("#9C59D1"), -- purple
+    util.color("#000000"), -- black
+  },
+  [5] = {                 -- pan pride
+    util.color("#FF218C"), -- pink
+    util.color("#FFD800"), -- yellow
+    util.color("#21B1FF"), -- blue
+  },
+  [6] = {                 -- ace pride
+    util.color("#000000"), -- black
+    util.color("#A3A3A3"), -- grey
+    util.color("#FFFFFF"), -- white
+    util.color("#800080"), -- purple
+  },
+  [7] = {                 -- progress pride
+    util.color("#E40303"), -- red
+    util.color("#FF8C00"), -- orange
+    util.color("#FFED00"), -- yellow
+    util.color("#008026"), -- green
+    util.color("#24408E"), -- blue
+    util.color("#732982"), -- purple
+    util.color("#FFFFFF"), -- white
+    util.color("#FFAFC8"), -- pink
+    util.color("#74D7EE"), -- light blue
+    util.color("#613915"), -- brown
+    util.color("#000000"), -- black
+  },
+  [8] = {                  -- agender pride
+    util.color("#000000"), -- black
+    util.color("#BCC4C7"), -- grey
+    util.color("#FFFFFF"), -- white
+    util.color("#B7F684"), -- green
+    util.color("#FFFFFF"), -- white
+    util.color("#BCC4C7"), -- grey
+    -- util.color("#000000"), -- black
+  },
+  [9] = {                  -- gay pride
+    util.color("#078D70"), -- dark green
+    util.color("#26CEAA"), -- medium green
+    util.color("#98E8C1"), -- light green
+    util.color("#FFFFFF"), -- white
+    util.color("#7BADE2"), -- light blue
+    util.color("#5049CC"), -- indigo
+    util.color("#3D1A78"), -- dark blue
+  }
 }
 
 local default_chat_colors = {
@@ -72,6 +157,7 @@ local active_states = {
 local sin = math.sin
 local abs = math.abs
 local max = math.max
+local floor = math.floor
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
@@ -134,8 +220,8 @@ local function initialize_settings()
     passengers_only = settings["train-trails-passengers-only"].value --[[@as boolean]],
     default_color = default_chat_colors[ settings["train-trails-default-color"].value --[[@as "nil"|"rainbow"|"red"|"orange"|"yellow"|"green"|"blue"|"purple"|"black"|"white"|"pink"|"gray"|"cyan"|"brown"|"acid"]] ],
     frequency = speeds[ settings["train-trails-speed"].value --[[@as  "veryslow"|"slow"|"default"|"fast"|"veryfast"]] ],
-    amplitude = palette[ settings["train-trails-palette"].value --[[@as "light"|"pastel"|"default"|"vibrant"|"deep"]] ].amplitude,
-    center = palette[ settings["train-trails-palette"].value --[[@as "light"|"pastel"|"default"|"vibrant"|"deep"]] ].center,
+    amplitude = palette[ settings["train-trails-palette"].value --[[@as "light"|"pastel"|"default"|"vibrant"|"deep"|"trans"|"lesbian"|"bi"|"nonbinary"]] ].amplitude,
+    center = palette[ settings["train-trails-palette"].value --[[@as "light"|"pastel"|"default"|"vibrant"|"deep"|"trans"|"lesbian"|"bi"|"nonbinary"]] ].center,
   }
 end
 
@@ -166,6 +252,13 @@ script.on_init(initialize_and_reset)
 ---@return Color
 local function get_rainbow_color(created_tick, train_id, frequency, amplitude, center)
   local modifier = (train_id + created_tick) * frequency
+  local flag_colors = pride_flags[amplitude]
+  if flag_colors then
+
+    local index = floor(modifier % #flag_colors) + 1
+
+    return flag_colors[index]
+  end
   return {
     r = sin(modifier + pi_0) * amplitude + center,
     g = sin(modifier + pi_2) * amplitude + center,
