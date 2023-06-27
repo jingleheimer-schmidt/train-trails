@@ -1,3 +1,5 @@
+
+---@type {string: float}
 local speeds = {
     ["veryslow"] = 0.010,
     ["slow"] = 0.025,
@@ -6,6 +8,7 @@ local speeds = {
     ["veryfast"] = 0.200,
 }
 
+---@type {string: {amplitude: float, center: float}}
 local palettes = {
     ["light"] = { amplitude = 15, center = 240 },
     ["pastel"] = { amplitude = 55, center = 200 },
@@ -249,6 +252,7 @@ for name, _ in pairs(seasonal_color_palettes) do
     table.insert(seasonal_color_names, name)
 end
 
+--- @type {string: Color|string}
 local default_chat_colors = {
     ["red"] = { r = 1.000, g = 0.166, b = 0.141 } --[[@type Color]],
     ["orange"] = { r = 1.000, g = 0.630, b = 0.259 } --[[@type Color]],
@@ -267,6 +271,7 @@ local default_chat_colors = {
     ["nil"] = "nil",
 }
 
+--- @type {string: integer}
 local balance_to_ticks = {
     ["super-pretty"] = 1,
     ["pretty"] = 2,
@@ -274,6 +279,7 @@ local balance_to_ticks = {
     ["performance"] = 4
 }
 
+---@type {sprite: {string: boolean}, light: {string: boolean}}
 local trail_types = {
     sprite = {
         ["color-only"] = true,
@@ -285,6 +291,7 @@ local trail_types = {
     }
 }
 
+---@type {defines.train_state: boolean}
 local active_states = {
     [defines.train_state.arrive_signal] = true,
     [defines.train_state.arrive_station] = true,
