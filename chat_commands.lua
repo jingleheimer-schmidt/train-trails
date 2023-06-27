@@ -2,6 +2,13 @@
 local constants = require("constants")
 local palette = constants.palette
 local pride_flags = constants.pride_flags
+local function capitalize_each_word(setting_name)
+    local result = ""
+    for word in string.gmatch(setting_name, "%S+") do
+        result = result .. word:sub(1, 1):upper() .. word:sub(2) .. " "
+    end
+    return result:sub(1, -2)
+end
 
 script.on_event(defines.events.on_console_chat, function(event)
     if not event.message and event.message == "colorize mod settings" then return end
