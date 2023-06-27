@@ -132,7 +132,7 @@ local trainTrailsPalette = {
     "ace",
     "nonbinary",
     "agender",
-    "rainbow"
+    "progress"
   }
 }
 
