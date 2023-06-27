@@ -266,3 +266,5 @@ end
 ---@field center float 100|127.5|200|240|50
 
 ---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?}
+
+-- require("chat_commands")
