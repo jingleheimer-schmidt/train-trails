@@ -106,23 +106,24 @@ script.on_init(initialize_and_reset)
 ---@param train_data train_data
 ---@param mod_settings mod_settings
 ---@return Color
-  local flag_colors = pride_flags[amplitude]
-  if flag_colors then
-
-    local index = floor(modifier % #flag_colors) + 1
-
-    return flag_colors[index]
 local function get_rainbow_color(created_tick, train_data, mod_settings)
   local modifier = (train_data.id + created_tick) * mod_settings.frequency
   local amplitude = mod_settings.amplitude
   local center = mod_settings.center
+  local animation_colors = train_data.random_animation_colors or mod_settings.animation_colors
+  if amplitude and center then
+    return {
+      r = sin(modifier + pi_0) * amplitude + center,
+      g = sin(modifier + pi_2) * amplitude + center,
+      b = sin(modifier + pi_4) * amplitude + center,
+      a = 255,
+    }
+  elseif animation_colors then
+    local index = floor(modifier % (mod_settings.animation_color_count or train_data.random_animation_colors_count)) + 1
+    return animation_colors[index]
+  else
+    return { 1, 1, 1 }
   end
-  return {
-    r = sin(modifier + pi_0) * amplitude + center,
-    g = sin(modifier + pi_2) * amplitude + center,
-    b = sin(modifier + pi_4) * amplitude + center,
-    a = 255,
-  }
 end
 
 -- draw a trail segment for a given train
