@@ -103,19 +103,19 @@ script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
 
 ---@param created_tick number
----@param train_id number
----@param frequency number
----@param amplitude number
----@param center number
+---@param train_data train_data
+---@param mod_settings mod_settings
 ---@return Color
-local function get_rainbow_color(created_tick, train_id, frequency, amplitude, center)
-  local modifier = (train_id + created_tick) * frequency
   local flag_colors = pride_flags[amplitude]
   if flag_colors then
 
     local index = floor(modifier % #flag_colors) + 1
 
     return flag_colors[index]
+local function get_rainbow_color(created_tick, train_data, mod_settings)
+  local modifier = (train_data.id + created_tick) * mod_settings.frequency
+  local amplitude = mod_settings.amplitude
+  local center = mod_settings.center
   end
   return {
     r = sin(modifier + pi_0) * amplitude + center,
@@ -139,7 +139,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     color = default_chat_colors[mod_settings.default_color] --[[@as Color]]
   end
   if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
-    color = get_rainbow_color(event_tick, train_data.id, mod_settings.frequency, mod_settings.amplitude, mod_settings.center)
+    color = get_rainbow_color(event_tick, train_data, mod_settings)
   end
   if not color then return end
 
