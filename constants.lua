@@ -301,6 +301,8 @@ local active_states = {
 
 return {
     speeds = speeds,
+    original_palettes = palettes,
+    pride_flag_palettes = pride_flag_palettes,
     national_flag_palettes = national_flag_palettes,
     seasonal_color_palettes = seasonal_color_palettes,
     animation_palettes = animation_palettes,
