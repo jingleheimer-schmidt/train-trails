@@ -15,7 +15,14 @@ local trainTrailsGlow = {
   default_value = true
 }
 
+local trainTrailsPassengersOnly = {
+  type = "bool-setting",
+  name = "train-trails-passengers-only",
+  setting_type = "runtime-global",
   order = "a - bools",
+  default_value = false
+}
+
 local trainTrailsColorAndGLow = {
   type = "string-setting",
   name = "train-trails-color-and-glow",
@@ -28,13 +35,6 @@ local trainTrailsColorAndGLow = {
     "glow-only",
     "none"
   }
-}
-
-local trainTrailsPassengersOnly = {
-  type = "bool-setting",
-  name = "train-trails-passengers-only",
-  setting_type = "runtime-global",
-  default_value = false
 }
 
 local trainTrailsScale = {
@@ -87,7 +87,31 @@ local trainTrailsColorSync = {
   }
 }
 
+local trainTrailsDefaultTrailColor = {
+  type = "string-setting",
+  name = "train-trails-default-color",
+  setting_type = "runtime-global",
   order = "c - color - 2",
+  default_value = "rainbow",
+  allowed_values = {
+    "nil",
+    "rainbow",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "black",
+    "white",
+    "pink",
+    "gray",
+    "cyan",
+    "brown",
+    "acid"
+  }
+}
+
 local trainTrailsPalette = {
   type = "string-setting",
   name = "train-trails-palette",
@@ -139,30 +163,6 @@ local trainTrailsBalance = {
     "balanced",
     "pretty",
     "super-pretty"
-  }
-}
-
-local trainTrailsDefaultTrailColor = {
-  type = "string-setting",
-  name = "train-trails-default-color",
-  setting_type = "runtime-global",
-  default_value = "rainbow",
-  allowed_values = {
-    "nil",
-    "rainbow",
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "purple",
-    "black",
-    "white",
-    "pink",
-    "gray",
-    "cyan",
-    "brown",
-    "acid"
   }
 }
 
