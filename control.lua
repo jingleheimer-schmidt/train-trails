@@ -5,8 +5,15 @@ Trian Trails control script © 2023 by asher_sky is licensed under Attribution-N
 
 local constants = require("constants")
 local speeds = constants.speeds
-local palettes = constants.palettes
-local pride_flags = constants.pride_flags
+local original_palettes = constants.original_palettes
+local animation_palettes = constants.animation_palettes
+local pride_flag_palettes = constants.pride_flag_palettes
+local national_flag_palettes = constants.national_flag_palettes
+local seasonal_color_palettes = constants.seasonal_color_palettes
+local animation_names = constants.animation_names
+local pride_flag_names = constants.pride_flag_names
+local national_flag_names = constants.national_flag_names
+local seasonal_color_names = constants.seasonal_color_names
 local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
@@ -16,15 +23,34 @@ local sin = math.sin
 local abs = math.abs
 local max = math.max
 local floor = math.floor
+local random = math.random
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
+-- gets a random color palette within mod setting restrictions
+---@return Color.0|Color.1[]?
+local function get_random_palette()
+  local mod_settings = global.settings
+  local palette_name = mod_settings.palette
+  local palette_names = {
+    ["random all"] = animation_names,
+    ["random pride"] = pride_flag_names,
+    ["random country"] = national_flag_names,
+    ["random seasonal"] = seasonal_color_names
+  }
+  local index = palette_names[palette_name] and random(#palette_names[palette_name]) or nil
+  local random_palette_name = palette_names[palette_name] and palette_names[palette_name][index] or nil
+  local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
+  return random_palette
+end
+
 -- add static data to the active_trains table to reduce lookup time
 ---@param train LuaTrain
 local function add_active_train(train)
+  local random_palette = get_random_palette()
   global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
   global.active_trains[train.id] = {
     length = #train.carriages,
@@ -33,6 +59,8 @@ local function add_active_train(train)
     id = train.id,
     front_stock = train.front_stock,
     back_stock = train.back_stock,
+    random_animation_colors = random_palette,
+    random_animation_colors_count = random_palette and #random_palette,
   }
 end
 
