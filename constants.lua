@@ -91,6 +91,67 @@ local pride_flag_palettes = {
 }
 
 ---@type {string: Color[]}
+local seasonal_color_palettes = {
+    ["fresh spring"] = {
+        util.color("#BBE7C6"),
+        util.color("#A4DEAB"),
+        util.color("#D7E8BA"),
+        util.color("#FAF3DD"),
+        util.color("#F3D250")
+    },
+    ["blossoming spring"] = {
+        util.color("#F9C1BB"),
+        util.color("#FDD6BD"),
+        util.color("#FFF3D4"),
+        util.color("#BCD8BF"),
+        util.color("#93C4AE")
+    },
+    ["vibrant summer"] = {
+        util.color("#FF6F69"),
+        util.color("#FFCC5C"),
+        util.color("#88D8B0"),
+        util.color("#5A9E6E"),
+        util.color("#49796B")
+    },
+    ["lively summer"] = {
+        util.color("#F3D250"),
+        util.color("#FFEE8A"),
+        util.color("#FFCB74"),
+        util.color("#FF9F6E"),
+        util.color("#FF677D")
+    },
+    ["golden autumn"] = {
+        util.color("#E8A87C"),
+        util.color("#C38D9E"),
+        util.color("#A6A5B5"),
+        util.color("#98C1D9"),
+        util.color("#FFD28F")
+    },
+    ["crisp autumn"] = {
+        util.color("#FF8666"),
+        util.color("#FFB383"),
+        util.color("#FFD9A5"),
+        util.color("#F7F0B3"),
+        util.color("#BFD5AA")
+    },
+    ["cozy winter"] = {
+        util.color("#FFE6E8"),
+        util.color("#F2EFFD"),
+        util.color("#D9E4F5"),
+        util.color("#A1C4F2"),
+        util.color("#7FB8F5")
+    },
+    ["serene winter"] = {
+        util.color("#D1E3FF"),
+        util.color("#D8D7F8"),
+        util.color("#F0D6FF"),
+        util.color("#FFE1F0"),
+        util.color("#E9F0FF")
+    }
+}
+-- util.color("#"),
+
+---@type {string: Color[]}
 local animation_palettes = {}
 for name, colors in pairs(pride_flag_palettes) do
     animation_palettes[name] = colors
@@ -178,6 +239,7 @@ local active_states = {
 
 return {
     speeds = speeds,
+    seasonal_color_palettes = seasonal_color_palettes,
     animation_palettes = animation_palettes,
     animation_names = animation_names,
     pride_flag_names = pride_flag_names,
