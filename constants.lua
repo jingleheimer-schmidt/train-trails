@@ -91,6 +91,68 @@ local pride_flag_palettes = {
 }
 
 ---@type {string: Color[]}
+local national_flag_palettes = {
+    ["china"] = {
+        util.color("#EE1C25"), -- red
+        util.color("#FFFF00"), -- yellow
+    },
+    ["india"] = {
+        util.color("#FF9933"), -- saffron
+        util.color("#FFFFFF"), -- white
+        util.color("#138808"), -- green
+        util.color("#000080"), -- navy blue
+    },
+    ["united states"] = {
+        util.color("#B31942"), -- red
+        util.color("#FFFFFF"), -- white
+        util.color("#0A3161"), -- blue
+    },
+    ["brazil"] = {
+        util.color("#009739"), -- green
+        util.color("#FEDD00"), -- yellow
+        util.color("#FFFFFF"), -- white
+        util.color("#012169"), -- blue
+    },
+    ["russia"] = {
+        util.color("#FFFFFF"), -- white
+        util.color("#1C3578"), -- blue
+        util.color("#E4181C"), -- red
+    },
+    ["mexico"] = {
+        util.color("#006341"), -- dark green
+        util.color("#FFFFFF"), -- white
+        util.color("#C8102E"), -- red
+    },
+    ["japan"] = {
+        util.color("#BC002D"), -- red
+        util.color("#FFFFFF"), -- white
+    },
+    ["germany"] = {
+        util.color("#000000"), -- schwarz
+        util.color("#DD0000"), -- rot
+        util.color("#FFCE00"), -- gold
+    },
+    ["united kingdom"] = {
+        util.color("#FFFFFF"), -- white
+        util.color("#C8102E"), -- red
+        util.color("#012169"), -- blue
+    },
+    ["ukraine"] = {
+        util.color("#0057B7"), -- blue
+        util.color("#FFDD00"), -- yellow
+    },
+    ["czech republic"] = {
+        util.color("#11457E"), -- blue
+        util.color("#FFFFFF"), -- white
+        util.color("#D7141A"), -- red
+    },
+    ["sweden"] = {
+        util.color("#006AA7"), -- blue
+        util.color("#FECC02"), -- yellow
+    }
+}
+
+---@type {string: Color[]}
 local seasonal_color_palettes = {
     ["fresh spring"] = {
         util.color("#BBE7C6"),
@@ -239,6 +301,7 @@ local active_states = {
 
 return {
     speeds = speeds,
+    national_flag_palettes = national_flag_palettes,
     seasonal_color_palettes = seasonal_color_palettes,
     animation_palettes = animation_palettes,
     animation_names = animation_names,
