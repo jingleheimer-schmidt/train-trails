@@ -90,6 +90,30 @@ local pride_flag_palettes = {
     }
 }
 
+---@type string[]
+local animation_names = {}
+for name, _ in pairs(animation_palettes) do
+    table.insert(animation_names, name)
+end
+
+---@type string[]
+local pride_flag_names = {}
+for name, _ in pairs(pride_flag_palettes) do
+    table.insert(pride_flag_names, name)
+end
+
+---@type string[]
+local national_flag_names = {}
+for name, _ in pairs(national_flag_palettes) do
+    table.insert(national_flag_names, name)
+end
+
+---@type string[]
+local seasonal_color_names = {}
+for name, _ in pairs(seasonal_color_palettes) do
+    table.insert(seasonal_color_names, name)
+end
+
 local default_chat_colors = {
     ["red"] = { r = 1.000, g = 0.166, b = 0.141 } --[[@type Color]],
     ["orange"] = { r = 1.000, g = 0.630, b = 0.259 } --[[@type Color]],
@@ -142,6 +166,10 @@ local active_states = {
 
 return {
     speeds = speeds,
+    animation_names = animation_names,
+    pride_flag_names = pride_flag_names,
+    national_flag_names = national_flag_names,
+    seasonal_color_names = seasonal_color_names,
     default_chat_colors = default_chat_colors,
     balance_to_ticks = balance_to_ticks,
     trail_types = trail_types,
