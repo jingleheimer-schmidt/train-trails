@@ -15,8 +15,8 @@ local palettes = {
 }
 
 require("util")
---- @type table<string, Color[]>
-local pride_flags = {
+---@type {string: Color[]}
+local pride_flag_palettes = {
     ["trans"] = {            -- trans pride
         util.color("#5BCEFA"), -- light blue
         util.color("#F5A9B8"), -- light pink
@@ -142,8 +142,6 @@ local active_states = {
 
 return {
     speeds = speeds,
-    palettes = palettes,
-    pride_flags = pride_flags,
     default_chat_colors = default_chat_colors,
     balance_to_ticks = balance_to_ticks,
     trail_types = trail_types,
