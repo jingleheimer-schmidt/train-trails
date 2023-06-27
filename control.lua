@@ -55,9 +55,9 @@ end
 ---@param event EventData.on_train_changed_state
 local function on_train_changed_state(event)
   local train = event.train
-  if active_states[train.state] then
+  if active_states[train.state] and not active_states[event.old_state] then
     add_active_train(train)
-  else
+  elseif not active_states[train.state] then
     remove_active_train(train)
   end
 end
