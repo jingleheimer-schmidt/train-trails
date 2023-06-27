@@ -90,6 +90,18 @@ local pride_flag_palettes = {
     }
 }
 
+---@type {string: Color[]}
+local animation_palettes = {}
+for name, colors in pairs(pride_flag_palettes) do
+    animation_palettes[name] = colors
+end
+for name, colors in pairs(national_flag_palettes) do
+    animation_palettes[name] = colors
+end
+for name, colors in pairs(seasonal_color_palettes) do
+    animation_palettes[name] = colors
+end
+
 ---@type string[]
 local animation_names = {}
 for name, _ in pairs(animation_palettes) do
@@ -166,6 +178,7 @@ local active_states = {
 
 return {
     speeds = speeds,
+    animation_palettes = animation_palettes,
     animation_names = animation_names,
     pride_flag_names = pride_flag_names,
     national_flag_names = national_flag_names,
