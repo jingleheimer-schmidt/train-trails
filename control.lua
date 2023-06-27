@@ -68,18 +68,23 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
   local settings = settings.global
+  local palette_name = settings["train-trails-palette"].value --[[@as string]]
+  ---@type mod_settings
   global.settings = {
-    sprite = trail_types.sprite[ settings["train-trails-color-and-glow"].value --[[@as "color-and-glow"|"color-only"|"glow-only"|"none"]] ],
-    light = trail_types.light[ settings["train-trails-color-and-glow"].value --[[@as "color-and-glow"|"color-only"|"glow-only"|"none"]] ],
+    sprite = trail_types.sprite[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
+    light = trail_types.light[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
     length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
     scale = tonumber(settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
-    color_type = settings["train-trails-color-type"].value --[[@as "rainbow"|"train"]],
-    balance = balance_to_ticks[ settings["train-trails-balance"].value --[[@as "performance"|"balanced"|"pretty"|"super-pretty"]] ],
+    color_type = settings["train-trails-color-type"].value --[[@as string]],
+    balance = balance_to_ticks[ settings["train-trails-balance"].value --[[@as string]] ],
     passengers_only = settings["train-trails-passengers-only"].value --[[@as boolean]],
-    default_color = default_chat_colors[ settings["train-trails-default-color"].value --[[@as "nil"|"rainbow"|"red"|"orange"|"yellow"|"green"|"blue"|"purple"|"black"|"white"|"pink"|"gray"|"cyan"|"brown"|"acid"]] ],
-    frequency = speeds[ settings["train-trails-speed"].value --[[@as  "veryslow"|"slow"|"default"|"fast"|"veryfast"]] ],
-    amplitude = palette[ settings["train-trails-palette"].value --[[@as "light"|"pastel"|"default"|"vibrant"|"deep"|"trans"|"lesbian"|"bi"|"nonbinary"]] ].amplitude,
-    center = palette[ settings["train-trails-palette"].value --[[@as "light"|"pastel"|"default"|"vibrant"|"deep"|"trans"|"lesbian"|"bi"|"nonbinary"]] ].center,
+    default_color = default_chat_colors[ settings["train-trails-default-color"].value --[[@as string]] ],
+    frequency = speeds[ settings["train-trails-speed"].value --[[@as string]] ],
+    amplitude = original_palettes[palette_name] and original_palettes[palette_name].amplitude,
+    center = original_palettes[palette_name] and original_palettes[palette_name].center,
+    animation_colors = animation_palettes[palette_name],
+    animation_color_count = animation_palettes[palette_name] and #animation_palettes[palette_name],
+    palette = palette_name,
   }
 end
 
