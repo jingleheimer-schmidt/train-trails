@@ -15,11 +15,12 @@ local trainTrailsGlow = {
   default_value = true
 }
 
+  order = "a - bools",
 local trainTrailsColorAndGLow = {
   type = "string-setting",
   name = "train-trails-color-and-glow",
   setting_type = "runtime-global",
-  order = "a",
+  order = "b - basics - 1",
   default_value = "color-and-glow",
   allowed_values = {
     "color-and-glow",
@@ -33,7 +34,6 @@ local trainTrailsPassengersOnly = {
   type = "bool-setting",
   name = "train-trails-passengers-only",
   setting_type = "runtime-global",
-  order = "c",
   default_value = false
 }
 
@@ -41,7 +41,7 @@ local trainTrailsScale = {
   type = "string-setting",
   name = "train-trails-scale",
   setting_type = "runtime-global",
-  order = "d",
+  order = "b - basics - 2",
   default_value = "5",
   allowed_values = {
     "1",
@@ -60,7 +60,7 @@ local trainTrailsLength = {
   type = "string-setting",
   name = "train-trails-length",
   setting_type = "runtime-global",
-  order = "e",
+  order = "b - basics - 1",
   default_value = "120",
   allowed_values = {
     "15",
@@ -79,7 +79,7 @@ local trainTrailsColorSync = {
   type = "string-setting",
   name = "train-trails-color-type",
   setting_type = "runtime-global",
-  order = "f",
+  order = "c - color - 1",
   default_value = "train",
   allowed_values = {
     "train",
@@ -87,11 +87,12 @@ local trainTrailsColorSync = {
   }
 }
 
+  order = "c - color - 2",
 local trainTrailsPalette = {
   type = "string-setting",
   name = "train-trails-palette",
   setting_type = "runtime-global",
-  order = "g",
+  order = "c - color - 3",
   default_value = "default",
   allowed_values = {
     "light",
@@ -115,7 +116,7 @@ local trainTrailsSpeed = {
   type = "string-setting",
   name = "train-trails-speed",
   setting_type = "runtime-global",
-  order = "h",
+  order = "c - color - 4",
   default_value = "default",
   allowed_values = {
     "veryslow",
@@ -130,7 +131,7 @@ local trainTrailsBalance = {
   type = "string-setting",
   name = "train-trails-balance",
   setting_type = "runtime-global",
-  order = "i",
+  order = "d - balance - 1",
   default_value = "pretty",
   allowed_values = {
     -- "super-performance",
@@ -145,7 +146,6 @@ local trainTrailsDefaultTrailColor = {
   type = "string-setting",
   name = "train-trails-default-color",
   setting_type = "runtime-global",
-  order = "j",
   default_value = "rainbow",
   allowed_values = {
     "nil",
