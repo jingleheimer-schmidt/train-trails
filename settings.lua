@@ -119,11 +119,15 @@ local trainTrailsPalette = {
   order = "c - color - 3",
   default_value = "default",
   allowed_values = {
+    "random all",
+    -- original:
     "light",
     "pastel",
     "default",
     "vibrant",
     "deep",
+    -- pride flags:
+    "random pride",
     "lesbian",
     "gay",
     "bi",
@@ -132,7 +136,31 @@ local trainTrailsPalette = {
     "ace",
     "nonbinary",
     "agender",
-    "progress"
+    "progress",
+    -- seasonal:
+    "random seasonal",
+    "fresh spring",
+    "blossoming spring",
+    "vibrant summer",
+    "lively summer",
+    "golden autumn",
+    "crisp autumn",
+    "cozy winter",
+    "serene winter",
+    -- country flags:
+    "random country",
+    "china",
+    "india",
+    "united states",
+    "brazil",
+    "russia",
+    "mexico",
+    "japan",
+    "germany",
+    "united kingdom",
+    "ukraine",
+    "czech republic",
+    "sweden"
   }
 }
 
@@ -179,3 +207,5 @@ data:extend({
   trainTrailsBalance,
   trainTrailsDefaultTrailColor
 })
+
+require("colorize_locale")
