@@ -257,14 +257,15 @@ end
 ---@field light boolean
 ---@field length uint 15|30|60|90|120|180|210|300|600
 ---@field scale float 1|2|3|4|5|6|8|11|20
----@field color_type "train"|"rainbow"
----@field balance uint 1|2|3|4
+---@field color_type string "train"|"rainbow"
+---@field balance integer 1|2|3|4
 ---@field passengers_only boolean
----@field default_color Color|"rainbow"|"train"
+---@field default_color Color|string Color|"nil"|"rainbow"
 ---@field frequency float 0.010|0.025|0.050|0.100|0.200
----@field amplitude float 127.5|15|25|50|55
----@field center float 100|127.5|200|240|50
+---@field amplitude float?
+---@field center float?
+---@field animation_colors Color[]?
+---@field animation_color_count integer?
+---@field palette string 
 
----@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?}
-
--- require("chat_commands")
+---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?}
