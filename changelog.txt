@@ -3,10 +3,10 @@ Version: 0.0.12
 Date: ????
   Changes:
     - increased variable trail length to +1 seconds per carriage
-    - added variable trail scale based on train speed, with minimum of half the specified scale
     - reduced train processing to only iterate trains with an active state
     - trails are only rendered for trains on surfaces that are visible to a player
     - combined "Color" and "Glow" mod settings into a single dropdown selection
+    - added variable trail scale based on train speed, with minimum of 2/3 the scale specified in mod settings
     - renamed rainbow palette and rainbow speed mod settings to animation palette and animation speed
     - added pride flag color palettes for animated train trails
     - added natural color palettes for animated train trails
