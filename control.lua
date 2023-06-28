@@ -10,10 +10,12 @@ local animation_palettes = constants.animation_palettes
 local pride_flag_palettes = constants.pride_flag_palettes
 local national_flag_palettes = constants.national_flag_palettes
 local seasonal_color_palettes = constants.seasonal_color_palettes
+local natural_palettes = constants.natural_palettes
 local animation_names = constants.animation_names
 local pride_flag_names = constants.pride_flag_names
 local national_flag_names = constants.national_flag_names
 local seasonal_color_names = constants.seasonal_color_names
+local natural_palette_names = constants.natural_palette_names
 local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
@@ -39,7 +41,8 @@ local function get_random_palette()
     ["random all"] = animation_names,
     ["random pride"] = pride_flag_names,
     ["random country"] = national_flag_names,
-    ["random seasonal"] = seasonal_color_names
+    ["random seasonal"] = seasonal_color_names,
+    ["random natural"] = natural_palette_names,
   }
   local index = palette_names[palette_name] and random(#palette_names[palette_name]) or nil
   local random_palette_name = palette_names[palette_name] and palette_names[palette_name][index] or nil

@@ -4,6 +4,7 @@ local palettes = constants.original_palettes
 local pride_flag_palettes = constants.pride_flag_palettes
 local national_flag_palettes = constants.national_flag_palettes
 local seasonal_color_palettes = constants.seasonal_color_palettes
+local natural_palettes = constants.natural_palettes
 
 local function capitalize_each_word(setting_name)
     local result = ""
@@ -40,14 +41,15 @@ for _, setting_value in pairs(allowed_values) do
     local pride_flag = pride_flag_palettes[setting_value]
     local country_flag = national_flag_palettes[setting_value]
     local seasonal_colors = seasonal_color_palettes[setting_value]
+    local natural_colors = natural_palettes[setting_value]
 
     local capitalized_name = capitalize_each_word(setting_value)
 
     local canvas = "|||||||||||||||"
-    local colors = pride_flag or country_flag or seasonal_colors
+    local colors = pride_flag or country_flag or seasonal_colors or natural_colors
     local colorized_canvas = colors and colorize(canvas, colors) or canvas
 
-    local type = pride_flag and "Pride" or country_flag and "Country" or seasonal_colors and "Seasonal" or ""
+    local type = pride_flag and "Pride" or country_flag and "Country" or seasonal_colors and "Seasonal" or natural_colors and "Natural" or ""
 
     local locale = setting_name .. "-" .. setting_value .. "=" .. type .. ": " .. colorized_canvas .. " " .. capitalized_name
 

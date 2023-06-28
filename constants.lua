@@ -214,6 +214,226 @@ local seasonal_color_palettes = {
         util.color("#E9F0FF")
     }
 }
+
+local natural_palettes = {
+    ["water"] = {
+        util.color("#71A8D2"),
+        util.color("#4D8EB6"),
+        util.color("#336E94"),
+        util.color("#234E6E"),
+        util.color("#173C52"),
+        util.color("#0F2D40"),
+        util.color("#091E2D")
+    },
+    ["earth"] = {
+        util.color("#B78E5C"),
+        util.color("#9E7749"),
+        util.color("#835C38"),
+        util.color("#6B4629"),
+        util.color("#52311C"),
+        util.color("#3A1C10"),
+        util.color("#261007")
+    },
+    ["fire"] = {
+        util.color("#FF4D00"),
+        util.color("#FF6900"),
+        util.color("#FF8519"),
+        util.color("#FF9C33"),
+        util.color("#FFB14D"),
+        util.color("#FFC766"),
+        util.color("#FFDF80")
+    },
+    ["air"] = {
+        util.color("#E6F7FF"),
+        util.color("#CCEAFF"),
+        util.color("#B3E3FF"),
+        util.color("#99D9FF"),
+        util.color("#80CFFF"),
+        util.color("#66C4FF"),
+        util.color("#4DBAFF")
+    },
+    ["ice"] = {
+        util.color("#C3E6FF"),
+        util.color("#A6D9FF"),
+        util.color("#8ACBFF"),
+        util.color("#6EBDFF"),
+        util.color("#52B0FF"),
+        util.color("#3692E6"),
+        util.color("#1A74CC")
+    },
+    ["sunlight"] = {
+        util.color("#FFFAE5"),
+        util.color("#FFF2CC"),
+        util.color("#FFEAB3"),
+        util.color("#FFD999"),
+        util.color("#FFD080"),
+        util.color("#FFC266"),
+        util.color("#FFBA4D")
+    },
+    ["moonlight"] = {
+        util.color("#E5E5FF"),
+        util.color("#CCCCFF"),
+        util.color("#B3B3FF"),
+        util.color("#9999FF"),
+        util.color("#8080FF"),
+        util.color("#6666FF"),
+        util.color("#4D4DFF")
+    },
+    ["stars"] = {
+        util.color("#FFF5E5"),
+        util.color("#FFEBCC"),
+        util.color("#FFE0B3"),
+        util.color("#FFD699"),
+        util.color("#FFCC80"),
+        util.color("#FFC266"),
+        util.color("#FFB84D")
+    },
+    ["sunrise"] = {
+        util.color("#FF9F6E"),
+        util.color("#FFB488"),
+        util.color("#FFCFA2"),
+        util.color("#FFDDBC"),
+        util.color("#FFECD6"),
+        util.color("#FFF5F0"),
+        util.color("#FFFBFA")
+    },
+    ["sunset"] = {
+        util.color("#FF6F69"),
+        util.color("#FF867D"),
+        util.color("#FF9D91"),
+        util.color("#FFB3A5"),
+        util.color("#FFCAB9"),
+        util.color("#FFD1C6"),
+        util.color("#FFE8DC")
+    },
+    ["fog"] = {
+        util.color("#D9D9D9"),
+        util.color("#C0C0C0"),
+        util.color("#A6A6A6"),
+        util.color("#8C8C8C"),
+        util.color("#737373"),
+        util.color("#595959"),
+        util.color("#404040")
+    },
+    ["rain"] = {
+        util.color("#5CC8FF"),
+        util.color("#49B5FF"),
+        util.color("#37A2FF"),
+        util.color("#248FFF"),
+        util.color("#127CFF"),
+        util.color("#0069FF"),
+        util.color("#0056E6")
+    },
+    ["snow"] = {
+        util.color("#FFFFFF"),
+        util.color("#F2F2F2"),
+        util.color("#E5E5E5"),
+        util.color("#D8D8D8"),
+        util.color("#CCCCCC"),
+        util.color("#BFBFBF"),
+        util.color("#B3B3B3")
+    },
+    ["forest"] = {
+        util.color("#006400"),
+        util.color("#008000"),
+        util.color("#228B22"),
+        util.color("#2E8B57"),
+        util.color("#3CB371"),
+        util.color("#6B8E23"),
+        util.color("#808000")
+    },
+    ["meadow"] = {
+        util.color("#7CFC00"),
+        util.color("#ADFF2F"),
+        util.color("#9ACD32"),
+        util.color("#32CD32"),
+        util.color("#228B22"),
+        util.color("#008000"),
+        util.color("#006400")
+    },
+    ["ocean"] = {
+        util.color("#1F8EAA"),
+        util.color("#3E9CBF"),
+        util.color("#5BAED3"),
+        util.color("#79BDDF"),
+        util.color("#98CCEC"),
+        util.color("#B6DBF9"),
+        util.color("#D5EBFF")
+    },
+    ["desert"] = {
+        util.color("#D2B48C"),
+        util.color("#C8AD81"),
+        util.color("#BEA476"),
+        util.color("#B49E6B"),
+        util.color("#AA9761"),
+        util.color("#A08F56"),
+        util.color("#96884B")
+    },
+    ["mountain"] = {
+        util.color("#5D5349"),
+        util.color("#736B61"),
+        util.color("#8A8378"),
+        util.color("#A19A8F"),
+        util.color("#B895A6"),
+        util.color("#D18FBF"),
+        util.color("#EB8ADA")
+    },
+    ["rainforest"] = {
+        util.color("#008B45"),
+        util.color("#00A157"),
+        util.color("#00AD6E"),
+        util.color("#00B786"),
+        util.color("#00C3A0"),
+        util.color("#00D0BA"),
+        util.color("#00DDD4")
+    },
+    ["coral reef"] = {
+        util.color("#FF6C40"),
+        util.color("#FF7F50"),
+        util.color("#FF9360"),
+        util.color("#FFA673"),
+        util.color("#FFB986"),
+        util.color("#FFCCA0"),
+        util.color("#FFE0B9")
+    },
+    ["volcano"] = {
+        util.color("#800000"),
+        util.color("#8E0C00"),
+        util.color("#9C1800"),
+        util.color("#AA2400"),
+        util.color("#B83000"),
+        util.color("#C63C00"),
+        util.color("#D44800")
+    },
+    ["waterfall"] = {
+        util.color("#4D74FF"),
+        util.color("#5A81FF"),
+        util.color("#678EFF"),
+        util.color("#74A8FF"),
+        util.color("#81B5FF"),
+        util.color("#8EC3FF"),
+        util.color("#9BD0FF")
+    },
+    ["cave"] = {
+        util.color("#4D4D4D"),
+        util.color("#595959"),
+        util.color("#666666"),
+        util.color("#737373"),
+        util.color("#808080"),
+        util.color("#8C8C8C"),
+        util.color("#999999")
+    },
+    ["canyon"] = {
+        util.color("#AB4E20"),
+        util.color("#BF5B23"),
+        util.color("#D16826"),
+        util.color("#E07529"),
+        util.color("#EE822C"),
+        util.color("#FA8F2F"),
+        util.color("#FF9C32")
+    }
+}
+
 -- util.color("#"),
 
 ---@type {string: Color[]}
@@ -225,6 +445,9 @@ for name, colors in pairs(national_flag_palettes) do
     animation_palettes[name] = colors
 end
 for name, colors in pairs(seasonal_color_palettes) do
+    animation_palettes[name] = colors
+end
+for name, colors in pairs(natural_palettes) do
     animation_palettes[name] = colors
 end
 
@@ -250,6 +473,12 @@ end
 local seasonal_color_names = {}
 for name, _ in pairs(seasonal_color_palettes) do
     table.insert(seasonal_color_names, name)
+end
+
+---@type string[]
+local natural_palette_names = {}
+for name, _ in pairs(natural_palettes) do
+    table.insert(natural_palette_names, name)
 end
 
 --- @type {string: Color|string}
@@ -312,11 +541,13 @@ return {
     pride_flag_palettes = pride_flag_palettes,
     national_flag_palettes = national_flag_palettes,
     seasonal_color_palettes = seasonal_color_palettes,
+    natural_palettes = natural_palettes,
     animation_palettes = animation_palettes,
     animation_names = animation_names,
     pride_flag_names = pride_flag_names,
     national_flag_names = national_flag_names,
     seasonal_color_names = seasonal_color_names,
+    natural_palette_names = natural_palette_names,
     default_chat_colors = default_chat_colors,
     balance_to_ticks = balance_to_ticks,
     trail_types = trail_types,
