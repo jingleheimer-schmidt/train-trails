@@ -1,4 +1,3 @@
-
 ---@type {string: float}
 local speeds = {
     ["veryslow"] = 0.010,
@@ -20,14 +19,14 @@ local palettes = {
 require("util")
 ---@type {string: Color[]}
 local pride_flag_palettes = {
-    ["trans"] = {            -- trans pride
+    ["trans"] = {              -- trans pride
         util.color("#5BCEFA"), -- light blue
         util.color("#F5A9B8"), -- light pink
         util.color("#FFFFFF"), -- white
         util.color("#F5A9B8"), -- light pink
         -- util.color("#5BCEFA"), -- light blue
     },
-    ["lesbian"] = {          -- lesbian pride
+    ["lesbian"] = {            -- lesbian pride
         util.color("#D52D00"), -- dark orange
         util.color("#EF7627"), -- mid orange
         util.color("#FF9A56"), -- light orange
@@ -36,31 +35,31 @@ local pride_flag_palettes = {
         util.color("#B55690"), -- mid pink
         util.color("#A30262"), -- dark pink
     },
-    ["bi"] = {               -- bi pride
+    ["bi"] = {                 -- bi pride
         util.color("#D60270"), -- pink
         util.color("#D60270"), -- pink
         util.color("#9B4F96"), -- purple
         util.color("#0038A8"), -- blue
         util.color("#0038A8"), -- blue
     },
-    ["nonbinary"] = {        -- nonbinary pride
+    ["nonbinary"] = {          -- nonbinary pride
         util.color("#FCF434"), -- yellow
         util.color("#FFFFFF"), -- white
         util.color("#9C59D1"), -- purple
         util.color("#000000"), -- black
     },
-    ["pan"] = {              -- pan pride
+    ["pan"] = {                -- pan pride
         util.color("#FF218C"), -- pink
         util.color("#FFD800"), -- yellow
         util.color("#21B1FF"), -- blue
     },
-    ["ace"] = {              -- ace pride
+    ["ace"] = {                -- ace pride
         util.color("#000000"), -- black
         util.color("#A3A3A3"), -- grey
         util.color("#FFFFFF"), -- white
         util.color("#800080"), -- purple
     },
-    ["progress"] = {         -- progress pride
+    ["progress"] = {           -- progress pride
         util.color("#FFFFFF"), -- white
         util.color("#FFAFC8"), -- pink
         util.color("#74D7EE"), -- light blue
@@ -73,7 +72,7 @@ local pride_flag_palettes = {
         util.color("#24408E"), -- blue
         util.color("#732982"), -- purple
     },
-    ["agender"] = {          -- agender pride
+    ["agender"] = {            -- agender pride
         util.color("#000000"), -- black
         util.color("#BCC4C7"), -- grey
         util.color("#FFFFFF"), -- white
@@ -82,7 +81,7 @@ local pride_flag_palettes = {
         util.color("#BCC4C7"), -- grey
         -- util.color("#000000"), -- black
     },
-    ["gay"] = {              -- gay pride
+    ["gay"] = {                -- gay pride
         util.color("#078D70"), -- dark green
         util.color("#26CEAA"), -- medium green
         util.color("#98E8C1"), -- light green
