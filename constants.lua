@@ -61,17 +61,17 @@ local pride_flag_palettes = {
         util.color("#800080"), -- purple
     },
     ["progress"] = {         -- progress pride
+        util.color("#FFFFFF"), -- white
+        util.color("#FFAFC8"), -- pink
+        util.color("#74D7EE"), -- light blue
+        util.color("#613915"), -- brown
+        util.color("#000000"), -- black
         util.color("#E40303"), -- red
         util.color("#FF8C00"), -- orange
         util.color("#FFED00"), -- yellow
         util.color("#008026"), -- green
         util.color("#24408E"), -- blue
         util.color("#732982"), -- purple
-        util.color("#FFFFFF"), -- white
-        util.color("#FFAFC8"), -- pink
-        util.color("#74D7EE"), -- light blue
-        util.color("#613915"), -- brown
-        util.color("#000000"), -- black
     },
     ["agender"] = {          -- agender pride
         util.color("#000000"), -- black
