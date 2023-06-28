@@ -433,6 +433,95 @@ local natural_palettes = {
     }
 }
 
+local railway_company_palettes = {
+    ["deutsche bahn"] = {
+        util.color("#EC1B2D"),
+    },
+    ["SNCF"] = {
+      util.color("#007AC9"),
+      util.color("#FFCD00"),
+      util.color("#FFFFFF"),
+      util.color("#E3001B"),
+      util.color("#00A150")
+    },
+    ["russian railways"] = {
+      util.color("#00274C"),
+      util.color("#FFFFFF"),
+      util.color("#ED1C24"),
+      util.color("#FFD700"),
+      util.color("#007A33")
+    },
+    ["indian railways"] = {
+      util.color("#FF9933"),
+      util.color("#008000"),
+      util.color("#FFFFFF"),
+      util.color("#0000CC"),
+      util.color("#FFCC00")
+    },
+    ["JR east"] = {
+      util.color("#007AC9"),
+      util.color("#FFFFFF"),
+      util.color("#FFD700"),
+      util.color("#000000"),
+      util.color("#EF7C00")
+    },
+    ["union pacific"] = {
+      util.color("#FF2622"),
+      util.color("#F9C11C"),
+      util.color("#1D5C9E"),
+      util.color("#FFFFFF"),
+      util.color("#FFD200")
+    },
+    ["BNSF"] = {
+      util.color("#FF0000"),
+      util.color("#FFFFFF"),
+      util.color("#0E2447"),
+      util.color("#B8CCE4"),
+      util.color("#FFAA00")
+    },
+    ["JR central"] = {
+      util.color("#000000"),
+      util.color("#FFFFFF"),
+      util.color("#E60012"),
+      util.color("#0090D0"),
+      util.color("#FFD700")
+    },
+    ["CSX"] = {
+      util.color("#003399"),
+      util.color("#FFCC00"),
+      util.color("#FFFFFF"),
+      util.color("#990000"),
+      util.color("#CCCCCC")
+    },
+    ["canadian national rail"] = {
+      util.color("#FF0000"),
+      util.color("#FFD600"),
+      util.color("#0000FF"),
+      util.color("#FFFFFF"),
+      util.color("#00A651")
+    },
+    ["trenitalia"] = {
+      util.color("#009FE3"),
+      util.color("#FFFFFF"),
+      util.color("#FFD500"),
+      util.color("#009345"),
+      util.color("#000000")
+    },
+    ["norfolk southern"] = {
+      util.color("#E2001A"),
+      util.color("#FFFFFF"),
+      util.color("#000000"),
+      util.color("#B8CCE4"),
+      util.color("#FF7900")
+    },
+    ["amtrak"] = {
+      util.color("#0A3D6B"),
+      util.color("#FFFFFF"),
+      util.color("#DC241F"),
+      util.color("#003D7D"),
+      util.color("#B1040E")
+    }
+  }
 -- util.color("#"),
 
 ---@type {string: Color[]}
@@ -447,6 +536,9 @@ for name, colors in pairs(seasonal_color_palettes) do
     animation_palettes[name] = colors
 end
 for name, colors in pairs(natural_palettes) do
+    animation_palettes[name] = colors
+end
+for name, colors in pairs(railway_company_palettes) do
     animation_palettes[name] = colors
 end
 
@@ -478,6 +570,12 @@ end
 local natural_palette_names = {}
 for name, _ in pairs(natural_palettes) do
     table.insert(natural_palette_names, name)
+end
+
+---@type string[]
+local railway_palette_names = {}
+for name, _ in pairs(railway_company_palettes) do
+    table.insert(railway_palette_names, name)
 end
 
 --- @type {string: Color|string}
@@ -540,12 +638,14 @@ return {
     pride_flag_palettes = pride_flag_palettes,
     national_flag_palettes = national_flag_palettes,
     seasonal_color_palettes = seasonal_color_palettes,
+    railway_company_palettes = railway_company_palettes,
     natural_palettes = natural_palettes,
     animation_palettes = animation_palettes,
     animation_names = animation_names,
     pride_flag_names = pride_flag_names,
     national_flag_names = national_flag_names,
     seasonal_color_names = seasonal_color_names,
+    railway_palette_names = railway_palette_names,
     natural_palette_names = natural_palette_names,
     default_chat_colors = default_chat_colors,
     balance_to_ticks = balance_to_ticks,
