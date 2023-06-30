@@ -20,7 +20,7 @@ Date: 29JUN2023
     - modified setting descriptions for clarity
   Modding:
     - added integration with automatic train painter mod to set the default unpainted locomotive color to empty. with both mods using default options this allowed unpainted trains to use the animated color palettes
-    - added compatibility for other mods that add on_tick functions to the main menu simulations
+    - added compatibility for other mods that add update functions to the main menu simulations
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.11
 Date: 14AUG2022
