@@ -767,8 +767,8 @@ local simulation_script = [[
           target = position,
           surface = surface,
           tint = color,
-          x_scale = scale,
-          y_scale = scale,
+          x_scale = scale * speedScale,
+          y_scale = scale * speedScale,
           render_layer = "radius-visualization",
           time_to_live = length,
         }
@@ -780,7 +780,7 @@ local simulation_script = [[
           surface = surface,
           color = color,
           intensity = .175,
-          scale = scale * 1.75,
+          scale = scale * 1.75 * speedScale,
           render_layer = "light-effect",
           time_to_live = length,
         }
