@@ -8,7 +8,7 @@ local speeds = {
 }
 
 ---@type {string: {amplitude: float, center: float}}
-local palettes = {
+local original_palettes = {
     ["light"] = { amplitude = 15, center = 240 },
     ["pastel"] = { amplitude = 55, center = 200 },
     ["default"] = { amplitude = 127.5, center = 127.5 },
@@ -598,7 +598,7 @@ local active_states = {
 
 return {
     speeds = speeds,
-    original_palettes = palettes,
+    original_palettes = original_palettes,
     pride_flag_palettes = pride_flag_palettes,
     national_flag_palettes = national_flag_palettes,
     seasonal_color_palettes = seasonal_color_palettes,
