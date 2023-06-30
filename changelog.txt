@@ -1,18 +1,24 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.12
 Date: ????
-  Changes:
+  Optimizations:
     - performance update: now only active trains are processed, and trails for only drawn for trains on visible surfaces
-    - refined trail smoothing for trains at all speeds; implemented limit of 3 trail segments per tile
-    - increased variable trail length to +1 seconds per carriage
-    - added variable trail scale based on train speed, with minimum of 2/3 the scale specified in mod settings
-    - combined color and glow toggle mod settings into a single dropdown selector
-    - renamed rainbow palette and rainbow speed mod settings to animation palette and animation speed
+    - reduced render preparation and script update time with refined trail smoothing for trains at all speeds; implemented limit of 3 trail segments drawn per tile
+  Major Features:
     - added pride flag color palettes for animated train trails
     - added seasonal color palettes for animated train trails
+    - added railway company color palettes for animated train trails
     - added natural color palettes for animated train trails
     - added national flag color palettes for animated train trails
+    - added random color palette option for each category
+  Minor Features:
+    - increased variable trail length to + 0.5 seconds per carriage
+    - added variable trail scale based on train speed, with minimum of 2/3 the scale specified in mod settings
+    - combined color and glow toggle mod settings into a single dropdown selector
+  Locale:
+    - renamed rainbow palette and rainbow speed mod settings to animation palette and animation speed
     - modified setting descriptions for clarity
+  Modding:
     - added integration with automatic train painter mod to set the default unpainted locomotive color to empty. with both mods using default options this allowed unpainted trains to use the animated color palettes
     - added compatibility for other mods that add on_tick functions to the main menu simulations
 ---------------------------------------------------------------------------------------------------
