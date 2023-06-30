@@ -1,367 +1,329 @@
 
 --[[
-Trian Trails control script © 2022 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International. See LICENSE.txt for additional information
+Trian Trails control script © 2023 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International. See LICENSE.txt for additional information
 --]]
 
-local speeds = {
-  veryslow = 0.010,
-  slow = 0.025,
-  default = 0.050,
-  fast = 0.100,
-  veryfast = 0.200,
-}
+local constants = require("constants")
+local speeds = constants.speeds
+local original_palettes = constants.original_palettes
+local animation_palettes = constants.animation_palettes
+local pride_flag_palettes = constants.pride_flag_palettes
+local national_flag_palettes = constants.national_flag_palettes
+local seasonal_color_palettes = constants.seasonal_color_palettes
+local natural_palettes = constants.natural_palettes
+local railway_company_palettes = constants.railway_company_palettes
+local animation_names = constants.animation_names
+local pride_flag_names = constants.pride_flag_names
+local national_flag_names = constants.national_flag_names
+local seasonal_color_names = constants.seasonal_color_names
+local natural_palette_names = constants.natural_palette_names
+local railway_palette_names = constants.railway_palette_names
+local default_chat_colors = constants.default_chat_colors
+local balance_to_ticks = constants.balance_to_ticks
+local trail_types = constants.trail_types
+local active_states = constants.active_states
 
-local palette = {
-  light = {amplitude = 15, center = 240},           -- light
-  pastel = {amplitude = 55, center = 200},          -- pastel <3
-  default = {amplitude = 127.5, center = 127.5},    -- default (nyan)
-  vibrant = {amplitude = 50, center = 100},         -- muted
-  deep = {amplitude = 25, center = 50},             -- dark
-}
-
-local default_player_colors = {
-  red = { r = 0.815, g = 0.024, b = 0.0  , a = 0.5 },
-  orange = { r = 0.869, g = 0.5  , b = 0.130, a = 0.5 },
-  yellow = { r = 0.835, g = 0.666, b = 0.077, a = 0.5 },
-  green = { r = 0.093, g = 0.768, b = 0.172, a = 0.5 },
-  blue = { r = 0.155, g = 0.540, b = 0.898, a = 0.5 },
-  purple = { r = 0.485, g = 0.111, b = 0.659, a = 0.5 },
-  black = { r = 0.1  , g = 0.1  , b = 0.1,   a = 0.5 },
-  white = { r = 0.8  , g = 0.8  , b = 0.8  , a = 0.5 },
-  pink = { r = 0.929, g = 0.386, b = 0.514, a = 0.5 },
-  gray = { r = 0.4  , g = 0.4  , b = 0.4,   a = 0.5 },
-  cyan = { r = 0.275, g = 0.755, b = 0.712, a = 0.5 },
-  brown = { r = 0.300, g = 0.117, b = 0.0,   a = 0.5 },
-  acid = { r = 0.559, g = 0.761, b = 0.157, a = 0.5 },
-  rainbow = "rainbow",
-}
-
-local default_chat_colors = {
-  red = { r = 1.000, g = 0.166, b = 0.141 },
-  orange = { r = 1.000, g = 0.630, b = 0.259 },
-  yellow = { r = 1.000, g = 0.828, b = 0.231 },
-  green = { r = 0.173, g = 0.824, b = 0.250 },
-  blue = { r = 0.343, g = 0.683, b = 1.000 },
-  purple = { r = 0.821, g = 0.440, b = 0.998 },
-  black = { r = 0.1  , g = 0.1  , b = 0.1   },
-  white = { r = 0.9  , g = 0.9  , b = 0.9   },
-  pink = { r = 1.000, g = 0.520, b = 0.633 },
-  gray = { r = 0.7  , g = 0.7  , b = 0.7   },
-  cyan = { r = 0.335, g = 0.918, b = 0.866 },
-  brown = { r = 0.757, g = 0.522, b = 0.371 },
-  acid = { r = 0.708, g = 0.996, b = 0.134 },
-  rainbow = "rainbow",
-}
-
-local balance_to_ticks = {
-  -- ontick uses this to lookup which on_nth_tick version of the mod to run, based on mod settings
-  ['super-pretty'] = 1,
-  ['pretty'] = 2,
-  ['balanced'] = 3,
-  ['performance'] = 4
-}
-
--- save all these things as local vars so that we don't have to calculate and/or ask the game for them every single time
-local mod_settings
-local lua_trains
 local sin = math.sin
+local abs = math.abs
+local max = math.max
+local floor = math.floor
+local random = math.random
 local pi_0 = 0 * math.pi / 3
 local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
+local draw_light = rendering.draw_light
+local draw_sprite = rendering.draw_sprite
 
-function make_rainbow(created_tick, train_id, settings, frequency, amplitude, center)
-  -- local frequency = speeds[settings["train-trails-speed"]]
-  -- local modifier = train_id + created_tick
-  local freq_mod = (train_id + created_tick) * frequency
-  -- local palette_key = settings["train-trails-palette"]
-  -- local amplitude = palette[palette_key].amplitude
-  -- local center = palette[palette_key].center
-  return {
-    r = sin(freq_mod+pi_0)*amplitude+center,
-    g = sin(freq_mod+pi_2)*amplitude+center,
-    b = sin(freq_mod+pi_4)*amplitude+center,
-    a = 255,
+-- gets a random color palette within mod setting restrictions
+---@return Color.0|Color.1[]?
+local function get_random_palette()
+  local mod_settings = global.settings
+  local palette_name = mod_settings.palette
+  local palette_names = {
+    ["random all"] = animation_names,
+    ["random pride"] = pride_flag_names,
+    ["random country"] = national_flag_names,
+    ["random seasonal"] = seasonal_color_names,
+    ["random natural"] = natural_palette_names,
+    ["random railway"] = railway_palette_names
+  }
+  local index = palette_names[palette_name] and random(#palette_names[palette_name]) or nil
+  local random_palette_name = palette_names[palette_name] and palette_names[palette_name][index] or nil
+  local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
+  return random_palette
+end
+
+-- add static data to the active_trains table to reduce lookup time
+---@param train LuaTrain
+local function add_active_train(train)
+  local random_palette = get_random_palette()
+  global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
+  global.active_trains[train.id] = {
+    length = #train.carriages,
+    surface_index = train.carriages[1].surface_index,
+    train = train,
+    id = train.id,
+    front_stock = train.front_stock,
+    back_stock = train.back_stock,
+    random_animation_colors = random_palette,
+    random_animation_colors_count = random_palette and #random_palette,
   }
 end
 
+---@param train LuaTrain
+local function remove_active_train(train)
+  global.active_trains = global.active_trains or {}
+  global.active_trains[train.id] = nil
+end
+
+-- add new trains to the active_trains table when they are created
+---@param event EventData.on_train_created
+local function on_train_created(event)
+  local train = event.train
+  if active_states[train.state] then
+    add_active_train(train)
+  end
+end
+
+-- add or remove trains from the active_trains table when their state changes
+---@param event EventData.on_train_changed_state
+local function on_train_changed_state(event)
+  local train = event.train
+  if active_states[train.state] and not active_states[event.old_state] then
+    add_active_train(train)
+  elseif not active_states[train.state] then
+    remove_active_train(train)
+  end
+end
+
+script.on_event(defines.events.on_train_created, on_train_created)
+script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
+
+-- save mod settings to global to reduce lookup time
 local function initialize_settings()
-  -- save mod settings to global so we don't have to ask the game for them all the time
   local settings = settings.global
-  global.settings = {}
-  global.settings["train-trails-color"] = settings["train-trails-color"].value
-  global.settings["train-trails-glow"] = settings["train-trails-glow"].value
-  global.settings["train-trails-length"] = settings["train-trails-length"].value
-  global.settings["train-trails-scale"] = settings["train-trails-scale"].value
-  global.settings["train-trails-color-type"] = settings["train-trails-color-type"].value
-  global.settings["train-trails-speed"] = settings["train-trails-speed"].value
-  global.settings["train-trails-palette"] = settings["train-trails-palette"].value
-  global.settings["train-trails-balance"] = balance_to_ticks[settings["train-trails-balance"].value]
-  global.settings["train-trails-passengers-only"] = settings["train-trails-passengers-only"].value
-  global.settings["train-trails-default-color"] = settings["train-trails-default-color"].value
-  -- now transfer them to a local, i guess finding and accessing a local is a little bit faster than a global.. idk
-  mod_settings = global.settings
+  local palette_name = settings["train-trails-palette"].value --[[@as string]]
+  ---@type mod_settings
+  global.settings = {
+    sprite = trail_types.sprite[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
+    light = trail_types.light[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
+    length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
+    scale = tonumber(settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
+    color_type = settings["train-trails-color-type"].value --[[@as string]],
+    balance = balance_to_ticks[ settings["train-trails-balance"].value --[[@as string]] ],
+    passengers_only = settings["train-trails-passengers-only"].value --[[@as boolean]],
+    default_color = default_chat_colors[ settings["train-trails-default-color"].value --[[@as string]] ],
+    frequency = speeds[ settings["train-trails-speed"].value --[[@as string]] ],
+    amplitude = original_palettes[palette_name] and original_palettes[palette_name].amplitude,
+    center = original_palettes[palette_name] and original_palettes[palette_name].center,
+    animation_colors = animation_palettes[palette_name],
+    animation_color_count = animation_palettes[palette_name] and #animation_palettes[palette_name],
+    palette = palette_name,
+  }
 end
 
-local function reset_trains_global()
-  global.lua_trains = {}
-  for each, surface in pairs(game.surfaces) do
-    for every, train in pairs(surface.get_trains()) do
-      global.lua_trains[train.id] = train
+local function reset_active_trains()
+  for _, surface in pairs(game.surfaces) do
+    for _, train in pairs(surface.get_trains()) do
+      if active_states[train.state] then
+        add_active_train(train)
+      end
     end
   end
-  lua_trains = global.lua_trains
 end
---
--- local function trains_rights()
---   -- turn off the main script if the trans trails mod is active so that this one doesn't crash and cause problems, trans trails mod will handle everything :)
---   if game.active_mods["trains-rights"] then
---     script.on_event(defines.events.on_tick, nil)
---   end
--- end
 
-script.on_event(defines.events.on_runtime_mod_setting_changed, function()
+local function initialize_and_reset()
   initialize_settings()
-end)
+  reset_active_trains()
+end
 
-script.on_configuration_changed(function()
-  initialize_settings()
-  reset_trains_global()
-  -- trains_rights()
-end)
+script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_and_reset)
+script.on_configuration_changed(initialize_and_reset)
+script.on_init(initialize_and_reset)
 
-script.on_init(function()
-  initialize_settings()
-  reset_trains_global()
-  -- trains_rights()
-end)
+---@param created_tick number
+---@param mod_settings mod_settings
+---@param train_data train_data
+---@return Color
+local function get_rainbow_color(created_tick, mod_settings, train_data)
+  local modifier = (train_data.id + created_tick) * mod_settings.frequency
+  local amplitude = mod_settings.amplitude
+  local center = mod_settings.center
+  local animation_colors = train_data.random_animation_colors or mod_settings.animation_colors
+  if amplitude and center then
+    return {
+      r = sin(modifier + pi_0) * amplitude + center,
+      g = sin(modifier + pi_2) * amplitude + center,
+      b = sin(modifier + pi_4) * amplitude + center,
+      a = 255,
+    }
+  elseif animation_colors then
+    local index = floor(modifier % (mod_settings.animation_color_count or train_data.random_animation_colors_count)) + 1
+    return animation_colors[index]
+  else
+    return { 1, 1, 1 }
+  end
+end
 
-script.on_load(function()
-  mod_settings = global.settings
-  lua_trains = global.lua_trains
-end)
+-- get the color for a given trail
+---@param event_tick uint
+---@param mod_settings mod_settings
+---@param train_data train_data
+---@param stock LuaEntity
+---@return Color?
+local function get_trail_color(event_tick, mod_settings, train_data, stock)
+  local default_color = default_chat_colors[mod_settings.default_color]
+  local color_type = mod_settings.color_type
 
-script.on_event(defines.events.on_train_created, function(event)
-  if not global.lua_trains then
-    global.lua_trains = {}
-  end
-  global.lua_trains[event.train.id] = event.train
-  if event.old_train_id_1 then
-    global.lua_trains[event.old_train_id_1] = nil
-  end
-  if event.old_train_id_2 then
-    global.lua_trains[event.old_train_id_2] = nil
-  end
-  lua_trains = global.lua_trains
-end)
+  if color_type == "rainbow" then
+    return get_rainbow_color(event_tick, mod_settings, train_data)
+  elseif color_type == "train" then
+    local color = stock.color
 
-local function draw_trails(settings, stock, sprite, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-  local color = stock.color
-  -- since default color locomotives technically have "nil" color, we need to assign those ones some color. so we pick a color, based on mod settings, using the chat colors. this mod default is for "rainbow", so then the next couple lines read that and create the rainbow effect
-  if ((not color) and (color_override ~= "nil")) then
-    color = default_chat_colors[color_override] -- color_override is just the mod setting for default loco color
-  end
-  if ((color_type == "rainbow") or (color == "rainbow") or ((not color) and passengers_only)) then
-    color = make_rainbow(event_tick, train_id, settings, frequency, amplitude, center)
-  end
-  if color then
-    local position = stock.position
-    local surface = stock.surface
-    local speedScale = speed / 216
-    if sprite then
-      sprite = rendering.draw_sprite{
-        sprite = "train-trail",
-        target = position,
-        surface = surface,
-        tint = color,
-        x_scale = scale * speedScale,
-        y_scale = scale* speedScale,
-        render_layer = "radius-visualization",
-        time_to_live = length,
-      }
+    if color then
+      return color
+    elseif default_color == "rainbow" then
+      return get_rainbow_color(event_tick, mod_settings, train_data)
+    elseif type(default_color) == "table" then
+      return default_color
     end
-    if light then
-      light = rendering.draw_light{
-        sprite = "train-trail",
-        target = position,
-        surface = surface,
-        color = color,
-        intensity = .175,
-        scale = scale * 1.75 * speedScale,
-        render_layer = "light-effect",
-        time_to_live = length,
-      }
+  end
+end
+-- draw a trail segment for a given train
+---@param event_tick uint
+---@param mod_settings mod_settings
+---@param train_data train_data
+---@param speed int
+local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
+  local stock = speed > 0 and train_data.front_stock or train_data.back_stock
+  if not stock then return end
+
+  local color = get_trail_color(event_tick, mod_settings, train_data, stock)
+  if not color then return end
+
+  local position = stock.position
+  local surface = train_data.surface_index
+  local length = mod_settings.length + ((train_data.length - 1) * 30)
+  local scale = mod_settings.scale * max( abs(speed), 0.66 )
+
+  if mod_settings.sprite then
+    draw_sprite {
+      sprite = "train-trail",
+      target = position,
+      surface = surface,
+      tint = color,
+      x_scale = scale,
+      y_scale = scale,
+      render_layer = "radius-visualization",
+      time_to_live = length,
+    }
+  end
+  if mod_settings.light then
+    draw_light {
+      sprite = "train-trail",
+      target = position,
+      surface = surface,
+      color = color,
+      intensity = .175,
+      scale = scale * 1.75,
+      render_layer = "light-effect",
+      time_to_live = length,
+    }
+  end
+end
+
+-- normalize the number of trails drawn per tile to make trails look consistent at all speeds
+---@param event_tick uint
+---@param mod_settings mod_settings
+---@param train_data train_data
+local function draw_normalized_trail_segment(event_tick, mod_settings, train_data)
+  local speed = train_data.train.speed -- tiles per tick
+  if speed == 0 then return end
+
+  local train_id = train_data.id
+  local distance_counters = global.distance_counters or {}
+  local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
+
+  if tiles_since_last_trail >= 1/3 then
+    draw_trail_segment(event_tick, mod_settings, train_data, speed)
+    tiles_since_last_trail = 0
+  end
+
+  global.distance_counters[train_id] = tiles_since_last_trail
+end
+
+-- create a lookup table of surfaces that players can see
+---@return table<uint, boolean>
+local function get_visible_surfaces()
+  local visible_surfaces = {}
+  for _, player in pairs(game.connected_players) do
+    visible_surfaces[player.surface_index] = true
+  end
+  return visible_surfaces
+end
+
+-- draw trail segments for any visible active trains
+---@param event_tick uint
+---@param mod_settings mod_settings
+local function draw_trails(event_tick, mod_settings)
+  local sprite = mod_settings.sprite
+  local light = mod_settings.light
+  if not (sprite or light) then return end
+
+  local active_train_datas = global.active_trains
+  if not active_train_datas then return end
+
+  global.distance_counters = global.distance_counters or {}
+
+  if mod_settings.passengers_only then
+    for _, player in pairs(game.connected_players) do
+      local train = player.vehicle and player.vehicle.train
+      local train_data = train and (active_train_datas and active_train_datas[train.id])
+      if train_data then
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
+      end
+    end
+
+  else
+    local visible_surfaces = get_visible_surfaces()
+    for train_id, train_data in pairs(active_train_datas) do
+      if train_data.train.valid then
+        if not visible_surfaces[train_data.surface_index] then break end
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
+      else
+        global.active_trains[train_id] = nil
+      end
     end
   end
 end
 
--- this one tries to reduce the weird ballooning and frying that happens when trains go really slowly, by making slower trains draw trails less frequently than faster ones
-local function draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
-  local speed = train.speed
-  if not (speed == 0) then
-    local stock = false
-    if speed < 0 then
-      stock = train.back_stock
-    elseif speed > 0 then
-      stock = train.front_stock
-    end
-    if stock then
-      local event_tick = event.tick
-      local train_id = train.id
-      speed = speed * 216
-      --[[
-      216 is the conversion factor between tiles per tick and kilometers per hour; 60 * 3600 / 1000
-      --]]
-
-      -- local speed_less_than_200 = ((speed < 200) and (speed > 0)) or ((speed > -200) and (speed < 0))
-      -- local speed_less_than_150 = ((speed < 150) and (speed > 0)) or ((speed > -150) and (speed < 0))
-      local speed_less_than_105 = ((speed < 105) and (speed > 0)) or ((speed > -105) and (speed < 0))
-      local speed_less_than_65 = ((speed < 65) and (speed > 0)) or ((speed > -65) and (speed < 0))
-      local speed_less_than_40 = ((speed < 40) and (speed > 0)) or ((speed > -40) and (speed < 0))
-      local speed_less_than_25 = ((speed < 25) and (speed > 0)) or ((speed > -25) and (speed < 0))
-      local speed_less_than_15 = ((speed < 15) and (speed > 0)) or ((speed > -15) and (speed < 0))
-      local speed_less_than_10 = ((speed < 10) and (speed > 0)) or ((speed > -10) and (speed < 0))
-      local speed_less_than_05 = ((speed < 05) and (speed > 0)) or ((speed > -05) and (speed < 0))
-      -- game.print(speed)
-      if not global.delay_counter then
-        global.delay_counter = {}
-      end
-      if not global.delay_counter[train_id] then
-        global.delay_counter[train_id] = 0
-      end
-      local delay_counter = global.delay_counter[train_id] + 1
-      local light_delay_counter = delay_counter
-      local sprite_delay_counter = delay_counter
-      local train_length = #train.carriages
-      length = length + ((train_length - 1) * 15)
-      -- global.delay_counter[train_id] = delay_counter
-      if sprite then
-        local light_override = false
-        -- draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-        if (not speed_less_than_105) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed > 105")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed between 65 and 105")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed between 40 and 65")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed between 25 and 40")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed between 15 and 25")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed between 10 and 15")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif (not speed_less_than_05) and speed_less_than_10 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed less than 10")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        elseif speed_less_than_05 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite, light_override, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          -- game.print(game.tick.." speed less than 05")
-          -- game.print(game.tick.." delay counter: "..delay_counter)
-          sprite_delay_counter = 0
-        end
-      end
-      if light then
-        local sprite_override = false
-        if (not speed_less_than_105) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif (not speed_less_than_65) and speed_less_than_105 and (delay_counter >= 1) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif (not speed_less_than_40) and speed_less_than_65 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif (not speed_less_than_25) and speed_less_than_40 and (delay_counter >= 2) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif (not speed_less_than_15) and speed_less_than_25 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif (not speed_less_than_10) and speed_less_than_15 and (delay_counter >= 3) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif (not speed_less_than_05) and speed_less_than_10 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        elseif speed_less_than_05 and (delay_counter >= 4) then
-          draw_trails(settings, stock, sprite_override, light, event_tick, train_id, passengers_only, color_override, length, scale, color_type, frequency, amplitude, center, speed)
-          light_delay_counter = 0
-        end
-      end
-      if sprite and light then
-        delay_counter = sprite_delay_counter
-      elseif sprite then
-        delay_counter = sprite_delay_counter
-      elseif light then
-        delay_counter = light_delay_counter
-      end
-      global.delay_counter[train_id] = delay_counter
-    end
-  end
-end
-
-local function make_trails(settings, event)
-  -- first we create or get our settings
-  local sprite = settings["train-trails-color"]
-  local light = settings["train-trails-glow"]
-  -- then we make any new lights or sprites as needed
-  if sprite or light then
-    local passengers_only = settings["train-trails-passengers-only"]
-    local color_override = settings["train-trails-default-color"]
-    local length = tonumber(settings["train-trails-length"])
-    local scale = tonumber(settings["train-trails-scale"])
-    local color_type = settings["train-trails-color-type"]
-    local frequency = speeds[settings["train-trails-speed"]]
-    local palette_key = settings["train-trails-palette"]
-    local amplitude = palette[palette_key].amplitude
-    local center = palette[palette_key].center
-    --[[ if passenger mode is on, loop through the players and find their trains instead of looping through the trains to find the players, since there are almost always going to be less players than trains --]]
-    if passengers_only then
-      for _, player in pairs(game.connected_players) do
-        if player.vehicle and player.vehicle.train then
-          local train = player.vehicle.train
-          draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
-        end
-      end
-    --[[ passenger mode is not on. look through all the trains and then start drawing trails --]]
-    else
-      -- local trains = global.lua_trains
-      local trains = lua_trains -- unsure if this is necessary...
-      if not trains then return end
-      for id, train in pairs(trains) do
-        if not train.valid then
-          global.lua_trains[id] = nil
-        else
-          draw_trails_based_on_speed(event, train, settings, sprite, light, color_override, length, scale, color_type, frequency, amplitude, center, passengers_only)
-        end
-      end
-    end
+---@param event EventData.on_tick
+local function on_tick(event)
+  local mod_settings = global.settings
+  local event_tick = event.tick
+  if event_tick % mod_settings.balance == 0 then
+    draw_trails(event_tick, mod_settings)
   end
 end
 
 if not script.active_mods["trains-rights"] then
-  script.on_event(defines.events.on_tick, function(event)
-    if event.tick % mod_settings["train-trails-balance"] == 0 then
-      make_trails(mod_settings, event)
-    end
-  end)
+  script.on_event(defines.events.on_tick, on_tick)
 end
+
+---@class mod_settings
+---@field sprite boolean
+---@field light boolean
+---@field length uint 15|30|60|90|120|180|210|300|600
+---@field scale float 1|2|3|4|5|6|8|11|20
+---@field color_type string "train"|"rainbow"
+---@field balance integer 1|2|3|4
+---@field passengers_only boolean
+---@field default_color Color|string Color|"nil"|"rainbow"
+---@field frequency float 0.010|0.025|0.050|0.100|0.200
+---@field amplitude float?
+---@field center float?
+---@field animation_colors Color[]?
+---@field animation_color_count integer?
+---@field palette string 
+
+---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?}

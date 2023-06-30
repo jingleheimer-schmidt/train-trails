@@ -19,15 +19,29 @@ local trainTrailsPassengersOnly = {
   type = "bool-setting",
   name = "train-trails-passengers-only",
   setting_type = "runtime-global",
-  order = "c",
+  order = "a - bools",
   default_value = false
+}
+
+local trainTrailsColorAndGLow = {
+  type = "string-setting",
+  name = "train-trails-color-and-glow",
+  setting_type = "runtime-global",
+  order = "b - basics - 1",
+  default_value = "color-and-glow",
+  allowed_values = {
+    "color-and-glow",
+    "color-only",
+    "glow-only",
+    "none"
+  }
 }
 
 local trainTrailsScale = {
   type = "string-setting",
   name = "train-trails-scale",
   setting_type = "runtime-global",
-  order = "d",
+  order = "b - basics - 2",
   default_value = "5",
   allowed_values = {
     "1",
@@ -46,7 +60,7 @@ local trainTrailsLength = {
   type = "string-setting",
   name = "train-trails-length",
   setting_type = "runtime-global",
-  order = "e",
+  order = "b - basics - 1",
   default_value = "120",
   allowed_values = {
     "15",
@@ -65,7 +79,7 @@ local trainTrailsColorSync = {
   type = "string-setting",
   name = "train-trails-color-type",
   setting_type = "runtime-global",
-  order = "f",
+  order = "c - color - 1",
   default_value = "train",
   allowed_values = {
     "train",
@@ -73,56 +87,11 @@ local trainTrailsColorSync = {
   }
 }
 
-local trainTrailsPalette = {
-  type = "string-setting",
-  name = "train-trails-palette",
-  setting_type = "runtime-global",
-  order = "g",
-  default_value = "default",
-  allowed_values = {
-    "light",
-    "pastel",
-    "default",
-    "vibrant",
-    "deep"
-  }
-}
-
-local trainTrailsSpeed = {
-  type = "string-setting",
-  name = "train-trails-speed",
-  setting_type = "runtime-global",
-  order = "h",
-  default_value = "default",
-  allowed_values = {
-    "veryslow",
-    "slow",
-    "default",
-    "fast",
-    "veryfast"
-  }
-}
-
-local trainTrailsBalance = {
-  type = "string-setting",
-  name = "train-trails-balance",
-  setting_type = "runtime-global",
-  order = "i",
-  default_value = "pretty",
-  allowed_values = {
-    -- "super-performance",
-    "performance",
-    "balanced",
-    "pretty",
-    "super-pretty"
-  }
-}
-
 local trainTrailsDefaultTrailColor = {
   type = "string-setting",
   name = "train-trails-default-color",
   setting_type = "runtime-global",
-  order = "j",
+  order = "c - color - 2",
   default_value = "rainbow",
   allowed_values = {
     "nil",
@@ -143,9 +112,128 @@ local trainTrailsDefaultTrailColor = {
   }
 }
 
+local trainTrailsPalette = {
+  type = "string-setting",
+  name = "train-trails-palette",
+  setting_type = "runtime-global",
+  order = "c - color - 3",
+  default_value = "default",
+  allowed_values = {
+    "random all",
+    -- original:
+    "light",
+    "pastel",
+    "default",
+    "vibrant",
+    "deep",
+    -- pride flags:
+    "random pride",
+    "lesbian",
+    "gay",
+    "bi",
+    "trans",
+    "pan",
+    "ace",
+    "nonbinary",
+    "agender",
+    "progress",
+    -- seasonal:
+    "random seasonal",
+    "fresh spring",
+    "blossoming spring",
+    "vibrant summer",
+    "lively summer",
+    "golden autumn",
+    "crisp autumn",
+    "cozy winter",
+    "serene winter",
+    -- railways:
+    "random railway",
+    "deutsche bahn",
+    "SNCF",
+    "union pacific",
+    "BNSF",
+    "CSX",
+    "CN",
+    "trenitalia",
+    "amtrak",
+    -- natural:
+    "random natural",
+    "water",
+    "earth",
+    "fire",
+    "air",
+    "ice",
+    "sunlight",
+    "moonlight",
+    "stars",
+    "sunrise",
+    "sunset",
+    "fog",
+    "rain",
+    "snow",
+    "forest",
+    "meadow",
+    "ocean",
+    "desert",
+    "mountain",
+    "rainforest",
+    "coral reef",
+    "volcano",
+    "waterfall",
+    "cave",
+    "canyon",
+    -- country flags:
+    "random country",
+    "china",
+    "india",
+    "united states",
+    "brazil",
+    "russia",
+    "mexico",
+    "japan",
+    "germany",
+    "united kingdom",
+    "ukraine",
+    "czech republic",
+    "sweden"
+  }
+}
+
+local trainTrailsSpeed = {
+  type = "string-setting",
+  name = "train-trails-speed",
+  setting_type = "runtime-global",
+  order = "c - color - 4",
+  default_value = "default",
+  allowed_values = {
+    "veryslow",
+    "slow",
+    "default",
+    "fast",
+    "veryfast"
+  }
+}
+
+local trainTrailsBalance = {
+  type = "string-setting",
+  name = "train-trails-balance",
+  setting_type = "runtime-global",
+  order = "d - balance - 1",
+  default_value = "pretty",
+  allowed_values = {
+    -- "super-performance",
+    "performance",
+    "balanced",
+    "pretty",
+    "super-pretty"
+  }
+}
+
 data:extend({
-  trainTrailsColor,
-  trainTrailsGlow,
+  -- trainTrailsColor,
+  -- trainTrailsGlow,
+  trainTrailsColorAndGLow,
   trainTrailsPassengersOnly,
   trainTrailsScale,
   trainTrailsLength,
@@ -155,3 +243,9 @@ data:extend({
   trainTrailsBalance,
   trainTrailsDefaultTrailColor
 })
+
+if mods["Automatic_Train_Painter"] then
+  data.raw["string-setting"]["u-loco"].default_value = ""
+end
+
+require("colorize_locale")
