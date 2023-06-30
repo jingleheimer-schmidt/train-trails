@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.13
+Date: 30JUN2023
+  Bugfixes:
+    - moved automatic train painter unpainted locomotive default value configuration to data-updates
+---------------------------------------------------------------------------------------------------
 Version: 0.0.12
 Date: 29JUN2023
   Optimizations:
