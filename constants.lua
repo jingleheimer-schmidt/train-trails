@@ -434,7 +434,7 @@ local natural_palettes = {
 }
 
 local railway_company_palettes = {
-    ["deutsche bahn"] = {
+    ["deutsche bahn"] = { -- https://logos-world.net/deutsche-bahn-logo
         util.color("#EC1B2D"),
     },
     ["SNCF"] = {
