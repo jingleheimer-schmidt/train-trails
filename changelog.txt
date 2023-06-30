@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.12
-Date: ????
+Date: 29JUN2023
   Optimizations:
     - performance update: now only active trains are processed, and trails for only drawn for trains on visible surfaces
     - reduced render preparation and script update time with refined trail smoothing for trains at all speeds; implemented limit of 3 trail segments drawn per tile
