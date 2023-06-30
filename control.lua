@@ -165,6 +165,30 @@ local function get_rainbow_color(created_tick, mod_settings, train_data)
   end
 end
 
+-- get the color for a given trail
+---@param event_tick uint
+---@param mod_settings mod_settings
+---@param train_data train_data
+---@param stock LuaEntity
+---@return Color?
+local function get_trail_color(event_tick, mod_settings, train_data, stock)
+  local default_color = default_chat_colors[mod_settings.default_color]
+  local color_type = mod_settings.color_type
+
+  if color_type == "rainbow" then
+    return get_rainbow_color(event_tick, mod_settings, train_data)
+  elseif color_type == "train" then
+    local color = stock.color
+
+    if color then
+      return color
+    elseif default_color == "rainbow" then
+      return get_rainbow_color(event_tick, mod_settings, train_data)
+    elseif type(default_color) == "table" then
+      return default_color
+    end
+  end
+end
 -- draw a trail segment for a given train
 ---@param event_tick uint
 ---@param mod_settings mod_settings
@@ -174,13 +198,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   local stock = speed > 0 and train_data.front_stock or train_data.back_stock
   if not stock then return end
 
-  local color = stock.color -- when 1.1.85 becomes stable, replace with a lookup table updated on_entity_color_changed
-  if ((not color) and (mod_settings.default_color ~= "nil")) then -- since default color locomotives have "nil" color, we need to pick a color
-    color = default_chat_colors[mod_settings.default_color] --[[@as Color]]
-  end
-  if ((mod_settings.color_type == "rainbow") or (color == "rainbow") or ((not color) and mod_settings.passengers_only)) then
-    color = get_rainbow_color(event_tick, mod_settings, train_data)
-  end
+  local color = get_trail_color(event_tick, mod_settings, train_data, stock)
   if not color then return end
 
   local position = stock.position
