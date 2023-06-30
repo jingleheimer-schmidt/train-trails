@@ -214,6 +214,7 @@ local seasonal_color_palettes = {
     }
 }
 
+---@type {string: Color[]}
 local natural_palettes = {
     ["water"] = {
         util.color("#71A8D2"),
@@ -433,6 +434,7 @@ local natural_palettes = {
     }
 }
 
+---@type {string: Color[]}
 local railway_company_palettes = {
     ["deutsche bahn"] = { -- https://logos-world.net/deutsche-bahn-logo
         util.color("#EC1B2D"),
