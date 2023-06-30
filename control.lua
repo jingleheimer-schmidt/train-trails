@@ -137,7 +137,7 @@ local function initialize_and_reset()
   reset_active_trains()
 end
 
-script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_settings)
+script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_and_reset)
 script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
 
