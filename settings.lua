@@ -244,4 +244,8 @@ data:extend({
   trainTrailsDefaultTrailColor
 })
 
+if mods["Automatic_Train_Painter"] then
+  data.raw["string-setting"]["u-loco"].default_value = ""
+end
+
 require("colorize_locale")

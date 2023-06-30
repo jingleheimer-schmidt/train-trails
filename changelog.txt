@@ -13,6 +13,7 @@ Date: ????
     - added natural color palettes for animated train trails
     - added national flag color palettes for animated train trails
     - modified setting descriptions for clarity
+    - added integration with automatic train painter mod to set the default unpainted locomotive color to empty. with both mods using default options this allowed unpainted trains to use the animated color palettes
     - added compatibility for other mods that add on_tick functions to the main menu simulations
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.11
