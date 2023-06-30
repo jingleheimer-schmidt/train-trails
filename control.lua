@@ -57,7 +57,6 @@ end
 ---@param train LuaTrain
 local function add_active_train(train)
   local random_palette = get_random_palette()
-  global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
   global.active_trains[train.id] = {
     length = #train.carriages,
     surface_index = train.carriages[1].surface_index,
@@ -72,7 +71,6 @@ end
 
 ---@param train LuaTrain
 local function remove_active_train(train)
-  global.active_trains = global.active_trains or {}
   global.active_trains[train.id] = nil
 end
 
@@ -101,6 +99,8 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
+  global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
+  global.distance_counters = global.distance_counters or {}
   local settings = settings.global
   local palette_name = settings["train-trails-palette"].value --[[@as string]]
   ---@type mod_settings
@@ -241,7 +241,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
   if speed == 0 then return end
 
   local train_id = train_data.id
-  local distance_counters = global.distance_counters or {}
+  local distance_counters = global.distance_counters
   local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
 
   if tiles_since_last_trail >= 1/3 then
@@ -272,8 +272,6 @@ local function draw_trails(event_tick, mod_settings)
 
   local active_train_datas = global.active_trains
   if not active_train_datas then return end
-
-  global.distance_counters = global.distance_counters or {}
 
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
