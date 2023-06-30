@@ -437,91 +437,53 @@ local railway_company_palettes = {
     ["deutsche bahn"] = { -- https://logos-world.net/deutsche-bahn-logo
         util.color("#EC1B2D"),
     },
-    ["SNCF"] = {
-      util.color("#007AC9"),
-      util.color("#FFCD00"),
-      util.color("#FFFFFF"),
-      util.color("#E3001B"),
-      util.color("#00A150")
+    ["SNCF"] = { -- color pick from company logo https://www.sncf.com/fr/groupe/marques/sncf/identite
+        util.color("#7E2270"),
+        util.color("#98177A"),
+        util.color("#A51475"),
+        util.color("#B11864"),
+        util.color("#BB1952"),
+        util.color("#C61B40"),
+        util.color("#D91C24"),
+        util.color("#DA1E26"),
     },
-    ["russian railways"] = {
-      util.color("#00274C"),
-      util.color("#FFFFFF"),
-      util.color("#ED1C24"),
-      util.color("#FFD700"),
-      util.color("#007A33")
+    ["union pacific"] = { -- https://utahrails.net/up/up-paint-html.php
+        util.color("#635F56"),
+        util.color("#D10000"),
+        util.color("#FEBD00"),
+        util.color("#FEBD00"),
+        util.color("#FEBD00"),
+        util.color("#D10000"),
+        util.color("#635F56"),
     },
-    ["indian railways"] = {
-      util.color("#FF9933"),
-      util.color("#008000"),
-      util.color("#FFFFFF"),
-      util.color("#0000CC"),
-      util.color("#FFCC00")
+    ["BNSF"] = { -- https://www.bnsf.com/brand2k5/pdf/bnsf-brand-quick-reference-guide.pdf
+        util.color("#f85d13"),
+        util.color("#2B2926"),
     },
-    ["JR east"] = {
-      util.color("#007AC9"),
-      util.color("#FFFFFF"),
-      util.color("#FFD700"),
-      util.color("#000000"),
-      util.color("#EF7C00")
+    ["CSX"] = { -- https://www.csx.com/index.cfm/library/files/customers/style-test/
+        util.color("#00467F"),
+        util.color("#FFC939"),
+        util.color("#4D4F53"),
+        util.color("#000000"),
     },
-    ["union pacific"] = {
-      util.color("#FF2622"),
-      util.color("#F9C11C"),
-      util.color("#1D5C9E"),
-      util.color("#FFFFFF"),
-      util.color("#FFD200")
+    ["CN"] = { -- https://www.cn.ca/-/media/Files/Media/Media-Image-Centre/FIN-1BasicElement.pdf
+        util.color("#ED1A2D"),
     },
-    ["BNSF"] = {
-      util.color("#FF0000"),
-      util.color("#FFFFFF"),
-      util.color("#0E2447"),
-      util.color("#B8CCE4"),
-      util.color("#FFAA00")
+    ["trenitalia"] = { -- color pick from company logo https://www.trenitalia.com
+        util.color("#006C68"),
+        util.color("#FFFFFF"),
+        util.color("#E31837"),
     },
-    ["JR central"] = {
-      util.color("#000000"),
-      util.color("#FFFFFF"),
-      util.color("#E60012"),
-      util.color("#0090D0"),
-      util.color("#FFD700")
-    },
-    ["CSX"] = {
-      util.color("#003399"),
-      util.color("#FFCC00"),
-      util.color("#FFFFFF"),
-      util.color("#990000"),
-      util.color("#CCCCCC")
-    },
-    ["canadian national rail"] = {
-      util.color("#FF0000"),
-      util.color("#FFD600"),
-      util.color("#0000FF"),
-      util.color("#FFFFFF"),
-      util.color("#00A651")
-    },
-    ["trenitalia"] = {
-      util.color("#009FE3"),
-      util.color("#FFFFFF"),
-      util.color("#FFD500"),
-      util.color("#009345"),
-      util.color("#000000")
-    },
-    ["norfolk southern"] = {
-      util.color("#E2001A"),
-      util.color("#FFFFFF"),
-      util.color("#000000"),
-      util.color("#B8CCE4"),
-      util.color("#FF7900")
-    },
-    ["amtrak"] = {
-      util.color("#0A3D6B"),
-      util.color("#FFFFFF"),
-      util.color("#DC241F"),
-      util.color("#003D7D"),
-      util.color("#B1040E")
+    ["amtrak"] = { -- https://history.amtrak.com/archives/amtrak-livery-and-logo-guide-2018/@@download/item/Amtrak%20Livery%20and%20Logo%20Guide%202-8-19.pdf
+        util.color("#00537D"),
+        util.color("#00537D"),
+        util.color("#FFFFFF"),
+        util.color("#EF3823"),
+        util.color("#FFFFFF"),
+        util.color("#00537D"),
+        util.color("#00537D"),
     }
-  }
+}
 -- util.color("#"),
 
 ---@type {string: Color[]}
