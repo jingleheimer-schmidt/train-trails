@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.14
+Date: 01JUL2023
+  Bugfixes:
+    - fixed drawing trails on some surfaces when other surfaces with active trains were not visible
+  Optimizations:
+    - adjusted train length is now precomputed on active train registration and stored in the train data table
+    - moved random[type] color palette lookup table creation to file scope
+    - moved global registrations to mod initialization
+  Changes:
+    - updated mod description
+---------------------------------------------------------------------------------------------------
 Version: 0.0.13
 Date: 30JUN2023
   Bugfixes:

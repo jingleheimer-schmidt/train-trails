@@ -7,21 +7,18 @@ local constants = require("constants")
 local speeds = constants.speeds
 local original_palettes = constants.original_palettes
 local animation_palettes = constants.animation_palettes
-local pride_flag_palettes = constants.pride_flag_palettes
-local national_flag_palettes = constants.national_flag_palettes
-local seasonal_color_palettes = constants.seasonal_color_palettes
-local natural_palettes = constants.natural_palettes
-local railway_company_palettes = constants.railway_company_palettes
-local animation_names = constants.animation_names
-local pride_flag_names = constants.pride_flag_names
-local national_flag_names = constants.national_flag_names
-local seasonal_color_names = constants.seasonal_color_names
-local natural_palette_names = constants.natural_palette_names
-local railway_palette_names = constants.railway_palette_names
 local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
+local random_palette_names = {
+  ["random all"] = constants.animation_names,
+  ["random pride"] = constants.pride_flag_names,
+  ["random country"] = constants.national_flag_names,
+  ["random seasonal"] = constants.seasonal_color_names,
+  ["random natural"] = constants.natural_palette_names,
+  ["random railway"] = constants.railway_palette_names
+}
 
 local sin = math.sin
 local abs = math.abs
@@ -39,16 +36,7 @@ local draw_sprite = rendering.draw_sprite
 local function get_random_palette()
   local mod_settings = global.settings
   local palette_name = mod_settings.palette
-  local palette_names = {
-    ["random all"] = animation_names,
-    ["random pride"] = pride_flag_names,
-    ["random country"] = national_flag_names,
-    ["random seasonal"] = seasonal_color_names,
-    ["random natural"] = natural_palette_names,
-    ["random railway"] = railway_palette_names
-  }
-  local index = palette_names[palette_name] and random(#palette_names[palette_name]) or nil
-  local random_palette_name = palette_names[palette_name] and palette_names[palette_name][index] or nil
+  local random_palette_name = random_palette_names[palette_name] and random(#random_palette_names[palette_name]) or nil
   local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
   return random_palette
 end
@@ -58,7 +46,6 @@ end
 local function add_active_train(train)
   local random_palette = get_random_palette()
   global.active_trains[train.id] = {
-    length = #train.carriages,
     surface_index = train.carriages[1].surface_index,
     train = train,
     id = train.id,
@@ -66,6 +53,7 @@ local function add_active_train(train)
     back_stock = train.back_stock,
     random_animation_colors = random_palette,
     random_animation_colors_count = random_palette and #random_palette,
+    adjusted_length = global.settings.length + ((#train.carriages - 1) * 30)
   }
 end
 
@@ -87,9 +75,11 @@ end
 ---@param event EventData.on_train_changed_state
 local function on_train_changed_state(event)
   local train = event.train
-  if active_states[train.state] and not active_states[event.old_state] then
+  local is_active = active_states[train.state]
+  local was_active = active_states[event.old_state]
+  if is_active and not was_active then
     add_active_train(train)
-  elseif not active_states[train.state] then
+  elseif not is_active then
     remove_active_train(train)
   end
 end
@@ -100,7 +90,7 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
   global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
-  global.distance_counters = global.distance_counters or {}
+  global.distance_counters = global.distance_counters or {} ---@type table<uint, number>
   local settings = settings.global
   local palette_name = settings["train-trails-palette"].value --[[@as string]]
   ---@type mod_settings
@@ -189,11 +179,12 @@ local function get_trail_color(event_tick, mod_settings, train_data, stock)
     end
   end
 end
+
 -- draw a trail segment for a given train
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
----@param speed int
+---@param speed number
 local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   local stock = speed > 0 and train_data.front_stock or train_data.back_stock
   if not stock then return end
@@ -203,8 +194,8 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
 
   local position = stock.position
   local surface = train_data.surface_index
-  local length = mod_settings.length + ((train_data.length - 1) * 30)
-  local scale = mod_settings.scale * max( abs(speed), 0.66 )
+  local length = train_data.adjusted_length
+  local scale = mod_settings.scale * max(abs(speed), 0.66)
 
   if mod_settings.sprite then
     draw_sprite {
@@ -244,7 +235,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
   local distance_counters = global.distance_counters
   local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
 
-  if tiles_since_last_trail >= 1/3 then
+  if tiles_since_last_trail >= 1 / 3 then
     draw_trail_segment(event_tick, mod_settings, train_data, speed)
     tiles_since_last_trail = 0
   end
@@ -275,26 +266,21 @@ local function draw_trails(event_tick, mod_settings)
 
   if mod_settings.passengers_only then
     for _, player in pairs(game.connected_players) do
-      local vehicle = player.vehicle
-      if vehicle then
-        local train = vehicle.train
-        local train_data = train and (active_train_datas and active_train_datas[train.id])
-        if train_data then
-          draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-        end
+      local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id]
+      if train_data then
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       end
     end
-
-  else
-    local visible_surfaces = get_visible_surfaces()
-    for train_id, train_data in pairs(active_train_datas) do
-      if train_data.train.valid then
-        if visible_surfaces[train_data.surface_index] then
-          draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-        end
-      else
-        global.active_trains[train_id] = nil
+    return
+  end
+  local visible_surfaces = get_visible_surfaces()
+  for train_id, train_data in pairs(active_train_datas) do
+    if train_data.train.valid then
+      if visible_surfaces[train_data.surface_index] then
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       end
+    else
+      global.active_trains[train_id] = nil
     end
   end
 end
@@ -326,6 +312,6 @@ end
 ---@field center float?
 ---@field animation_colors Color[]?
 ---@field animation_color_count integer?
----@field palette string 
+---@field palette string
 
----@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?}
+---@alias train_data {surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: uint}
