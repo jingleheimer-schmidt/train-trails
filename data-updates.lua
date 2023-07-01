@@ -652,7 +652,7 @@ local simulation_script = [[
         back_stock = train.back_stock,
         random_animation_colors = random_palette,
         random_animation_colors_count = random_palette and #random_palette,
-        adjusted_length = global.settings.length + ((#train.carriages - 1) * 30)
+        adjusted_length = mod_settings.length + ((#train.carriages - 1) * 30)
       }
     end
 
@@ -758,7 +758,7 @@ local simulation_script = [[
 
       local position = stock.position
       local surface = train_data.surface_index
-      local length = mod_settings.length + ((train_data.length - 1) * 30)
+      local length = train_data.adjusted_length
       local scale = mod_settings.scale * max( abs(speed), 0.66 )
 
       if mod_settings.sprite then
@@ -832,7 +832,7 @@ local simulation_script = [[
 
       if mod_settings.passengers_only then
         for _, player in pairs(game.connected_players) do
-          local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id])
+          local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id]
           if train_data then
             draw_normalized_trail_segment(event_tick, mod_settings, train_data)
           end
