@@ -95,7 +95,7 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
   global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
-  global.distance_counters = global.distance_counters or {}
+  global.distance_counters = global.distance_counters or {} ---@type table<uint, number>
   local settings = settings.global
   local palette_name = settings["train-trails-palette"].value --[[@as string]]
   ---@type mod_settings
