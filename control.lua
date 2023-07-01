@@ -277,7 +277,6 @@ local function draw_trails(event_tick, mod_settings)
         draw_normalized_trail_segment(event_tick, mod_settings, train_data)
       end
     end
-  else
     local visible_surfaces = get_visible_surfaces()
     for train_id, train_data in pairs(active_train_datas) do
       if train_data.train.valid then
@@ -286,6 +285,8 @@ local function draw_trails(event_tick, mod_settings)
         end
       else
         global.active_trains[train_id] = nil
+    return
+  end
       end
     end
   end
