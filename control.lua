@@ -60,6 +60,7 @@ local function add_active_train(train)
     back_stock = train.back_stock,
     random_animation_colors = random_palette,
     random_animation_colors_count = random_palette and #random_palette,
+    adjusted_length = global.settings.length + ((#train.carriages - 1) * 30)
   }
 end
 
@@ -197,7 +198,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
 
   local position = stock.position
   local surface = train_data.surface_index
-  local length = mod_settings.length + ((train_data.length - 1) * 30)
+  local length = train_data.adjusted_length
   local scale = mod_settings.scale * max( abs(speed), 0.66 )
 
   if mod_settings.sprite then
