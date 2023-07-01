@@ -608,6 +608,15 @@ local simulation_script = [[
       [defines.train_state.wait_station] = false,
     }
 
+    local random_palette_names = {
+      ["random all"] = animation_names,
+      ["random pride"] = pride_flag_names,
+      ["random country"] = national_flag_names,
+      ["random seasonal"] = seasonal_color_names,
+      ["random natural"] = natural_palette_names,
+      ["random railway"] = railway_palette_names
+    }
+
     local sin = math.sin
     local abs = math.abs
     local max = math.max
@@ -624,16 +633,7 @@ local simulation_script = [[
     ---@return Color.0|Color.1[]?
     local function get_random_palette(mod_settings)
       local palette_name = mod_settings.palette
-      local palette_names = {
-        ["random all"] = animation_names,
-        ["random pride"] = pride_flag_names,
-        ["random country"] = national_flag_names,
-        ["random seasonal"] = seasonal_color_names,
-        ["random natural"] = natural_palette_names,
-        ["random railway"] = railway_palette_names
-      }
-      local index = palette_names[palette_name] and random(#palette_names[palette_name]) or nil
-      local random_palette_name = palette_names[palette_name] and palette_names[palette_name][index] or nil
+      local random_palette_name = random_palette_names[palette_name] and random(#random_palette_names[palette_name]) or nil
       local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
       return random_palette
     end
@@ -645,7 +645,6 @@ local simulation_script = [[
     local function create_train_data(mod_settings, train)
       local random_palette = get_random_palette(mod_settings)
       return {
-        length = #train.carriages,
         surface_index = train.carriages[1].surface_index,
         train = train,
         id = train.id,
@@ -653,6 +652,7 @@ local simulation_script = [[
         back_stock = train.back_stock,
         random_animation_colors = random_palette,
         random_animation_colors_count = random_palette and #random_palette,
+        adjusted_length = global.settings.length + ((#train.carriages - 1) * 30)
       }
     end
 
@@ -832,22 +832,20 @@ local simulation_script = [[
 
       if mod_settings.passengers_only then
         for _, player in pairs(game.connected_players) do
-          local train = player.vehicle and player.vehicle.train
-          local train_data = train and (active_train_datas and active_train_datas[train.id])
+          local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id])
           if train_data then
             draw_normalized_trail_segment(event_tick, mod_settings, train_data)
           end
         end
-
-      else
-        local visible_surfaces = get_visible_surfaces()
-        for train_id, train_data in pairs(active_train_datas) do
-          if train_data.train.valid then
-            if not visible_surfaces[train_data.surface_index] then break end
-            draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-          else
-            global.active_trains[train_id] = nil
-          end
+        return
+      end
+      local visible_surfaces = get_visible_surfaces()
+      for train_id, train_data in pairs(active_train_datas) do
+        if train_data.train.valid then
+          if not visible_surfaces[train_data.surface_index] then break end
+          draw_normalized_trail_segment(event_tick, mod_settings, train_data)
+        else
+          global.active_trains[train_id] = nil
         end
       end
     end
@@ -865,24 +863,6 @@ local simulation_script = [[
       on_tick({ tick = game.tick })
     end
   end
-
-  ---@class mod_settings
-  ---@field sprite boolean
-  ---@field light boolean
-  ---@field length uint 15|30|60|90|120|180|210|300|600
-  ---@field scale float 1|2|3|4|5|6|8|11|20
-  ---@field color_type string "train"|"rainbow"
-  ---@field balance integer 1|2|3|4
-  ---@field passengers_only boolean
-  ---@field default_color Color|string Color|"nil"|"rainbow"
-  ---@field frequency float 0.010|0.025|0.050|0.100|0.200
-  ---@field amplitude float?
-  ---@field center float?
-  ---@field animation_colors Color[]?
-  ---@field animation_color_count integer?
-  ---@field palette string 
-
-  ---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?}
 
   ::end_of_train_trails_script::
 ]]
