@@ -191,7 +191,7 @@ end
 ---@param event_tick uint
 ---@param mod_settings mod_settings
 ---@param train_data train_data
----@param speed int
+---@param speed number
 local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   local stock = speed > 0 and train_data.front_stock or train_data.back_stock
   if not stock then return end
@@ -326,4 +326,4 @@ end
 ---@field animation_color_count integer?
 ---@field palette string 
 
----@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?}
+---@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: integer}
