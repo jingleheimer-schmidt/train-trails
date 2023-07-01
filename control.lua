@@ -52,7 +52,6 @@ end
 local function add_active_train(train)
   local random_palette = get_random_palette()
   global.active_trains[train.id] = {
-    length = #train.carriages,
     surface_index = train.carriages[1].surface_index,
     train = train,
     id = train.id,
@@ -326,4 +325,4 @@ end
 ---@field animation_color_count integer?
 ---@field palette string 
 
----@alias train_data {length: int, surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: integer}
+---@alias train_data {surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: uint}
