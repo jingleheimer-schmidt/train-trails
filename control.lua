@@ -186,6 +186,7 @@ local function get_trail_color(event_tick, mod_settings, train_data, stock)
     end
   end
 end
+
 -- draw a trail segment for a given train
 ---@param event_tick uint
 ---@param mod_settings mod_settings
