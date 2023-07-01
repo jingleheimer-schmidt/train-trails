@@ -276,7 +276,7 @@ local function draw_trails(event_tick, mod_settings)
       local vehicle = player.vehicle
       if vehicle then
         local train = vehicle.train
-        local train_data = train and (active_train_datas and active_train_datas[train.id])
+        local train_data = train and active_train_datas[train.id]
         if train_data then
           draw_normalized_trail_segment(event_tick, mod_settings, train_data)
         end
