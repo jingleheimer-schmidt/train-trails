@@ -201,7 +201,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
   local position = stock.position
   local surface = train_data.surface_index
   local length = train_data.adjusted_length
-  local scale = mod_settings.scale * max( abs(speed), 0.66 )
+  local scale = mod_settings.scale * max(abs(speed), 0.66)
 
   if mod_settings.sprite then
     draw_sprite {
@@ -241,7 +241,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
   local distance_counters = global.distance_counters
   local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
 
-  if tiles_since_last_trail >= 1/3 then
+  if tiles_since_last_trail >= 1 / 3 then
     draw_trail_segment(event_tick, mod_settings, train_data, speed)
     tiles_since_last_trail = 0
   end
@@ -281,7 +281,6 @@ local function draw_trails(event_tick, mod_settings)
         end
       end
     end
-
   else
     local visible_surfaces = get_visible_surfaces()
     for train_id, train_data in pairs(active_train_datas) do
@@ -323,6 +322,6 @@ end
 ---@field center float?
 ---@field animation_colors Color[]?
 ---@field animation_color_count integer?
----@field palette string 
+---@field palette string
 
 ---@alias train_data {surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: uint}
