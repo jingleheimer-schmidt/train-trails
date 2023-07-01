@@ -17,6 +17,14 @@ local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
+local random_palette_names = {
+  ["random all"] = animation_names,
+  ["random pride"] = pride_flag_names,
+  ["random country"] = national_flag_names,
+  ["random seasonal"] = seasonal_color_names,
+  ["random natural"] = natural_palette_names,
+  ["random railway"] = railway_palette_names
+}
 
 local sin = math.sin
 local abs = math.abs
@@ -34,16 +42,7 @@ local draw_sprite = rendering.draw_sprite
 local function get_random_palette()
   local mod_settings = global.settings
   local palette_name = mod_settings.palette
-  local palette_names = {
-    ["random all"] = animation_names,
-    ["random pride"] = pride_flag_names,
-    ["random country"] = national_flag_names,
-    ["random seasonal"] = seasonal_color_names,
-    ["random natural"] = natural_palette_names,
-    ["random railway"] = railway_palette_names
-  }
-  local index = palette_names[palette_name] and random(#palette_names[palette_name]) or nil
-  local random_palette_name = palette_names[palette_name] and palette_names[palette_name][index] or nil
+  local random_palette_name = random_palette_names[palette_name] and random(#random_palette_names[palette_name]) or nil
   local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
   return random_palette
 end
