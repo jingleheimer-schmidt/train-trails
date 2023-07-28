@@ -229,220 +229,220 @@ local simulation_script = [[
     ---@type {string: Color[]}
     local natural_palettes = {
       ["water"] = {
-          hex_to_rgb("#71A8D2"),
-          hex_to_rgb("#4D8EB6"),
-          hex_to_rgb("#336E94"),
-          hex_to_rgb("#234E6E"),
-          hex_to_rgb("#173C52"),
-          hex_to_rgb("#0F2D40"),
-          hex_to_rgb("#091E2D")
+        hex_to_rgb("#71A8D2"),
+        hex_to_rgb("#4D8EB6"),
+        hex_to_rgb("#0F2D40"),
+        hex_to_rgb("#336E94"),
+        hex_to_rgb("#173C52"),
+        hex_to_rgb("#234E6E"),
+        hex_to_rgb("#091E2D")
       },
       ["earth"] = {
-          hex_to_rgb("#B78E5C"),
-          hex_to_rgb("#9E7749"),
-          hex_to_rgb("#835C38"),
-          hex_to_rgb("#6B4629"),
-          hex_to_rgb("#52311C"),
-          hex_to_rgb("#3A1C10"),
-          hex_to_rgb("#261007")
+        hex_to_rgb("#B78E5C"),
+        hex_to_rgb("#6B4629"),
+        hex_to_rgb("#9E7749"),
+        hex_to_rgb("#3A1C10"),
+        hex_to_rgb("#835C38"),
+        hex_to_rgb("#52311C"),
+        hex_to_rgb("#261007")
       },
       ["fire"] = {
-          hex_to_rgb("#FF4D00"),
-          hex_to_rgb("#FF6900"),
-          hex_to_rgb("#FF8519"),
-          hex_to_rgb("#FF9C33"),
-          hex_to_rgb("#FFB14D"),
-          hex_to_rgb("#FFC766"),
-          hex_to_rgb("#FFDF80")
+        hex_to_rgb("#FF6900"),
+        hex_to_rgb("#FFC766"),
+        hex_to_rgb("#FF8519"),
+        hex_to_rgb("#FF9C33"),
+        hex_to_rgb("#FF4D00"),
+        hex_to_rgb("#FFB14D"),
+        hex_to_rgb("#FFDF80")
       },
       ["air"] = {
-          hex_to_rgb("#E6F7FF"),
-          hex_to_rgb("#CCEAFF"),
-          hex_to_rgb("#B3E3FF"),
-          hex_to_rgb("#99D9FF"),
-          hex_to_rgb("#80CFFF"),
-          hex_to_rgb("#66C4FF"),
-          hex_to_rgb("#4DBAFF")
+        hex_to_rgb("#E6F7FF"),
+        hex_to_rgb("#CCEAFF"),
+        hex_to_rgb("#99D9FF"),
+        hex_to_rgb("#66C4FF"),
+        hex_to_rgb("#B3E3FF"),
+        hex_to_rgb("#80CFFF"),
+        hex_to_rgb("#4DBAFF")
       },
       ["ice"] = {
-          hex_to_rgb("#C3E6FF"),
-          hex_to_rgb("#A6D9FF"),
-          hex_to_rgb("#8ACBFF"),
-          hex_to_rgb("#6EBDFF"),
-          hex_to_rgb("#52B0FF"),
-          hex_to_rgb("#3692E6"),
-          hex_to_rgb("#1A74CC")
+        hex_to_rgb("#3692E6"),
+        hex_to_rgb("#C3E6FF"),
+        hex_to_rgb("#8ACBFF"),
+        hex_to_rgb("#6EBDFF"),
+        hex_to_rgb("#A6D9FF"),
+        hex_to_rgb("#52B0FF"),
+        hex_to_rgb("#1A74CC")
       },
       ["sunlight"] = {
-          hex_to_rgb("#FFFAE5"),
-          hex_to_rgb("#FFF2CC"),
-          hex_to_rgb("#FFEAB3"),
-          hex_to_rgb("#FFD999"),
-          hex_to_rgb("#FFD080"),
-          hex_to_rgb("#FFC266"),
-          hex_to_rgb("#FFBA4D")
+        hex_to_rgb("#FFC266"),
+        hex_to_rgb("#FFFAE5"),
+        hex_to_rgb("#FFEAB3"),
+        hex_to_rgb("#FFD999"),
+        hex_to_rgb("#FFF2CC"),
+        hex_to_rgb("#FFD080"),
+        hex_to_rgb("#FFBA4D")
       },
       ["moonlight"] = {
-          hex_to_rgb("#E5E5FF"),
-          hex_to_rgb("#CCCCFF"),
-          hex_to_rgb("#B3B3FF"),
-          hex_to_rgb("#9999FF"),
-          hex_to_rgb("#8080FF"),
-          hex_to_rgb("#6666FF"),
-          hex_to_rgb("#4D4DFF")
+        hex_to_rgb("#6666FF"),
+        hex_to_rgb("#E5E5FF"),
+        hex_to_rgb("#8080FF"),
+        hex_to_rgb("#B3B3FF"),
+        hex_to_rgb("#CCCCFF"),
+        hex_to_rgb("#9999FF"),
+        hex_to_rgb("#4D4DFF")
       },
       ["stars"] = {
-          hex_to_rgb("#FFF5E5"),
-          hex_to_rgb("#FFEBCC"),
-          hex_to_rgb("#FFE0B3"),
-          hex_to_rgb("#FFD699"),
-          hex_to_rgb("#FFCC80"),
-          hex_to_rgb("#FFC266"),
-          hex_to_rgb("#FFB84D")
+        hex_to_rgb("#FFF5E5"),
+        hex_to_rgb("#FFC266"),
+        hex_to_rgb("#52B0FF"),
+        hex_to_rgb("#FFE0B3"),
+        hex_to_rgb("#FFF5F0"),
+        hex_to_rgb("#B3B3FF"),
+        hex_to_rgb("#FFB84D")
       },
       ["sunrise"] = {
-          hex_to_rgb("#FF9F6E"),
-          hex_to_rgb("#FFB488"),
-          hex_to_rgb("#FFCFA2"),
-          hex_to_rgb("#FFDDBC"),
-          hex_to_rgb("#FFECD6"),
-          hex_to_rgb("#FFF5F0"),
-          hex_to_rgb("#FFFBFA")
+        hex_to_rgb("#FF9F6E"),
+        hex_to_rgb("#FFB488"),
+        hex_to_rgb("#FFCFA2"),
+        hex_to_rgb("#FFDDBC"),
+        hex_to_rgb("#FFECD6"),
+        hex_to_rgb("#FFF5F0"),
+        hex_to_rgb("#FFFBFA")
       },
       ["sunset"] = {
-          hex_to_rgb("#FF6F69"),
-          hex_to_rgb("#FF867D"),
-          hex_to_rgb("#FF9D91"),
-          hex_to_rgb("#FFB3A5"),
-          hex_to_rgb("#FFCAB9"),
-          hex_to_rgb("#FFD1C6"),
-          hex_to_rgb("#FFE8DC")
+        hex_to_rgb("#FF6F69"),
+        hex_to_rgb("#FF867D"),
+        hex_to_rgb("#FF9D91"),
+        hex_to_rgb("#FFB3A5"),
+        hex_to_rgb("#FFCAB9"),
+        hex_to_rgb("#FFD1C6"),
+        hex_to_rgb("#FFE8DC")
       },
       ["fog"] = {
-          hex_to_rgb("#D9D9D9"),
-          hex_to_rgb("#C0C0C0"),
-          hex_to_rgb("#A6A6A6"),
-          hex_to_rgb("#8C8C8C"),
-          hex_to_rgb("#737373"),
-          hex_to_rgb("#595959"),
-          hex_to_rgb("#404040")
+        hex_to_rgb("#D9D9D9"),
+        hex_to_rgb("#595959"),
+        hex_to_rgb("#C0C0C0"),
+        hex_to_rgb("#737373"),
+        hex_to_rgb("#A6A6A6"),
+        hex_to_rgb("#8C8C8C"),
+        hex_to_rgb("#404040")
       },
       ["rain"] = {
-          hex_to_rgb("#5CC8FF"),
-          hex_to_rgb("#49B5FF"),
-          hex_to_rgb("#37A2FF"),
-          hex_to_rgb("#248FFF"),
-          hex_to_rgb("#127CFF"),
-          hex_to_rgb("#0069FF"),
-          hex_to_rgb("#0056E6")
+        hex_to_rgb("#5CC8FF"),
+        hex_to_rgb("#127CFF"),
+        hex_to_rgb("#49B5FF"),
+        hex_to_rgb("#248FFF"),
+        hex_to_rgb("#37A2FF"),
+        hex_to_rgb("#0069FF"),
+        hex_to_rgb("#0056E6")
       },
       ["snow"] = {
-          hex_to_rgb("#FFFFFF"),
-          hex_to_rgb("#F2F2F2"),
-          hex_to_rgb("#E5E5E5"),
-          hex_to_rgb("#D8D8D8"),
-          hex_to_rgb("#CCCCCC"),
-          hex_to_rgb("#BFBFBF"),
-          hex_to_rgb("#B3B3B3")
+        hex_to_rgb("#BFBFBF"),
+        hex_to_rgb("#E5E5E5"),
+        hex_to_rgb("#FFFFFF"),
+        hex_to_rgb("#F2F2F2"),
+        hex_to_rgb("#D8D8D8"),
+        hex_to_rgb("#CCCCCC"),
+        hex_to_rgb("#B3B3B3")
       },
       ["forest"] = {
-          hex_to_rgb("#006400"),
-          hex_to_rgb("#008000"),
-          hex_to_rgb("#228B22"),
-          hex_to_rgb("#2E8B57"),
-          hex_to_rgb("#3CB371"),
-          hex_to_rgb("#6B8E23"),
-          hex_to_rgb("#808000")
+        hex_to_rgb("#6B8E23"),
+        hex_to_rgb("#008000"),
+        hex_to_rgb("#3CB371"),
+        hex_to_rgb("#006400"),
+        hex_to_rgb("#228B22"),
+        hex_to_rgb("#2E8B57"),
+        hex_to_rgb("#808000")
       },
       ["meadow"] = {
-          hex_to_rgb("#7CFC00"),
-          hex_to_rgb("#ADFF2F"),
-          hex_to_rgb("#9ACD32"),
-          hex_to_rgb("#32CD32"),
-          hex_to_rgb("#228B22"),
-          hex_to_rgb("#008000"),
-          hex_to_rgb("#006400")
+        hex_to_rgb("#7CFC00"),
+        hex_to_rgb("#228B22"),
+        hex_to_rgb("#32CD32"),
+        hex_to_rgb("#ADFF2F"),
+        hex_to_rgb("#9ACD32"),
+        hex_to_rgb("#008000"),
+        hex_to_rgb("#006400")
       },
       ["ocean"] = {
-          hex_to_rgb("#1F8EAA"),
-          hex_to_rgb("#3E9CBF"),
-          hex_to_rgb("#5BAED3"),
-          hex_to_rgb("#79BDDF"),
-          hex_to_rgb("#98CCEC"),
-          hex_to_rgb("#B6DBF9"),
-          hex_to_rgb("#D5EBFF")
+        hex_to_rgb("#98CCEC"),
+        hex_to_rgb("#5BAED3"),
+        hex_to_rgb("#3E9CBF"),
+        hex_to_rgb("#1F8EAA"),
+        hex_to_rgb("#79BDDF"),
+        hex_to_rgb("#B6DBF9"),
+        hex_to_rgb("#D5EBFF")
       },
       ["desert"] = {
-          hex_to_rgb("#D2B48C"),
-          hex_to_rgb("#C8AD81"),
-          hex_to_rgb("#BEA476"),
-          hex_to_rgb("#B49E6B"),
-          hex_to_rgb("#AA9761"),
-          hex_to_rgb("#A08F56"),
-          hex_to_rgb("#96884B")
+        hex_to_rgb("#D2B48C"),
+        hex_to_rgb("#C8AD81"),
+        hex_to_rgb("#A08F56"),
+        hex_to_rgb("#BEA476"),
+        hex_to_rgb("#AA9761"),
+        hex_to_rgb("#B49E6B"),
+        hex_to_rgb("#96884B")
       },
       ["mountain"] = {
-          hex_to_rgb("#5D5349"),
-          hex_to_rgb("#736B61"),
-          hex_to_rgb("#8A8378"),
-          hex_to_rgb("#A19A8F"),
-          hex_to_rgb("#B895A6"),
-          hex_to_rgb("#D18FBF"),
-          hex_to_rgb("#EB8ADA")
+        hex_to_rgb("#5D5349"),
+        hex_to_rgb("#736B61"),
+        hex_to_rgb("#D18FBF"),
+        hex_to_rgb("#A19A8F"),
+        hex_to_rgb("#B895A6"),
+        hex_to_rgb("#8A8378"),
+        hex_to_rgb("#EB8ADA")
       },
       ["rainforest"] = {
-          hex_to_rgb("#008B45"),
-          hex_to_rgb("#00A157"),
-          hex_to_rgb("#00AD6E"),
-          hex_to_rgb("#00B786"),
-          hex_to_rgb("#00C3A0"),
-          hex_to_rgb("#00D0BA"),
-          hex_to_rgb("#00DDD4")
+        hex_to_rgb("#008B45"),
+        hex_to_rgb("#00C3A0"),
+        hex_to_rgb("#00A157"),
+        hex_to_rgb("#00B786"),
+        hex_to_rgb("#00AD6E"),
+        hex_to_rgb("#00D0BA"),
+        hex_to_rgb("#00DDD4")
       },
       ["coral reef"] = {
-          hex_to_rgb("#FF6C40"),
-          hex_to_rgb("#FF7F50"),
-          hex_to_rgb("#FF9360"),
-          hex_to_rgb("#FFA673"),
-          hex_to_rgb("#FFB986"),
-          hex_to_rgb("#FFCCA0"),
-          hex_to_rgb("#FFE0B9")
+        hex_to_rgb("#FFCCA0"),
+        hex_to_rgb("#FF6C40"),
+        hex_to_rgb("#FFB986"),
+        hex_to_rgb("#FF9360"),
+        hex_to_rgb("#FF7F50"),
+        hex_to_rgb("#FFA673"),
+        hex_to_rgb("#FFE0B9")
       },
       ["volcano"] = {
-          hex_to_rgb("#800000"),
-          hex_to_rgb("#8E0C00"),
-          hex_to_rgb("#9C1800"),
-          hex_to_rgb("#AA2400"),
-          hex_to_rgb("#B83000"),
-          hex_to_rgb("#C63C00"),
-          hex_to_rgb("#D44800")
+        hex_to_rgb("#AA2400"),
+        hex_to_rgb("#8E0C00"),
+        hex_to_rgb("#9C1800"),
+        hex_to_rgb("#B83000"),
+        hex_to_rgb("#800000"),
+        hex_to_rgb("#C63C00"),
+        hex_to_rgb("#D44800")
       },
       ["waterfall"] = {
-          hex_to_rgb("#4D74FF"),
-          hex_to_rgb("#5A81FF"),
-          hex_to_rgb("#678EFF"),
-          hex_to_rgb("#74A8FF"),
-          hex_to_rgb("#81B5FF"),
-          hex_to_rgb("#8EC3FF"),
-          hex_to_rgb("#9BD0FF")
+        hex_to_rgb("#8EC3FF"),
+        hex_to_rgb("#5A81FF"),
+        hex_to_rgb("#74A8FF"),
+        hex_to_rgb("#4D74FF"),
+        hex_to_rgb("#81B5FF"),
+        hex_to_rgb("#678EFF"),
+        hex_to_rgb("#9BD0FF")
       },
       ["cave"] = {
-          hex_to_rgb("#4D4D4D"),
-          hex_to_rgb("#595959"),
-          hex_to_rgb("#666666"),
-          hex_to_rgb("#737373"),
-          hex_to_rgb("#808080"),
-          hex_to_rgb("#8C8C8C"),
-          hex_to_rgb("#999999")
+        hex_to_rgb("#808080"),
+        hex_to_rgb("#4D4D4D"),
+        hex_to_rgb("#666666"),
+        hex_to_rgb("#737373"),
+        hex_to_rgb("#595959"),
+        hex_to_rgb("#8C8C8C"),
+        hex_to_rgb("#999999")
       },
       ["canyon"] = {
-          hex_to_rgb("#AB4E20"),
-          hex_to_rgb("#BF5B23"),
-          hex_to_rgb("#D16826"),
-          hex_to_rgb("#E07529"),
-          hex_to_rgb("#EE822C"),
-          hex_to_rgb("#FA8F2F"),
-          hex_to_rgb("#FF9C32")
+        hex_to_rgb("#AB4E20"),
+        hex_to_rgb("#D16826"),
+        hex_to_rgb("#EE822C"),
+        hex_to_rgb("#BF5B23"),
+        hex_to_rgb("#FA8F2F"),
+        hex_to_rgb("#E07529"),
+        hex_to_rgb("#FF9C32")
       }
     }
 
