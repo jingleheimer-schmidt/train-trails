@@ -2,6 +2,7 @@
 Version: 0.0.15
 Date: ????
   Changes:
+    - removed navy blue from India flag palette
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.14
 Date: 01JUL2023

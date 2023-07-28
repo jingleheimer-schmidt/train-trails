@@ -102,7 +102,7 @@ local national_flag_palettes = {
 		util.color("#FF9933"), -- saffron
 		util.color("#FFFFFF"), -- white
 		util.color("#138808"), -- green
-		util.color("#000080"), -- navy blue
+		-- util.color("#000080"), -- navy blue
 	},
 	["united states"] = {
 		util.color("#B31942"), -- red

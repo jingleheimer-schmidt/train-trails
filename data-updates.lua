@@ -114,7 +114,7 @@ local simulation_script = [[
           hex_to_rgb("#FF9933"), -- saffron
           hex_to_rgb("#FFFFFF"), -- white
           hex_to_rgb("#138808"), -- green
-          hex_to_rgb("#000080"), -- navy blue
+          -- hex_to_rgb("#000080"), -- navy blue
       },
       ["united states"] = {
           hex_to_rgb("#B31942"), -- red
