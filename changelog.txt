@@ -2,6 +2,7 @@
 Version: 0.0.15
 Date: ????
   Changes:
+    - modified the colors of the "natural" palette
     - removed navy blue from India flag palette
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.14
