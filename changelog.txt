@@ -4,6 +4,7 @@ Date: ????
   Changes:
     - modified the colors of the "natural" palette
     - removed navy blue from India flag palette
+    - changed random palette locale from "Random: Type" to "Type: Random"
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.14
 Date: 01JUL2023
