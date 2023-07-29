@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.15
 Date: ????
+    - reduced trail ballooning for trains at low speeds
+    - limited trail segment drawing to a maximum of 1 per tile
   Changes:
     - modified the colors of the "natural" palette
     - removed navy blue from India flag palette
