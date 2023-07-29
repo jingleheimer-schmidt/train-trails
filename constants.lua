@@ -503,10 +503,12 @@ local natural_palettes = {
 
 ---@type {string: Color[]}
 local railway_company_palettes = {
-	["deutsche bahn"] = { -- https://logos-world.net/deutsche-bahn-logo
+	["deutsche bahn"] = {
+		-- https://logos-world.net/deutsche-bahn-logo
 		util.color("#EC1B2D"),
 	},
-	["SNCF"] = { -- color pick from company logo https://www.sncf.com/fr/groupe/marques/sncf/identite
+	["SNCF"] = {
+		-- color pick from company logo https://www.sncf.com/fr/groupe/marques/sncf/identite
 		util.color("#7E2270"),
 		util.color("#98177A"),
 		util.color("#A51475"),
@@ -516,7 +518,8 @@ local railway_company_palettes = {
 		util.color("#D91C24"),
 		util.color("#DA1E26"),
 	},
-	["union pacific"] = { -- https://utahrails.net/up/up-paint-html.php
+	["union pacific"] = {
+		-- https://utahrails.net/up/up-paint-html.php
 		util.color("#635F56"),
 		util.color("#D10000"),
 		util.color("#FEBD00"),
@@ -525,25 +528,30 @@ local railway_company_palettes = {
 		util.color("#D10000"),
 		util.color("#635F56"),
 	},
-	["BNSF"] = { -- https://www.bnsf.com/brand2k5/pdf/bnsf-brand-quick-reference-guide.pdf
+	["BNSF"] = {
+		-- https://www.bnsf.com/brand2k5/pdf/bnsf-brand-quick-reference-guide.pdf
 		util.color("#f85d13"),
 		util.color("#2B2926"),
 	},
-	["CSX"] = { -- https://www.csx.com/index.cfm/library/files/customers/style-test/
+	["CSX"] = {
+		-- https://www.csx.com/index.cfm/library/files/customers/style-test/
 		util.color("#00467F"),
 		util.color("#FFC939"),
 		util.color("#4D4F53"),
 		util.color("#000000"),
 	},
-	["CN"] = { -- https://www.cn.ca/-/media/Files/Media/Media-Image-Centre/FIN-1BasicElement.pdf
+	["CN"] = {
+		-- https://www.cn.ca/-/media/Files/Media/Media-Image-Centre/FIN-1BasicElement.pdf
 		util.color("#ED1A2D"),
 	},
-	["trenitalia"] = { -- color pick from company logo https://www.trenitalia.com
+	["trenitalia"] = {
+		-- color pick from company logo https://www.trenitalia.com
 		util.color("#006C68"),
 		util.color("#FFFFFF"),
 		util.color("#E31837"),
 	},
-	["amtrak"] = { -- https://history.amtrak.com/archives/amtrak-livery-and-logo-guide-2018/@@download/item/Amtrak%20Livery%20and%20Logo%20Guide%202-8-19.pdf
+	["amtrak"] = {
+		-- https://history.amtrak.com/archives/amtrak-livery-and-logo-guide-2018/@@download/item/Amtrak%20Livery%20and%20Logo%20Guide%202-8-19.pdf
 		util.color("#00537D"),
 		util.color("#00537D"),
 		util.color("#FFFFFF"),
