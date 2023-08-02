@@ -3,11 +3,11 @@ Version: 0.0.15
 Date: ????
   Bugfixes:
     - reduced trail ballooning for trains at low speeds
-    - fixed that random palette selection sometimes showed only white trails
+    - fixed random palette selection sometimes showing only white trails
   Optimizations:
     - limited trail segment drawing to a maximum of 1 per tile
   Changes:
-    - modified the colors of the "natural" palette
+    - modified colors of the "natural" palettes
     - removed navy blue from India flag palette
   Locale:
     - changed random palette locale scheme from "Random: Type" to "Type: Random"
