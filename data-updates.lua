@@ -949,7 +949,8 @@ local simulation_script = [[
       local light = mod_settings.light
       if not (sprite or light) then return end
 
-      local active_train_datas = get_active_trains(mod_settings)
+      global.active_train_datas = global.active_train_datas or get_active_trains(mod_settings)
+      local active_train_datas = global.active_train_datas
       if not active_train_datas then return end
 
       global.distance_counters = global.distance_counters or {}
