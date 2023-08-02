@@ -94,61 +94,61 @@ local pride_flag_palettes = {
 
 ---@type {string: Color[]}
 local national_flag_palettes = {
-	["china"] = {
+	["china"] = { -- population 1.4 billion, rank 1
 		util.color("#EE1C25"), -- red
 		util.color("#FFFF00"), -- yellow
 	},
-	["india"] = {
+	["india"] = { -- population 1.3 billion, rank 2
 		util.color("#FF9933"), -- saffron
 		util.color("#FFFFFF"), -- white
 		util.color("#138808"), -- green
 		-- util.color("#000080"), -- navy blue
 	},
-	["united states"] = {
+	["united states"] = { -- population 335 million, rank 3
 		util.color("#B31942"), -- red
 		util.color("#FFFFFF"), -- white
 		util.color("#0A3161"), -- blue
 	},
-	["brazil"] = {
+	["brazil"] = { -- population 203 million, rank 7
 		util.color("#009739"), -- green
 		util.color("#FEDD00"), -- yellow
 		util.color("#FFFFFF"), -- white
 		util.color("#012169"), -- blue
 	},
-	["russia"] = {
+	["russia"] = { -- population 146 million, rank 9
 		util.color("#FFFFFF"), -- white
 		util.color("#1C3578"), -- blue
 		util.color("#E4181C"), -- red
 	},
-	["mexico"] = {
+	["mexico"] = { -- population 129 million, rank 10
 		util.color("#006341"), -- dark green
 		util.color("#FFFFFF"), -- white
 		util.color("#C8102E"), -- red
 	},
-	["japan"] = {
+	["japan"] = { -- population 124 million, rank 11
 		util.color("#BC002D"), -- red
 		util.color("#FFFFFF"), -- white
 	},
-	["germany"] = {
+	["germany"] = { -- population 84 million, rank 19
 		util.color("#000000"), -- schwarz
 		util.color("#DD0000"), -- rot
 		util.color("#FFCE00"), -- gold
 	},
-	["united kingdom"] = {
+	["united kingdom"] = { -- population 67 million, rank 22
 		util.color("#FFFFFF"), -- white
 		util.color("#C8102E"), -- red
 		util.color("#012169"), -- blue
 	},
-	["ukraine"] = {
+	["ukraine"] = { -- population 41 million, rank 36
 		util.color("#0057B7"), -- blue
 		util.color("#FFDD00"), -- yellow
 	},
-	["czech republic"] = {
+	["czech republic"] = { -- population 10 million, rank 86
 		util.color("#11457E"), -- blue
 		util.color("#FFFFFF"), -- white
 		util.color("#D7141A"), -- red
 	},
-	["sweden"] = {
+	["sweden"] = { -- population 10 million, rank 87
 		util.color("#006AA7"), -- blue
 		util.color("#FECC02"), -- yellow
 	}
