@@ -94,6 +94,15 @@ local pride_flag_palettes = {
 
 ---@type {string: Color[]}
 local national_flag_palettes = {
+	["united nations"] = { -- population 7.4 billion, rank 0
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+		util.color("#FFFFFF"), -- white
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+	},
 	["china"] = { -- population 1.4 billion, rank 1
 		util.color("#EE1C25"), -- red
 		util.color("#FFFF00"), -- yellow
@@ -109,11 +118,30 @@ local national_flag_palettes = {
 		util.color("#FFFFFF"), -- white
 		util.color("#0A3161"), -- blue
 	},
+	["indonesia"] = { -- population 277 million, rank 4
+		util.color("#ED1C24"), -- red
+		util.color("#FFFFFF"), -- white
+	},
+	["pakistan"] = { -- population 220 million, rank 5
+		util.color("#FFFFFF"), -- white
+		util.color("#00401A"), -- dark green
+		util.color("#00401A"), -- dark green
+	},
+	["nigeria"] = { -- population 216 million, rank 6
+		util.color("#008753"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#008753"), -- green
+	},
 	["brazil"] = { -- population 203 million, rank 7
 		util.color("#009739"), -- green
 		util.color("#FEDD00"), -- yellow
 		util.color("#FFFFFF"), -- white
 		util.color("#012169"), -- blue
+	},
+	["bangladesh"] = { -- population 162 million, rank 8
+		util.color("#006a4e"), -- green
+		util.color("#f42a41"), -- red
+		util.color("#006A4E"), -- green
 	},
 	["russia"] = { -- population 146 million, rank 9
 		util.color("#FFFFFF"), -- white
@@ -129,24 +157,120 @@ local national_flag_palettes = {
 		util.color("#BC002D"), -- red
 		util.color("#FFFFFF"), -- white
 	},
+	["philippines"] = { -- population 110 million, rank 12
+		util.color("#0038A8"), -- blue
+		util.color("#CE1126"), -- red
+		util.color("#FFFFFF"), -- white
+		-- util.color("#FCD116"), -- gold
+	},
+	["ethiopia"] = { -- population 105 million, rank 13
+		util.color("#098930"), -- yellow
+		util.color("#FCDD0C"), -- yellow
+		util.color("#DA131B"), -- yellow
+	},
+	["egypt"] = { -- population 102 million, rank 14
+		util.color("#CE1126"), -- red
+		util.color("#FFFFFF"), -- white
+		util.color("#000000"), -- black
+	},
+	["vietnam"] = { -- population 97 million, rank 15
+		util.color("#DA251D"), -- red
+		util.color("#FFFF00"), -- yellow
+	},
+	["democratic republic of the congo"] = { -- population 89 million, rank 16
+		util.color("#007FFF"), -- blue
+		util.color("#CE1021"), -- red
+		util.color("#F7D618"), -- yellow
+	},
+	["turkey"] = { -- population 84 million, rank 17
+		util.color("#E30A17"), -- red
+		util.color("#FFFFFF"), -- white
+	},
+	["iran"] = { -- population 84 million, rank 18
+		util.color("#239f40"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#DA0000"), -- red
+	},
 	["germany"] = { -- population 84 million, rank 19
 		util.color("#000000"), -- schwarz
 		util.color("#DD0000"), -- rot
 		util.color("#FFCE00"), -- gold
+	},
+	["thailand"] = { -- population 68 million, rank 20
+		util.color("#A51931"), -- red
+		util.color("#F4F5F8"), -- white
+		util.color("#2D2A4A"), -- blue
+		util.color("#2D2A4A"), -- blue
+		util.color("#F4F5F8"), -- white
+		util.color("#A51931"), -- red
+	},
+	["france"] = { -- population 68 million, rank 21
+		util.color("#0055A4"), -- blue
+		util.color("#FFFFFF"), -- white
+		util.color("#EF4135"), -- red
 	},
 	["united kingdom"] = { -- population 67 million, rank 22
 		util.color("#FFFFFF"), -- white
 		util.color("#C8102E"), -- red
 		util.color("#012169"), -- blue
 	},
+	["tanzania"] = { -- population 61 million, rank 23
+		util.color("#1FB53A"), -- green
+		util.color("#1FB53A"), -- green
+		util.color("#FCD116"), -- yellow
+		util.color("#000000"), -- black
+		util.color("#000000"), -- black
+		util.color("#FCD116"), -- yellow
+		util.color("#01A2DD"), -- blue
+		util.color("#01A2DD"), -- blue
+	},
+	["south africa"] = { -- population 60 million, rank 24
+		util.color("#000000"), -- black
+		util.color("#FFB612"), -- gold
+		util.color("#007A4D"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#DE3831"), -- red
+		util.color("#007A4D"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#002395"), -- blue
+	},
+	["italy"] = { -- population 58 million, rank 25
+		util.color("#008C45"), -- green
+		util.color("#F4F5F0"), -- white
+		util.color("#CD212A"), -- red
+	},
 	["ukraine"] = { -- population 41 million, rank 36
 		util.color("#0057B7"), -- blue
 		util.color("#FFDD00"), -- yellow
+	},
+	["australia"] = { -- population 26 million, rank 53
+		util.color("#00008B"), -- blue
+		util.color("#FFFFFF"), -- white
+		util.color("#FF0000"), -- red
+	},
+	["netherlands"] = { -- population 17 million, rank 67
+		util.color("#AD1D25"), -- red
+		util.color("#FFFFFF"), -- white
+		util.color("#1E4785"), -- blue
+	},
+	["belgium"] = { -- population 11 million, rank 82
+		util.color("#000000"), -- black
+		util.color("#FDDA24"), -- yellow
+		util.color("#EF3340"), -- red
+	},
+	["cuba"] = { -- population 11 million, rank 85
+		util.color("#D21034"), -- red
+		util.color("#002590"), -- blue
+		util.color("#FFFFFF"), -- white
 	},
 	["czech republic"] = { -- population 10 million, rank 86
 		util.color("#11457E"), -- blue
 		util.color("#FFFFFF"), -- white
 		util.color("#D7141A"), -- red
+	},
+	["greece"] = { -- population 10 million, rank 89
+		util.color("#004C98"), -- blue
+		util.color("#FFFFFF"), -- white
 	},
 	["sweden"] = { -- population 10 million, rank 87
 		util.color("#006AA7"), -- blue
