@@ -196,7 +196,7 @@ local trainTrailsPalette = {
     "united kingdom",
     "ukraine",
     "czech republic",
-    "sweden"
+    "sweden",
   }
 }
 
