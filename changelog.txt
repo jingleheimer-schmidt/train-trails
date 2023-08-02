@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.15
-Date: ????
+Date: 01AUG2023
   Bugfixes:
     - reduced trail ballooning for trains at low speeds
     - fixed random palette selection sometimes showing only white trails
