@@ -94,61 +94,185 @@ local pride_flag_palettes = {
 
 ---@type {string: Color[]}
 local national_flag_palettes = {
-	["china"] = {
+	["united nations"] = { -- population 7.4 billion, rank 0
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+		util.color("#FFFFFF"), -- white
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+		util.color("#019EDB"), -- blue
+	},
+	["china"] = { -- population 1.4 billion, rank 1
 		util.color("#EE1C25"), -- red
 		util.color("#FFFF00"), -- yellow
 	},
-	["india"] = {
+	["india"] = { -- population 1.3 billion, rank 2
 		util.color("#FF9933"), -- saffron
 		util.color("#FFFFFF"), -- white
 		util.color("#138808"), -- green
-		util.color("#000080"), -- navy blue
+		-- util.color("#000080"), -- navy blue
 	},
-	["united states"] = {
+	["united states"] = { -- population 335 million, rank 3
 		util.color("#B31942"), -- red
 		util.color("#FFFFFF"), -- white
 		util.color("#0A3161"), -- blue
 	},
-	["brazil"] = {
+	["indonesia"] = { -- population 277 million, rank 4
+		util.color("#ED1C24"), -- red
+		util.color("#FFFFFF"), -- white
+	},
+	["pakistan"] = { -- population 220 million, rank 5
+		util.color("#FFFFFF"), -- white
+		util.color("#00401A"), -- dark green
+		util.color("#00401A"), -- dark green
+	},
+	["nigeria"] = { -- population 216 million, rank 6
+		util.color("#008753"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#008753"), -- green
+	},
+	["brazil"] = { -- population 203 million, rank 7
 		util.color("#009739"), -- green
 		util.color("#FEDD00"), -- yellow
 		util.color("#FFFFFF"), -- white
 		util.color("#012169"), -- blue
 	},
-	["russia"] = {
+	["bangladesh"] = { -- population 162 million, rank 8
+		util.color("#006a4e"), -- green
+		util.color("#f42a41"), -- red
+		util.color("#006A4E"), -- green
+	},
+	["russia"] = { -- population 146 million, rank 9
 		util.color("#FFFFFF"), -- white
 		util.color("#1C3578"), -- blue
 		util.color("#E4181C"), -- red
 	},
-	["mexico"] = {
+	["mexico"] = { -- population 129 million, rank 10
 		util.color("#006341"), -- dark green
 		util.color("#FFFFFF"), -- white
 		util.color("#C8102E"), -- red
 	},
-	["japan"] = {
+	["japan"] = { -- population 124 million, rank 11
 		util.color("#BC002D"), -- red
 		util.color("#FFFFFF"), -- white
 	},
-	["germany"] = {
+	["philippines"] = { -- population 110 million, rank 12
+		util.color("#0038A8"), -- blue
+		util.color("#CE1126"), -- red
+		util.color("#FFFFFF"), -- white
+		-- util.color("#FCD116"), -- gold
+	},
+	["ethiopia"] = { -- population 105 million, rank 13
+		util.color("#098930"), -- yellow
+		util.color("#FCDD0C"), -- yellow
+		util.color("#DA131B"), -- yellow
+	},
+	["egypt"] = { -- population 102 million, rank 14
+		util.color("#CE1126"), -- red
+		util.color("#FFFFFF"), -- white
+		util.color("#000000"), -- black
+	},
+	["vietnam"] = { -- population 97 million, rank 15
+		util.color("#DA251D"), -- red
+		util.color("#FFFF00"), -- yellow
+	},
+	["democratic republic of the congo"] = { -- population 89 million, rank 16
+		util.color("#007FFF"), -- blue
+		util.color("#CE1021"), -- red
+		util.color("#F7D618"), -- yellow
+	},
+	["turkey"] = { -- population 84 million, rank 17
+		util.color("#E30A17"), -- red
+		util.color("#FFFFFF"), -- white
+	},
+	["iran"] = { -- population 84 million, rank 18
+		util.color("#239f40"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#DA0000"), -- red
+	},
+	["germany"] = { -- population 84 million, rank 19
 		util.color("#000000"), -- schwarz
 		util.color("#DD0000"), -- rot
 		util.color("#FFCE00"), -- gold
 	},
-	["united kingdom"] = {
+	["thailand"] = { -- population 68 million, rank 20
+		util.color("#A51931"), -- red
+		util.color("#F4F5F8"), -- white
+		util.color("#2D2A4A"), -- blue
+		util.color("#2D2A4A"), -- blue
+		util.color("#F4F5F8"), -- white
+		util.color("#A51931"), -- red
+	},
+	["france"] = { -- population 68 million, rank 21
+		util.color("#0055A4"), -- blue
+		util.color("#FFFFFF"), -- white
+		util.color("#EF4135"), -- red
+	},
+	["united kingdom"] = { -- population 67 million, rank 22
 		util.color("#FFFFFF"), -- white
 		util.color("#C8102E"), -- red
 		util.color("#012169"), -- blue
 	},
-	["ukraine"] = {
+	["tanzania"] = { -- population 61 million, rank 23
+		util.color("#1FB53A"), -- green
+		util.color("#1FB53A"), -- green
+		util.color("#FCD116"), -- yellow
+		util.color("#000000"), -- black
+		util.color("#000000"), -- black
+		util.color("#FCD116"), -- yellow
+		util.color("#01A2DD"), -- blue
+		util.color("#01A2DD"), -- blue
+	},
+	["south africa"] = { -- population 60 million, rank 24
+		util.color("#000000"), -- black
+		util.color("#FFB612"), -- gold
+		util.color("#007A4D"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#DE3831"), -- red
+		util.color("#007A4D"), -- green
+		util.color("#FFFFFF"), -- white
+		util.color("#002395"), -- blue
+	},
+	["italy"] = { -- population 58 million, rank 25
+		util.color("#008C45"), -- green
+		util.color("#F4F5F0"), -- white
+		util.color("#CD212A"), -- red
+	},
+	["ukraine"] = { -- population 41 million, rank 36
 		util.color("#0057B7"), -- blue
 		util.color("#FFDD00"), -- yellow
 	},
-	["czech republic"] = {
+	["australia"] = { -- population 26 million, rank 53
+		util.color("#00008B"), -- blue
+		util.color("#FFFFFF"), -- white
+		util.color("#FF0000"), -- red
+	},
+	["netherlands"] = { -- population 17 million, rank 67
+		util.color("#AD1D25"), -- red
+		util.color("#FFFFFF"), -- white
+		util.color("#1E4785"), -- blue
+	},
+	["belgium"] = { -- population 11 million, rank 82
+		util.color("#000000"), -- black
+		util.color("#FDDA24"), -- yellow
+		util.color("#EF3340"), -- red
+	},
+	["cuba"] = { -- population 11 million, rank 85
+		util.color("#D21034"), -- red
+		util.color("#002590"), -- blue
+		util.color("#FFFFFF"), -- white
+	},
+	["czech republic"] = { -- population 10 million, rank 86
 		util.color("#11457E"), -- blue
 		util.color("#FFFFFF"), -- white
 		util.color("#D7141A"), -- red
 	},
-	["sweden"] = {
+	["greece"] = { -- population 10 million, rank 89
+		util.color("#004C98"), -- blue
+		util.color("#FFFFFF"), -- white
+	},
+	["sweden"] = { -- population 10 million, rank 87
 		util.color("#006AA7"), -- blue
 		util.color("#FECC02"), -- yellow
 	}
@@ -218,74 +342,103 @@ local seasonal_color_palettes = {
 local natural_palettes = {
 	["water"] = {
 		util.color("#71A8D2"),
+		util.color("#3C7FB1"),
 		util.color("#4D8EB6"),
+		util.color("#2A6A9C"),
+		util.color("#0F2D40"),
+		util.color("#1A3F5A"),
 		util.color("#336E94"),
-		util.color("#234E6E"),
+		util.color("#1F4B6E"),
 		util.color("#173C52"),
 		util.color("#0F2D40"),
+		util.color("#234E6E"),
+		util.color("#1A3F5A"),
 		util.color("#091E2D")
 	},
 	["earth"] = {
 		util.color("#B78E5C"),
-		util.color("#9E7749"),
-		util.color("#835C38"),
+		util.color("#E0B87C"),
 		util.color("#6B4629"),
-		util.color("#52311C"),
+		util.color("#A67C52"),
+		util.color("#9E7749"),
+		util.color("#7C5A3D"),
 		util.color("#3A1C10"),
+		util.color("#5A3D2A"),
+		util.color("#835C38"),
+		util.color("#4D2E1C"),
+		util.color("#52311C"),
+		util.color("#6B4629"),
 		util.color("#261007")
 	},
 	["fire"] = {
-		util.color("#FF4D00"),
 		util.color("#FF6900"),
 		util.color("#FF8519"),
+		util.color("#FFC766"),
+		util.color("#FFDF80"),
+		util.color("#FF8519"),
+		util.color("#FF4D00"),
 		util.color("#FF9C33"),
 		util.color("#FFB14D"),
-		util.color("#FFC766"),
+		util.color("#FF4D00"),
+		util.color("#FF8519"),
+		util.color("#FFB14D"),
+		util.color("#FFDF80"),
 		util.color("#FFDF80")
 	},
 	["air"] = {
 		util.color("#E6F7FF"),
 		util.color("#CCEAFF"),
-		util.color("#B3E3FF"),
 		util.color("#99D9FF"),
-		util.color("#80CFFF"),
 		util.color("#66C4FF"),
+		util.color("#B3E3FF"),
+		util.color("#80CFFF"),
 		util.color("#4DBAFF")
 	},
 	["ice"] = {
+		util.color("#3692E6"),
 		util.color("#C3E6FF"),
-		util.color("#A6D9FF"),
 		util.color("#8ACBFF"),
 		util.color("#6EBDFF"),
+		util.color("#A6D9FF"),
 		util.color("#52B0FF"),
-		util.color("#3692E6"),
 		util.color("#1A74CC")
 	},
 	["sunlight"] = {
+		util.color("#FFC266"),
 		util.color("#FFFAE5"),
-		util.color("#FFF2CC"),
+		util.color("#FFDF80"),
 		util.color("#FFEAB3"),
 		util.color("#FFD999"),
 		util.color("#FFD080"),
-		util.color("#FFC266"),
+		util.color("#FFF2CC"),
+		util.color("#FFD080"),
 		util.color("#FFBA4D")
 	},
 	["moonlight"] = {
-		util.color("#E5E5FF"),
-		util.color("#CCCCFF"),
-		util.color("#B3B3FF"),
-		util.color("#9999FF"),
-		util.color("#8080FF"),
 		util.color("#6666FF"),
+		util.color("#E5E5FF"),
+		util.color("#B3B3FF"),
+		util.color("#8080FF"),
+		util.color("#9999FF"),
+		util.color("#B3B3FF"),
+		util.color("#4D4DFF"),
+		util.color("#CCCCFF"),
+		util.color("#E5E5FF"),
+		util.color("#9999FF"),
+		util.color("#CCCCFF"),
 		util.color("#4D4DFF")
 	},
 	["stars"] = {
 		util.color("#FFF5E5"),
-		util.color("#FFEBCC"),
-		util.color("#FFE0B3"),
-		util.color("#FFD699"),
-		util.color("#FFCC80"),
 		util.color("#FFC266"),
+		util.color("#FFD999"),
+		util.color("#52B0FF"),
+		util.color("#FFBA4D"),
+		util.color("#CCCCFF"),
+		util.color("#FFE0B3"),
+		util.color("#FFF5F0"),
+		util.color("#FFD080"),
+		util.color("#B3B3FF"),
 		util.color("#FFB84D")
 	},
 	["sunrise"] = {
@@ -308,138 +461,178 @@ local natural_palettes = {
 	},
 	["fog"] = {
 		util.color("#D9D9D9"),
+		util.color("#BFBFBF"),
+		util.color("#595959"),
+		util.color("#737373"),
 		util.color("#C0C0C0"),
 		util.color("#A6A6A6"),
+		util.color("#737373"),
+		util.color("#404040"),
+		util.color("#737373"),
 		util.color("#8C8C8C"),
 		util.color("#737373"),
-		util.color("#595959"),
+		util.color("#8C8C8C"),
 		util.color("#404040")
 	},
 	["rain"] = {
 		util.color("#5CC8FF"),
+		util.color("#4DBAFF"),
+		util.color("#127CFF"),
+		util.color("#0F69FF"),
 		util.color("#49B5FF"),
+		util.color("#1A8CFF"),
+		util.color("#248FFF"),
+		util.color("#0F69FF"),
 		util.color("#37A2FF"),
 		util.color("#248FFF"),
-		util.color("#127CFF"),
 		util.color("#0069FF"),
+		util.color("#0F69FF"),
 		util.color("#0056E6")
 	},
 	["snow"] = {
-		util.color("#FFFFFF"),
-		util.color("#F2F2F2"),
-		util.color("#E5E5E5"),
-		util.color("#D8D8D8"),
-		util.color("#CCCCCC"),
 		util.color("#BFBFBF"),
+		util.color("#FFFFFF"),
+		util.color("#E5E5E5"),
+		util.color("#CCCCCC"),
+		util.color("#FFFFFF"),
+		util.color("#E5E5E5"),
+		util.color("#F2F2F2"),
+		util.color("#CCCCCC"),
+		util.color("#D8D8D8"),
+		util.color("#E5E5E5"),
+		util.color("#CCCCCC"),
+		util.color("#E5E5E5"),
 		util.color("#B3B3B3")
 	},
 	["forest"] = {
-		util.color("#006400"),
-		util.color("#008000"),
-		util.color("#228B22"),
-		util.color("#2E8B57"),
-		util.color("#3CB371"),
 		util.color("#6B8E23"),
+		util.color("#008000"),
+		util.color("#32CD32"),
+		util.color("#3CB371"),
+		util.color("#006400"),
+		util.color("#228B22"),
+		util.color("#96884B"),
+		util.color("#2E8B57"),
+		util.color("#008000"),
 		util.color("#808000")
 	},
 	["meadow"] = {
 		util.color("#7CFC00"),
+		util.color("#228B22"),
+		util.color("#32CD32"),
 		util.color("#ADFF2F"),
 		util.color("#9ACD32"),
-		util.color("#32CD32"),
-		util.color("#228B22"),
 		util.color("#008000"),
 		util.color("#006400")
 	},
 	["ocean"] = {
-		util.color("#1F8EAA"),
-		util.color("#3E9CBF"),
-		util.color("#5BAED3"),
-		util.color("#79BDDF"),
 		util.color("#98CCEC"),
+		util.color("#5BAED3"),
+		util.color("#3E9CBF"),
+		util.color("#1F8EAA"),
+		util.color("#79BDDF"),
 		util.color("#B6DBF9"),
 		util.color("#D5EBFF")
 	},
 	["desert"] = {
 		util.color("#D2B48C"),
 		util.color("#C8AD81"),
-		util.color("#BEA476"),
-		util.color("#B49E6B"),
-		util.color("#AA9761"),
 		util.color("#A08F56"),
+		util.color("#BEA476"),
+		util.color("#AA9761"),
+		util.color("#B49E6B"),
 		util.color("#96884B")
 	},
 	["mountain"] = {
 		util.color("#5D5349"),
 		util.color("#736B61"),
-		util.color("#8A8378"),
-		util.color("#A19A8F"),
-		util.color("#B895A6"),
 		util.color("#D18FBF"),
-		util.color("#EB8ADA")
+		util.color("#B895A6"),
+		util.color("#A19A8F"),
+		util.color("#8A8378"),
+		util.color("#B895A6"),
+		util.color("#8A8378"),
+		util.color("#736B61"),
+		util.color("#EB8ADA"),
+		util.color("#B895A6"),
+		util.color("#8A8378")
 	},
 	["rainforest"] = {
 		util.color("#008B45"),
-		util.color("#00A157"),
-		util.color("#00AD6E"),
-		util.color("#00B786"),
 		util.color("#00C3A0"),
+		util.color("#00A157"),
+		util.color("#00B786"),
+		util.color("#00AD6E"),
 		util.color("#00D0BA"),
 		util.color("#00DDD4")
 	},
 	["coral reef"] = {
-		util.color("#FF6C40"),
-		util.color("#FF7F50"),
-		util.color("#FF9360"),
-		util.color("#FFA673"),
-		util.color("#FFB986"),
 		util.color("#FFCCA0"),
+		util.color("#FF6C40"),
+		util.color("#FFB986"),
+		util.color("#FF9360"),
+		util.color("#FF7F50"),
+		util.color("#FFA673"),
 		util.color("#FFE0B9")
 	},
 	["volcano"] = {
-		util.color("#800000"),
+		util.color("#AA2400"),
 		util.color("#8E0C00"),
 		util.color("#9C1800"),
-		util.color("#AA2400"),
 		util.color("#B83000"),
+		util.color("#800000"),
 		util.color("#C63C00"),
 		util.color("#D44800")
 	},
 	["waterfall"] = {
-		util.color("#4D74FF"),
-		util.color("#5A81FF"),
-		util.color("#678EFF"),
-		util.color("#74A8FF"),
-		util.color("#81B5FF"),
 		util.color("#8EC3FF"),
+		util.color("#5A81FF"),
+		util.color("#74A8FF"),
+		util.color("#4D74FF"),
+		util.color("#81B5FF"),
+		util.color("#678EFF"),
 		util.color("#9BD0FF")
 	},
 	["cave"] = {
+		util.color("#808080"),
+		util.color("#595959"),
 		util.color("#4D4D4D"),
+		util.color("#737576"),
+		util.color("#666666"),
+		util.color("#8C8C8C"),
+		util.color("#737373"),
+		util.color("#999999"),
 		util.color("#595959"),
 		util.color("#666666"),
-		util.color("#737373"),
-		util.color("#808080"),
 		util.color("#8C8C8C"),
+		util.color("#737373"),
 		util.color("#999999")
 	},
 	["canyon"] = {
 		util.color("#AB4E20"),
-		util.color("#BF5B23"),
+		util.color("#8C3B0C"),
 		util.color("#D16826"),
-		util.color("#E07529"),
+		util.color("#E07E3C"),
 		util.color("#EE822C"),
+		util.color("#F28E3A"),
+		util.color("#BF5B23"),
+		util.color("#F59E4C"),
 		util.color("#FA8F2F"),
+		util.color("#F9A03F"),
+		util.color("#E07529"),
+		util.color("#F9B55A"),
 		util.color("#FF9C32")
 	}
 }
 
 ---@type {string: Color[]}
 local railway_company_palettes = {
-	["deutsche bahn"] = { -- https://logos-world.net/deutsche-bahn-logo
+	["deutsche bahn"] = {
+		-- https://logos-world.net/deutsche-bahn-logo
 		util.color("#EC1B2D"),
 	},
-	["SNCF"] = { -- color pick from company logo https://www.sncf.com/fr/groupe/marques/sncf/identite
+	["SNCF"] = {
+		-- color pick from company logo https://www.sncf.com/fr/groupe/marques/sncf/identite
 		util.color("#7E2270"),
 		util.color("#98177A"),
 		util.color("#A51475"),
@@ -449,7 +642,8 @@ local railway_company_palettes = {
 		util.color("#D91C24"),
 		util.color("#DA1E26"),
 	},
-	["union pacific"] = { -- https://utahrails.net/up/up-paint-html.php
+	["union pacific"] = {
+		-- https://utahrails.net/up/up-paint-html.php
 		util.color("#635F56"),
 		util.color("#D10000"),
 		util.color("#FEBD00"),
@@ -458,25 +652,30 @@ local railway_company_palettes = {
 		util.color("#D10000"),
 		util.color("#635F56"),
 	},
-	["BNSF"] = { -- https://www.bnsf.com/brand2k5/pdf/bnsf-brand-quick-reference-guide.pdf
+	["BNSF"] = {
+		-- https://www.bnsf.com/brand2k5/pdf/bnsf-brand-quick-reference-guide.pdf
 		util.color("#f85d13"),
 		util.color("#2B2926"),
 	},
-	["CSX"] = { -- https://www.csx.com/index.cfm/library/files/customers/style-test/
+	["CSX"] = {
+		-- https://www.csx.com/index.cfm/library/files/customers/style-test/
 		util.color("#00467F"),
 		util.color("#FFC939"),
 		util.color("#4D4F53"),
 		util.color("#000000"),
 	},
-	["CN"] = { -- https://www.cn.ca/-/media/Files/Media/Media-Image-Centre/FIN-1BasicElement.pdf
+	["CN"] = {
+		-- https://www.cn.ca/-/media/Files/Media/Media-Image-Centre/FIN-1BasicElement.pdf
 		util.color("#ED1A2D"),
 	},
-	["trenitalia"] = { -- color pick from company logo https://www.trenitalia.com
+	["trenitalia"] = {
+		-- color pick from company logo https://www.trenitalia.com
 		util.color("#006C68"),
 		util.color("#FFFFFF"),
 		util.color("#E31837"),
 	},
-	["amtrak"] = { -- https://history.amtrak.com/archives/amtrak-livery-and-logo-guide-2018/@@download/item/Amtrak%20Livery%20and%20Logo%20Guide%202-8-19.pdf
+	["amtrak"] = {
+		-- https://history.amtrak.com/archives/amtrak-livery-and-logo-guide-2018/@@download/item/Amtrak%20Livery%20and%20Logo%20Guide%202-8-19.pdf
 		util.color("#00537D"),
 		util.color("#00537D"),
 		util.color("#FFFFFF"),
