@@ -962,43 +962,41 @@ local create_train_data = train_data_util.create_train_data
       end
       return visible_surfaces
     end
-
-    -- draw trail segments for any visible active trains
-    ---@param event_tick uint
-    ---@param mod_settings mod_settings
-    local function draw_trails(event_tick, mod_settings)
-      local sprite = mod_settings.sprite
-      local light = mod_settings.light
-      if not (sprite or light) then return end
-
-      global.active_train_datas = global.active_train_datas or get_active_trains(mod_settings)
-      local active_train_datas = global.active_train_datas
-      if not active_train_datas then return end
-
-      global.distance_counters = global.distance_counters or {}
-
-      if mod_settings.passengers_only then
-        for _, player in pairs(game.connected_players) do
-          local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id]
-          if train_data then
-            draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-          end
-        end
-        return
-      end
-      local visible_surfaces = get_visible_surfaces()
-      for train_id, train_data in pairs(active_train_datas) do
-        if train_data.train.valid then
-          if not visible_surfaces[train_data.surface_index] then break end
-          draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-        else
-          global.active_trains[train_id] = nil
-        end
-      end
-    end
   end
 
+-- draw trail segments for any visible active trains
+---@param event_tick uint
+---@param mod_settings mod_settings
+local function draw_trails(event_tick, mod_settings)
+  local sprite = mod_settings.sprite
+  local light = mod_settings.light
+  if not (sprite or light) then return end
 
+  global.active_train_datas = global.active_train_datas or get_active_trains(mod_settings)
+  local active_train_datas = global.active_train_datas
+  if not active_train_datas then return end
+
+  global.distance_counters = global.distance_counters or {}
+
+  if mod_settings.passengers_only then
+    for _, player in pairs(game.connected_players) do
+      local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id]
+      if train_data then
+        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
+      end
+    end
+    return
+  end
+  local visible_surfaces = get_visible_surfaces()
+  for train_id, train_data in pairs(active_train_datas) do
+    if train_data.train.valid then
+      if not visible_surfaces[train_data.surface_index] then break end
+      draw_normalized_trail_segment(event_tick, mod_settings, train_data)
+    else
+      global.active_trains[train_id] = nil
+    end
+  end
+end
 
 ---@param event EventData.on_tick
 local function on_tick(event)
