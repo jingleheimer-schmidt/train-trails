@@ -125,6 +125,10 @@ local create_train_data = train_data_util.create_train_data
           hex_to_rgb("#3D1A78"), -- dark blue
       }
     }
+local drawing_util = require("util/drawing")
+local draw_trail_segment = drawing_util.draw_trail_segment
+local draw_normalized_trail_segment = drawing_util.draw_normalized_trail_segment
+
 
     ---@type {string: Color[]}
     local national_flag_palettes = {
@@ -931,26 +935,6 @@ local create_train_data = train_data_util.create_train_data
           time_to_live = length,
         }
       end
-    end
-
-    -- normalize the number of trails drawn per tile to make trails look consistent at all speeds
-    ---@param event_tick uint
-    ---@param mod_settings mod_settings
-    ---@param train_data train_data
-    local function draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-      local speed = train_data.train.speed -- tiles per tick
-      if speed == 0 then return end
-
-      local train_id = train_data.id
-      local distance_counters = global.distance_counters or {}
-      local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
-
-      if tiles_since_last_trail >= 1/3 then
-        draw_trail_segment(event_tick, mod_settings, train_data, speed)
-        tiles_since_last_trail = 0
-      end
-
-      global.distance_counters[train_id] = tiles_since_last_trail
     end
   end
 
