@@ -11,14 +11,7 @@ local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
-local random_palette_names = {
-  ["random all"] = constants.animation_names,
-  ["random pride"] = constants.pride_flag_names,
-  ["random country"] = constants.national_flag_names,
-  ["random seasonal"] = constants.seasonal_color_names,
-  ["random natural"] = constants.natural_palette_names,
-  ["random railway"] = constants.railway_palette_names
-}
+local random_palette_names = constants.random_palette_names
 
 local sin = math.sin
 local abs = math.abs
