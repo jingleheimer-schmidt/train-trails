@@ -13,6 +13,12 @@ local trail_types = constants.trail_types
 local active_states = constants.active_states
 local random_palette_names = constants.random_palette_names
 
+
+local color_util = require("util/color")
+local get_rainbow_color = color_util.get_rainbow_color
+local get_trail_color = color_util.get_trail_color
+local get_random_palette = color_util.get_random_palette
+
 local sin = math.sin
 local abs = math.abs
 local max = math.max
