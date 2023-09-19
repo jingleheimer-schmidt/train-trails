@@ -28,6 +28,25 @@ local func_capture = require("__simhelper__.funccapture")
         g = tonumber("0x"..hex:sub(3,4)) / 255,
         b = tonumber("0x"..hex:sub(5,6)) / 255,
       }
+local constants = require("util/constants")
+local speeds = constants.speeds
+local original_palettes = constants.original_palettes
+local hex_to_rgb = constants.hex_to_rgb
+local pride_flag_palettes = constants.pride_flag_palettes
+local national_flag_palettes = constants.national_flag_palettes
+local seasonal_color_palettes = constants.seasonal_color_palettes
+local natural_palettes = constants.natural_palettes
+local railway_company_palettes = constants.railway_company_palettes
+local animation_palettes = constants.animation_palettes
+local animation_names = constants.animation_names
+local trail_types = constants.trail_types
+local balance_to_ticks = constants.balance_to_ticks
+local default_chat_colors = constants.default_chat_colors
+local active_states = constants.active_states
+local random_palette_names = constants.random_palette_names
+
+local train_data_util = require("util/train_data")
+local create_train_data = train_data_util.create_train_data
     end
 
     ---@type {string: Color[]}
