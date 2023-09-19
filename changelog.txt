@@ -2,6 +2,17 @@
 Version: 0.0.16
 Date: ????
   Changes:
+  Locale:
+    - added partial Catalan (ca) translation
+    - added partial Czech (cs) translation
+    - added partial German (de) translation
+    - added partial French (fr) translation
+    - added partial Italian (it) translation
+    - added partial Portuguese - Brazil (pt-BR) translation
+    - added partial Russian (ru) translation
+    - added partial Sweedish - Sweden (sv-SE) translation
+    - added partial Trukish (tr) translation
+    - added partial Ukrainian (uk) translation
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.15
 Date: 01AUG2023
