@@ -12,9 +12,10 @@ local pi_2 = 2 * math.pi / 3
 local pi_4 = 4 * math.pi / 3
 
 -- gets a random color palette within mod setting restrictions
+---@param mod_settings mod_settings?
 ---@return Color.0|Color.1[]?
-local function get_random_palette()
-    local mod_settings = global.settings
+local function get_random_palette(mod_settings)
+    mod_settings = mod_settings or global.settings
     local palette_name = mod_settings.palette
     local random_palette_name = random_palette_names[palette_name] and random_palette_names[palette_name][random(#random_palette_names[palette_name])] or nil
     local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
