@@ -3,7 +3,7 @@
 Train Trails control script © 2023 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International. See LICENSE.txt for additional information
 --]]
 
-local constants = require("constants")
+local constants = require("util.constants")
 local speeds = constants.speeds
 local original_palettes = constants.original_palettes
 local animation_palettes = constants.animation_palettes

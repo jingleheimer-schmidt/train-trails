@@ -795,15 +795,6 @@ local active_states = {
 	[defines.train_state.wait_station] = false,
 }
 
-local random_palette_names = {
-	["random all"] = animation_names,
-	["random pride"] = pride_flag_names,
-	["random country"] = national_flag_names,
-	["random seasonal"] = seasonal_color_names,
-	["random natural"] = natural_palette_names,
-	["random railway"] = railway_palette_names,
-}
-
 return {
 	speeds = speeds,
 	original_palettes = original_palettes,
@@ -823,5 +814,4 @@ return {
 	balance_to_ticks = balance_to_ticks,
 	trail_types = trail_types,
 	active_states = active_states,
-	random_palette_names = random_palette_names,
 }
