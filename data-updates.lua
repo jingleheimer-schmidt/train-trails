@@ -978,10 +978,8 @@ local function draw_trails(event_tick, mod_settings)
 
   global.distance_counters = global.distance_counters or {}
 
-  local visible_surfaces = get_visible_surfaces()
   for train_id, train_data in pairs(active_train_datas) do
     if train_data.train.valid then
-      if not visible_surfaces[train_data.surface_index] then break end
       draw_normalized_trail_segment(event_tick, mod_settings, train_data)
     else
       global.active_trains[train_id] = nil
