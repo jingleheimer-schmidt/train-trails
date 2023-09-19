@@ -1,3 +1,6 @@
+
+require("util")
+
 ---@type {string: float}
 local speeds = {
 	["veryslow"] = 0.010,
@@ -16,7 +19,6 @@ local original_palettes = {
 	["deep"] = { amplitude = 25, center = 50 },
 }
 
-require("util")
 ---@type {string: Color[]}
 local pride_flag_palettes = {
 	["trans"] = {          -- trans pride
