@@ -50,24 +50,6 @@ local function get_random_palette(mod_settings)
   return random_palette
 end
 
--- add static data to the active_trains table to reduce lookup time
----@param mod_settings mod_settings
----@param train LuaTrain
----@return train_data
-local function create_train_data(mod_settings, train)
-  local random_palette = get_random_palette(mod_settings)
-  return {
-    surface_index = train.carriages[1].surface_index,
-    train = train,
-    id = train.id,
-    front_stock = train.front_stock,
-    back_stock = train.back_stock,
-    random_animation_colors = random_palette,
-    random_animation_colors_count = random_palette and #random_palette,
-    adjusted_length = mod_settings.length + ((#train.carriages - 1) * 30)
-  }
-end
-
 -- save mod settings to global to reduce lookup time
 ---@return mod_settings
 local function get_mod_settings()
