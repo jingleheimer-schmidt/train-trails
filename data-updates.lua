@@ -978,15 +978,6 @@ local function draw_trails(event_tick, mod_settings)
 
   global.distance_counters = global.distance_counters or {}
 
-  if mod_settings.passengers_only then
-    for _, player in pairs(game.connected_players) do
-      local train_data = player.vehicle and player.vehicle.train and active_train_datas[player.vehicle.train.id]
-      if train_data then
-        draw_normalized_trail_segment(event_tick, mod_settings, train_data)
-      end
-    end
-    return
-  end
   local visible_surfaces = get_visible_surfaces()
   for train_id, train_data in pairs(active_train_datas) do
     if train_data.train.valid then
