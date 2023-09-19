@@ -1,10 +1,7 @@
 
 local func_capture = require("__simhelper__.funccapture")
 
-
-  if game.active_mods["train-trails"] then
 local func_capture = require("__simhelper__.funccapture")
-
     ---@type {string: float}
     local speeds = {
       ["veryslow"] = 0.010,
