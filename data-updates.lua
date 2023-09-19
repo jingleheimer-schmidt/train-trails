@@ -78,7 +78,7 @@ end
 ---@param mod_settings mod_settings
 ---@return {uint: train_data}
 local function get_active_trains(mod_settings)
-  local active_trains = nil
+  local active_trains
   for _, surface in pairs(game.surfaces) do
     for _, train in pairs(surface.get_trains()) do
       if active_states[train.state] then
