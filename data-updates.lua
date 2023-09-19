@@ -1,5 +1,7 @@
 
-local simulation_script = [[
+local func_capture = require("__simhelper__.funccapture")
+
+
   if game.active_mods["train-trails"] then
 local func_capture = require("__simhelper__.funccapture")
 
@@ -994,23 +996,22 @@ local create_train_data = train_data_util.create_train_data
         end
       end
     end
-
-    ---@param event EventData.on_tick
-    local function on_tick(event)
-      local mod_settings = get_mod_settings()
-      local event_tick = event.tick
-      if event_tick % mod_settings.balance == 0 then
-        draw_trails(event_tick, mod_settings)
-      end
-    end
-
-    if not script.active_mods["trains-rights"] then
-      on_tick({ tick = game.tick })
-    end
   end
 
+
+
+---@param event EventData.on_tick
+local function on_tick(event)
+  if script.active_mods["trains-rights"] then goto end_of_train_trails_script end
+  local mod_settings = get_mod_settings()
+  local event_tick = event.tick
+  if event_tick % mod_settings.balance == 0 then
+    draw_trails(event_tick, mod_settings)
+  end
   ::end_of_train_trails_script::
-]]
+end
+
+local simulation_script = func_capture.capture(on_tick)
 
 for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
   if main_menu_simulation then
