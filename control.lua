@@ -24,16 +24,6 @@ local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
--- gets a random color palette within mod setting restrictions
----@return Color.0|Color.1[]?
-local function get_random_palette()
-  local mod_settings = global.settings
-  local palette_name = mod_settings.palette
-  local random_palette_name = random_palette_names[palette_name] and random_palette_names[palette_name][random(#random_palette_names[palette_name])] or nil
-  local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
-  return random_palette
-end
-
 -- add static data to the active_trains table to reduce lookup time
 ---@param train LuaTrain
 local function add_active_train(train)
@@ -123,55 +113,6 @@ end
 script.on_event(defines.events.on_runtime_mod_setting_changed, initialize_and_reset)
 script.on_configuration_changed(initialize_and_reset)
 script.on_init(initialize_and_reset)
-
----@param created_tick number
----@param mod_settings mod_settings
----@param train_data train_data
----@return Color
-local function get_rainbow_color(created_tick, mod_settings, train_data)
-  local modifier = (train_data.id + created_tick) * mod_settings.frequency
-  local amplitude = mod_settings.amplitude
-  local center = mod_settings.center
-  local animation_colors = train_data.random_animation_colors or mod_settings.animation_colors
-  if amplitude and center then
-    return {
-      r = sin(modifier + pi_0) * amplitude + center,
-      g = sin(modifier + pi_2) * amplitude + center,
-      b = sin(modifier + pi_4) * amplitude + center,
-      a = 255,
-    }
-  elseif animation_colors then
-    local index = floor(modifier % (mod_settings.animation_color_count or train_data.random_animation_colors_count)) + 1
-    return animation_colors[index]
-  else
-    return { 1, 1, 1 }
-  end
-end
-
--- get the color for a given trail
----@param event_tick uint
----@param mod_settings mod_settings
----@param train_data train_data
----@param stock LuaEntity
----@return Color?
-local function get_trail_color(event_tick, mod_settings, train_data, stock)
-  local default_color = default_chat_colors[mod_settings.default_color]
-  local color_type = mod_settings.color_type
-
-  if color_type == "rainbow" then
-    return get_rainbow_color(event_tick, mod_settings, train_data)
-  elseif color_type == "train" then
-    local color = stock.color
-
-    if color then
-      return color
-    elseif default_color == "rainbow" then
-      return get_rainbow_color(event_tick, mod_settings, train_data)
-    elseif type(default_color) == "table" then
-      return default_color
-    end
-  end
-end
 
 -- draw a trail segment for a given train
 ---@param event_tick uint
