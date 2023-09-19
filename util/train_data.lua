@@ -1,7 +1,7 @@
 
 local constants = require("util.constants")
 local active_states = constants.active_states
-local color_util = require("util/color")
+local color_util = require("util.color")
 local get_random_palette = color_util.get_random_palette
 
 -- add static data to the active_trains table to reduce lookup time

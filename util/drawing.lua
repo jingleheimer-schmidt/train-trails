@@ -1,5 +1,5 @@
 
-local color_util = require("util/color")
+local color_util = require("util.color")
 local get_trail_color = color_util.get_trail_color
 
 local abs = math.abs

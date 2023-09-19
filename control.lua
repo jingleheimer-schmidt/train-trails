@@ -13,17 +13,17 @@ local trail_types = constants.trail_types
 local active_states = constants.active_states
 local random_palette_names = constants.random_palette_names
 
-local train_data_util = require("util/train_data")
+local train_data_util = require("util.train_data")
 local add_active_train = train_data_util.add_active_train
 local remove_active_train = train_data_util.remove_active_train
 local reset_active_trains = train_data_util.reset_active_trains
 
-local color_util = require("util/color")
+local color_util = require("util.color")
 local get_rainbow_color = color_util.get_rainbow_color
 local get_trail_color = color_util.get_trail_color
 local get_random_palette = color_util.get_random_palette
 
-local drawing_util = require("util/drawing")
+local drawing_util = require("util.drawing")
 local draw_trail_segment = drawing_util.draw_trail_segment
 local draw_normalized_trail_segment = drawing_util.draw_normalized_trail_segment
 
