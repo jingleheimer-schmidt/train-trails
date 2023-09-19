@@ -53,7 +53,8 @@ end
 -- save mod settings to global to reduce lookup time
 ---@return mod_settings
 local function get_mod_settings()
-  local settings = settings.global
+  global.settings = global.settings or _ENV.settings.global
+  local settings = global.settings
   local palette_name = settings["train-trails-palette"].value
   ---@type mod_settings
   return {
