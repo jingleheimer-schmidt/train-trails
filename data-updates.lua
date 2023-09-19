@@ -1,6 +1,7 @@
 
 local simulation_script = [[
   if game.active_mods["train-trails"] then
+local func_capture = require("__simhelper__.funccapture")
 
     ---@type {string: float}
     local speeds = {
