@@ -952,16 +952,6 @@ local create_train_data = train_data_util.create_train_data
 
       global.distance_counters[train_id] = tiles_since_last_trail
     end
-
-    -- create a lookup table of surfaces that players can see
-    ---@return table<uint, boolean>
-    local function get_visible_surfaces()
-      local visible_surfaces = {}
-      for _, player in pairs(game.connected_players) do
-        visible_surfaces[player.surface_index] = true
-      end
-      return visible_surfaces
-    end
   end
 
 -- draw trail segments for any visible active trains
