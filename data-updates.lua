@@ -1,7 +1,7 @@
 
 local func_capture = require("__simhelper__.funccapture")
 
-local constants = require("util/constants")
+local constants = require("util.constants")
 local speeds = constants.speeds
 local original_palettes = constants.original_palettes
 local animation_palettes = constants.animation_palettes
@@ -11,12 +11,12 @@ local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
 
-local drawing_util = require("util/drawing")
+local drawing_util = require("util.drawing")
 local draw_normalized_trail_segment = drawing_util.draw_normalized_trail_segment
 
-local color_util = require("util/color")
+local color_util = require("util.color")
 
-local train_data_util = require("util/train_data")
+local train_data_util = require("util.train_data")
 local create_train_data = train_data_util.create_train_data
 
 local function hex_to_rgb(hex)
