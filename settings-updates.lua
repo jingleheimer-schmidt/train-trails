@@ -5,4 +5,4 @@ if mods["Automatic_Train_Painter"] then
     end
 end
 
--- require("colorize_locale")
+-- require("util.colorize_locale")
