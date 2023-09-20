@@ -1,5 +1,5 @@
 
-local constants = require("constants")
+local constants = require("util.constants")
 local palettes = constants.original_palettes
 local pride_flag_palettes = constants.pride_flag_palettes
 local national_flag_palettes = constants.national_flag_palettes

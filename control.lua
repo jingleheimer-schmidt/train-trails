@@ -11,32 +11,14 @@ local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
-local random_palette_names = constants.random_palette_names
 
 local train_data_util = require("util.train_data")
 local add_active_train = train_data_util.add_active_train
 local remove_active_train = train_data_util.remove_active_train
 local reset_active_trains = train_data_util.reset_active_trains
 
-local color_util = require("util.color")
-local get_rainbow_color = color_util.get_rainbow_color
-local get_trail_color = color_util.get_trail_color
-local get_random_palette = color_util.get_random_palette
-
 local drawing_util = require("util.drawing")
-local draw_trail_segment = drawing_util.draw_trail_segment
 local draw_normalized_trail_segment = drawing_util.draw_normalized_trail_segment
-
-local sin = math.sin
-local abs = math.abs
-local max = math.max
-local floor = math.floor
-local random = math.random
-local pi_0 = 0 * math.pi / 3
-local pi_2 = 2 * math.pi / 3
-local pi_4 = 4 * math.pi / 3
-local draw_light = rendering.draw_light
-local draw_sprite = rendering.draw_sprite
 
 -- add new trains to the active_trains table when they are created
 ---@param event EventData.on_train_created
