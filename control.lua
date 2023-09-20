@@ -20,6 +20,9 @@ local reset_active_trains = train_data_util.reset_active_trains
 local drawing_util = require("util.drawing")
 local draw_normalized_trail_segment = drawing_util.draw_normalized_trail_segment
 
+local color_util = require("util.color")
+local register_rollingstock_colors = color_util.register_rollingstock_colors
+
 -- add new trains to the active_trains table when they are created
 ---@param event EventData.on_train_created
 local function on_train_created(event)
@@ -44,6 +47,19 @@ end
 
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
+
+---@param event EventData.on_entity_color_changed
+local function on_entity_color_changed(event)
+  local entity = event.entity
+  local type = entity.type
+  if type == "locomotive" or type == "cargo-wagon" or type == "fluid-wagon" or type == "artillery-wagon" then
+    local train = entity.train
+    if train then
+      register_rollingstock_colors(train)
+    end
+  end
+end
+script.on_event(defines.events.on_entity_color_changed, on_entity_color_changed)
 
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()

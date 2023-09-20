@@ -4,11 +4,14 @@ local active_states = constants.active_states
 
 local color_util = require("util.color")
 local get_random_palette = color_util.get_random_palette
+local register_rollingstock_colors = color_util.register_rollingstock_colors
+local unregister_rollingstock_colors = color_util.unregister_rollingstock_colors
 
 -- add static data to the active_trains table to reduce lookup time
 ---@param train LuaTrain
 local function add_active_train(train)
     local random_palette = get_random_palette()
+    register_rollingstock_colors(train)
     global.active_trains[train.id] = {
         surface_index = train.carriages[1].surface_index,
         train = train,
@@ -24,6 +27,7 @@ end
 ---@param train LuaTrain
 local function remove_active_train(train)
     global.active_trains[train.id] = nil
+    unregister_rollingstock_colors(train)
 end
 
 local function reset_active_trains()
@@ -42,6 +46,7 @@ end
 ---@return train_data
 local function create_train_data(mod_settings, train)
     local random_palette = get_random_palette(mod_settings)
+    register_rollingstock_colors(train)
     return {
         surface_index = train.carriages[1].surface_index,
         train = train,

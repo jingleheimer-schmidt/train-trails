@@ -60,7 +60,8 @@ local function get_trail_color(event_tick, mod_settings, train_data, stock)
     if color_type == "rainbow" then
         return get_rainbow_color(event_tick, mod_settings, train_data)
     elseif color_type == "train" then
-        local color = stock.color
+        global.rollingstock_colors = global.rollingstock_colors or {}
+        local color = global.rollingstock_colors[stock.unit_number]
 
         if color then
             return color
@@ -72,8 +73,30 @@ local function get_trail_color(event_tick, mod_settings, train_data, stock)
     end
 end
 
+-- register the colors of a given train's stock
+---@param train LuaTrain
+local function register_rollingstock_colors(train)
+    global.rollingstock_colors = global.rollingstock_colors or {}
+    for _, stock in pairs(train.carriages) do
+        if stock.color then
+            global.rollingstock_colors[stock.unit_number] = stock.color
+        end
+    end
+end
+
+-- unregisters the colors of a given train's stock
+---@param train LuaTrain
+local function unregister_rollingstock_colors(train)
+    global.rollingstock_colors = global.rollingstock_colors or {}
+    for _, stock in pairs(train.carriages) do
+        global.rollingstock_colors[stock.unit_number] = nil
+    end
+end
+
 return {
     get_random_palette = get_random_palette,
     get_rainbow_color = get_rainbow_color,
     get_trail_color = get_trail_color,
+    register_rollingstock_colors = register_rollingstock_colors,
+    unregister_rollingstock_colors = unregister_rollingstock_colors,
 }
