@@ -806,6 +806,8 @@ local random_palette_names = {
 	["random railway"] = railway_palette_names,
 }
 
+local sprite_name = "train-trail"
+
 return {
 	speeds = speeds,
 	original_palettes = original_palettes,
@@ -826,4 +828,5 @@ return {
 	trail_types = trail_types,
 	active_states = active_states,
 	random_palette_names = random_palette_names,
+	sprite_name = sprite_name,
 }
