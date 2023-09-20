@@ -163,7 +163,18 @@ local function on_tick(event)
   ::end_of_train_trails_script::
 end
 
-local simulation_script = func_capture.capture(on_tick)
+local restore_upvalues = { -- a list of restorers
+  {
+    upvalue_name = "random",
+    restore_as_global = { "math", "random" },
+  },
+  {
+    upvalue_name = "settings",
+    restore_as_global = { "settings" },
+  }
+}
+
+local update_script = func_capture.capture(on_tick, restore_upvalues)
 
 for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
   if main_menu_simulation then
