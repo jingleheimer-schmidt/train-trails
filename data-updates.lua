@@ -52,13 +52,19 @@ end
 ---@param mod_settings mod_settings
 ---@return {uint: train_data}
 local function get_active_trains(mod_settings)
-  local active_trains
+  global.active_train_datas = global.active_train_datas or {}
+  local active_trains = global.active_train_datas
   for _, surface in pairs(game.surfaces) do
-    for _, train in pairs(surface.get_trains()) do
+    local trains = surface.get_trains()
+    for _, train in pairs(trains) do
       if active_states[train.state] then
-        local data = create_train_data(mod_settings, train)
-        active_trains = active_trains or {}
-        active_trains[train.id] = data
+        if not active_trains[train.id] then
+          local data = create_train_data(mod_settings, train)
+          active_trains = active_trains or {}
+          active_trains[train.id] = data
+        end
+      else
+        active_trains[train.id] = nil
       end
     end
   end
