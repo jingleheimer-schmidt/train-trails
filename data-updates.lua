@@ -116,12 +116,12 @@ local restore_upvalues = { -- a list of restorers
 
 local update_script = func_capture.capture(on_tick, restore_upvalues)
 
-for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
-  if main_menu_simulation then
-    if main_menu_simulation.update then
-      main_menu_simulation.update = main_menu_simulation.update .. simulation_script
+for _, simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
+  if simulation then
+    if simulation.update then
+      simulation.update = simulation.update .. update_script
     else
-      main_menu_simulation.update = simulation_script
+      simulation.update = update_script
     end
   end
 end
