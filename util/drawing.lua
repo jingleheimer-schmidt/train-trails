@@ -7,6 +7,7 @@ local sprite_name = constants.sprite_name
 
 local abs = math.abs
 local max = math.max
+-- local rendering = _ENV.rendering
 -- local draw_light = rendering and rendering.draw_light
 -- local draw_sprite = rendering and rendering.draw_sprite
 
@@ -27,8 +28,15 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     local length = train_data.adjusted_length
     local scale = mod_settings.scale * max(abs(speed), 0.66)
 
+    local rendering = rendering
+    local draw_sprite = rendering.draw_sprite
+    local draw_light = rendering.draw_light
+    -- rendering = rendering
+    -- draw_sprite = draw_sprite
+    -- draw_light = draw_light
+
     if mod_settings.sprite then
-        rendering.draw_sprite {
+        draw_sprite {
             sprite = sprite_name,
             target = position,
             surface = surface,
@@ -40,7 +48,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
         }
     end
     if mod_settings.light then
-        rendering.draw_light {
+        draw_light {
             sprite = sprite_name,
             target = position,
             surface = surface,
