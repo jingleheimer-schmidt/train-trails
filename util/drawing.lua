@@ -4,8 +4,8 @@ local get_trail_color = color_util.get_trail_color
 
 local abs = math.abs
 local max = math.max
-local draw_light = rendering.draw_light
-local draw_sprite = rendering.draw_sprite
+-- local draw_light = rendering and rendering.draw_light
+-- local draw_sprite = rendering and rendering.draw_sprite
 
 -- draw a trail segment for a given train
 ---@param event_tick uint
@@ -25,7 +25,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     local scale = mod_settings.scale * max(abs(speed), 0.66)
 
     if mod_settings.sprite then
-        draw_sprite {
+        rendering.draw_sprite {
             sprite = "train-trail",
             target = position,
             surface = surface,
@@ -37,7 +37,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
         }
     end
     if mod_settings.light then
-        draw_light {
+        rendering.draw_light {
             sprite = "train-trail",
             target = position,
             surface = surface,
