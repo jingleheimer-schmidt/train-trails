@@ -26,6 +26,7 @@ end
 
 ---@param train LuaTrain
 local function remove_active_train(train)
+    global.active_trains = global.active_trains or {}
     global.active_trains[train.id] = nil
     unregister_rollingstock_colors(train)
 end
