@@ -152,12 +152,11 @@ local function draw_trails(event_tick, mod_settings)
   end
 end
 
----@param event EventData.on_tick
-local function on_tick(event)
+local function on_tick()
   if script.active_mods["trains-rights"] then goto end_of_train_trails_script end
   local mod_settings = get_mod_settings()
-  local event_tick = event.tick
   if event_tick % mod_settings.balance == 0 then
+  local event_tick = game.tick
     draw_trails(event_tick, mod_settings)
   end
   ::end_of_train_trails_script::
