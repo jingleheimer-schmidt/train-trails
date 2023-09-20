@@ -6,15 +6,12 @@ local speeds = constants.speeds
 local original_palettes = constants.original_palettes
 local animation_palettes = constants.animation_palettes
 local default_chat_colors = constants.default_chat_colors
-local random_palette_names = constants.random_palette_names
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
 
 local drawing_util = require("util.drawing")
 local draw_normalized_trail_segment = drawing_util.draw_normalized_trail_segment
-
-local color_util = require("util.color")
 
 local train_data_util = require("util.train_data")
 local create_train_data = train_data_util.create_train_data
@@ -27,17 +24,6 @@ local function hex_to_rgb(hex)
     b = tonumber("0x" .. hex:sub(5, 6)) / 255,
   }
 end
-
-local sin = math.sin
-local abs = math.abs
-local max = math.max
-local floor = math.floor
-local random = math.random
-local pi_0 = 0 * math.pi / 3
-local pi_2 = 2 * math.pi / 3
-local pi_4 = 4 * math.pi / 3
-local draw_light = rendering.draw_light
-local draw_sprite = rendering.draw_sprite
 
 -- save mod settings to global to reduce lookup time
 ---@return mod_settings
