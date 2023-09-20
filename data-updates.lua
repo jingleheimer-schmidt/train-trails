@@ -28,9 +28,8 @@ end
 -- save mod settings to global to reduce lookup time
 ---@return mod_settings
 local function get_mod_settings()
-  global.settings = global.settings or _ENV.settings.global
-  local settings = global.settings
-  local palette_name = settings["train-trails-palette"].value
+  local mod_settings = settings.global
+  local palette_name = mod_settings["train-trails-palette"].value
   ---@type mod_settings
   return {
     sprite = trail_types.sprite[settings["train-trails-color-and-glow"].value],
