@@ -111,6 +111,18 @@ local restore_upvalues = { -- a list of restorers
   {
     upvalue_name = "settings",
     restore_as_global = { "settings" },
+  },
+  {
+    upvalue_name = "rendering",
+    restore_as_global = { "rendering" },
+  },
+  {
+    upvalue_name = "draw_sprite",
+    restore_as_global = { "rendering", "draw_sprite" },
+  },
+  {
+    upvalue_name = "draw_light",
+    restore_as_global = { "rendering", "draw_light" },
   }
 }
 
