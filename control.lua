@@ -60,6 +60,7 @@ end
 ---@param train LuaTrain
 local function remove_active_train(train)
     storage.active_trains[train.id] = nil
+    storage.distance_counters[train.id] = nil
 end
 
 -- add new trains to the active_trains table when they are created
@@ -280,6 +281,7 @@ local function draw_trails(event_tick, mod_settings)
             end
         else
             storage.active_trains[train_id] = nil
+            storage.distance_counters[train_id] = nil
         end
     end
 end
