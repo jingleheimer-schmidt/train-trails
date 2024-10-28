@@ -242,7 +242,7 @@ local train_trails_balance = {
     name = "train-trails-balance",
     setting_type = "runtime-global",
     order = "d - balance - 1",
-    default_value = "pretty",
+    default_value = "super-pretty",
     allowed_values = {
         -- "super-performance",
         "performance",
