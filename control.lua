@@ -89,8 +89,10 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
-    storage.active_trains = storage.active_trains or {} ---@type table<uint, train_data>
-    storage.distance_counters = storage.distance_counters or {} ---@type table<uint, number>
+    ---@type table<uint, train_data>
+    storage.active_trains = storage.active_trains or {}
+    ---@type table<uint, number>
+    storage.distance_counters = storage.distance_counters or {}
     local mod_settings = settings.global
     local theme_name = mod_settings["train-trails-theme"].value --[[@as string]]
     ---@type mod_settings
@@ -248,7 +250,7 @@ end
 local function get_visible_surfaces()
     local visible_surfaces = {}
     for _, player in pairs(game.connected_players) do
-        visible_surfaces[player.surface_index] = true
+        visible_surfaces[player.physical_surface_index] = true
     end
     return visible_surfaces
 end
