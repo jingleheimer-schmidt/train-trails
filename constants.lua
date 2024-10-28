@@ -791,7 +791,7 @@ local active_states = {
     [defines.train_state.no_path] = false,
     [defines.train_state.no_schedule] = false,
     [defines.train_state.on_the_path] = true,
-    [defines.train_state.path_lost] = true,
+    -- [defines.train_state.path_lost] = true,
     [defines.train_state.wait_signal] = false,
     [defines.train_state.wait_station] = false,
 }

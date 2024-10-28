@@ -32,7 +32,7 @@ local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
 -- gets a random color palette within mod setting restrictions
----@return Color.0|Color.1[]?
+---@return Color?
 local function get_random_palette()
     local mod_settings = storage.settings
     local palette_name = mod_settings.palette
@@ -91,19 +91,19 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 local function initialize_settings()
     storage.active_trains = storage.active_trains or {} ---@type table<uint, train_data>
     storage.distance_counters = storage.distance_counters or {} ---@type table<uint, number>
-    local settings = settings.global
-    local palette_name = settings["train-trails-palette"].value --[[@as string]]
+    local mod_settings = settings.global
+    local palette_name = mod_settings["train-trails-palette"].value --[[@as string]]
     ---@type mod_settings
     storage.settings = {
-        sprite = trail_types.sprite[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
-        light = trail_types.light[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
-        length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
-        scale = tonumber(settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
-        color_type = settings["train-trails-color-type"].value --[[@as string]],
-        balance = balance_to_ticks[ settings["train-trails-balance"].value --[[@as string]] ],
-        passengers_only = settings["train-trails-passengers-only"].value --[[@as boolean]],
-        default_color = default_chat_colors[ settings["train-trails-default-color"].value --[[@as string]] ],
-        frequency = speeds[ settings["train-trails-speed"].value --[[@as string]] ],
+        sprite = trail_types.sprite[ mod_settings["train-trails-color-and-glow"].value --[[@as string]] ],
+        light = trail_types.light[ mod_settings["train-trails-color-and-glow"].value --[[@as string]] ],
+        length = tonumber(mod_settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
+        scale = tonumber(mod_settings["train-trails-scale"].value) --[[@as 1|2|3|4|5|6|8|11|20]],
+        color_type = mod_settings["train-trails-color-type"].value --[[@as string]],
+        balance = balance_to_ticks[ mod_settings["train-trails-balance"].value --[[@as string]] ],
+        passengers_only = mod_settings["train-trails-passengers-only"].value --[[@as boolean]],
+        default_color = default_chat_colors[ mod_settings["train-trails-default-color"].value --[[@as string]] ],
+        frequency = speeds[ mod_settings["train-trails-speed"].value --[[@as string]] ],
         amplitude = original_palettes[palette_name] and original_palettes[palette_name].amplitude,
         center = original_palettes[palette_name] and original_palettes[palette_name].center,
         animation_colors = animation_palettes[palette_name],
@@ -114,7 +114,7 @@ end
 
 local function reset_active_trains()
     for _, surface in pairs(game.surfaces) do
-        for _, train in pairs(surface.get_trains()) do
+        for _, train in pairs(game.train_manager.get_trains { surface = surface }) do
             if active_states[train.state] then
                 add_active_train(train)
             end
