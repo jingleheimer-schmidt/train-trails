@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date: ????
+Date: 28OCT2024
   Changes:
     - added support for Factorio 2.0
     - slightly lowered the intensity of trail glow
