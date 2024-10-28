@@ -112,9 +112,9 @@ local train_trails_default_trail_color = {
     }
 }
 
-local train_trails_palette = {
+local train_trails_theme = {
     type = "string-setting",
-    name = "train-trails-palette",
+    name = "train-trails-theme",
     setting_type = "runtime-global",
     order = "c - color - 3",
     default_value = "default",
@@ -260,7 +260,7 @@ data:extend({
     train_trails_scale,
     train_trails_length,
     train_trails_color_sync,
-    train_trails_palette,
+    train_trails_theme,
     train_trails_speed,
     train_trails_balance,
     train_trails_default_trail_color

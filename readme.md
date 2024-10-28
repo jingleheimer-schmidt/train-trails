@@ -5,7 +5,7 @@ This mod adds colorful glowing trails to trains as they drive around
 # Features
 - Color and Glow can be independently enabled or disabled
 - Size and Length of the trail can be changed in mod settings
-- Trail color can either sync to the train or use one of the 70 animated color palette options
+- Trail color can either sync to the train or use one of the 70 animated color theme options
 - Fully compatible with multiplayer games and modded trains
 - Passenger mode toggle: for when you only want trails for trains with a player in them
 - Includes main menu background simulation integration that reflects the current active mod settings

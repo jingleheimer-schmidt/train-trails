@@ -9,7 +9,7 @@ local speeds = {
 }
 
 ---@type {string: {amplitude: float, center: float}}
-local original_palettes = {
+local original_themes = {
     ["light"] = { amplitude = 15, center = 240 },
     ["pastel"] = { amplitude = 55, center = 200 },
     ["default"] = { amplitude = 127.5, center = 127.5 },
@@ -19,7 +19,7 @@ local original_palettes = {
 
 require("util")
 ---@type {string: Color[]}
-local pride_flag_palettes = {
+local pride_flag_themes = {
     ["trans"] = {        -- trans pride
         util.color("#5BCEFA"), -- light blue
         util.color("#F5A9B8"), -- light pink
@@ -94,7 +94,7 @@ local pride_flag_palettes = {
 }
 
 ---@type {string: Color[]}
-local national_flag_palettes = {
+local national_flag_themes = {
     ["united nations"] = { -- population 7.4 billion, rank 0
         util.color("#019EDB"), -- blue
         util.color("#019EDB"), -- blue
@@ -280,7 +280,7 @@ local national_flag_palettes = {
 }
 
 ---@type {string: Color[]}
-local seasonal_color_palettes = {
+local seasonal_color_themes = {
     ["fresh spring"] = {
         util.color("#BBE7C6"),
         util.color("#A4DEAB"),
@@ -340,7 +340,7 @@ local seasonal_color_palettes = {
 }
 
 ---@type {string: Color[]}
-local natural_palettes = {
+local natural_themes = {
     ["water"] = {
         util.color("#71A8D2"),
         util.color("#3C7FB1"),
@@ -627,7 +627,7 @@ local natural_palettes = {
 }
 
 ---@type {string: Color[]}
-local railway_company_palettes = {
+local railway_company_themes = {
     ["deutsche bahn"] = {
         -- https://logos-world.net/deutsche-bahn-logo
         util.color("#EC1B2D"),
@@ -689,57 +689,57 @@ local railway_company_palettes = {
 -- util.color("#"),
 
 ---@type {string: Color[]}
-local animation_palettes = {}
-for name, colors in pairs(pride_flag_palettes) do
-    animation_palettes[name] = colors
+local animation_themes = {}
+for name, colors in pairs(pride_flag_themes) do
+    animation_themes[name] = colors
 end
-for name, colors in pairs(national_flag_palettes) do
-    animation_palettes[name] = colors
+for name, colors in pairs(national_flag_themes) do
+    animation_themes[name] = colors
 end
-for name, colors in pairs(seasonal_color_palettes) do
-    animation_palettes[name] = colors
+for name, colors in pairs(seasonal_color_themes) do
+    animation_themes[name] = colors
 end
-for name, colors in pairs(natural_palettes) do
-    animation_palettes[name] = colors
+for name, colors in pairs(natural_themes) do
+    animation_themes[name] = colors
 end
-for name, colors in pairs(railway_company_palettes) do
-    animation_palettes[name] = colors
+for name, colors in pairs(railway_company_themes) do
+    animation_themes[name] = colors
 end
 
 ---@type string[]
 local animation_names = {}
-for name, _ in pairs(animation_palettes) do
+for name, _ in pairs(animation_themes) do
     table.insert(animation_names, name)
 end
 
 ---@type string[]
 local pride_flag_names = {}
-for name, _ in pairs(pride_flag_palettes) do
+for name, _ in pairs(pride_flag_themes) do
     table.insert(pride_flag_names, name)
 end
 
 ---@type string[]
 local national_flag_names = {}
-for name, _ in pairs(national_flag_palettes) do
+for name, _ in pairs(national_flag_themes) do
     table.insert(national_flag_names, name)
 end
 
 ---@type string[]
 local seasonal_color_names = {}
-for name, _ in pairs(seasonal_color_palettes) do
+for name, _ in pairs(seasonal_color_themes) do
     table.insert(seasonal_color_names, name)
 end
 
 ---@type string[]
-local natural_palette_names = {}
-for name, _ in pairs(natural_palettes) do
-    table.insert(natural_palette_names, name)
+local natural_theme_names = {}
+for name, _ in pairs(natural_themes) do
+    table.insert(natural_theme_names, name)
 end
 
 ---@type string[]
-local railway_palette_names = {}
-for name, _ in pairs(railway_company_palettes) do
-    table.insert(railway_palette_names, name)
+local railway_theme_names = {}
+for name, _ in pairs(railway_company_themes) do
+    table.insert(railway_theme_names, name)
 end
 
 --- @type {string: Color|string}
@@ -798,19 +798,19 @@ local active_states = {
 
 return {
     speeds = speeds,
-    original_palettes = original_palettes,
-    pride_flag_palettes = pride_flag_palettes,
-    national_flag_palettes = national_flag_palettes,
-    seasonal_color_palettes = seasonal_color_palettes,
-    railway_company_palettes = railway_company_palettes,
-    natural_palettes = natural_palettes,
-    animation_palettes = animation_palettes,
+    original_themes = original_themes,
+    pride_flag_themes = pride_flag_themes,
+    national_flag_themes = national_flag_themes,
+    seasonal_color_themes = seasonal_color_themes,
+    railway_company_themes = railway_company_themes,
+    natural_themes = natural_themes,
+    animation_themes = animation_themes,
     animation_names = animation_names,
     pride_flag_names = pride_flag_names,
     national_flag_names = national_flag_names,
     seasonal_color_names = seasonal_color_names,
-    railway_palette_names = railway_palette_names,
-    natural_palette_names = natural_palette_names,
+    railway_theme_names = railway_theme_names,
+    natural_theme_names = natural_theme_names,
     default_chat_colors = default_chat_colors,
     balance_to_ticks = balance_to_ticks,
     trail_types = trail_types,

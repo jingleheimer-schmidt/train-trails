@@ -11,7 +11,7 @@ local simulation_script = [[
         }
 
         ---@type {string: {amplitude: float, center: float}}
-        local original_palettes = {
+        local original_themes = {
             ["light"] = { amplitude = 15, center = 240 },
             ["pastel"] = { amplitude = 55, center = 200 },
             ["default"] = { amplitude = 127.5, center = 127.5 },
@@ -29,7 +29,7 @@ local simulation_script = [[
         end
 
         ---@type {string: Color[]}
-        local pride_flag_palettes = {
+        local pride_flag_themes = {
             ["trans"] = {            -- trans pride
                 hex_to_rgb("#5BCEFA"), -- light blue
                 hex_to_rgb("#F5A9B8"), -- light pink
@@ -104,7 +104,7 @@ local simulation_script = [[
         }
 
         ---@type {string: Color[]}
-        local national_flag_palettes = {
+        local national_flag_themes = {
             ["united nations"] = { -- population 7.4 billion, rank 0
                 hex_to_rgb("#019EDB"), -- blue
                 hex_to_rgb("#019EDB"), -- blue
@@ -290,7 +290,7 @@ local simulation_script = [[
         }
 
         ---@type {string: Color[]}
-        local seasonal_color_palettes = {
+        local seasonal_color_themes = {
             ["fresh spring"] = {
                 hex_to_rgb("#BBE7C6"),
                 hex_to_rgb("#A4DEAB"),
@@ -350,7 +350,7 @@ local simulation_script = [[
         }
 
         ---@type {string: Color[]}
-        local natural_palettes = {
+        local natural_themes = {
             ["water"] = {
                 hex_to_rgb("#71A8D2"),
                 hex_to_rgb("#4D8EB6"),
@@ -570,7 +570,7 @@ local simulation_script = [[
         }
 
         ---@type {string: Color[]}
-        local railway_company_palettes = {
+        local railway_company_themes = {
             ["deutsche bahn"] = { -- https://logos-world.net/deutsche-bahn-logo
                 hex_to_rgb("#EC1B2D"),
             },
@@ -624,57 +624,57 @@ local simulation_script = [[
         -- hex_to_rgb("#"),
 
         ---@type {string: Color[]}
-        local animation_palettes = {}
-        for name, colors in pairs(pride_flag_palettes) do
-            animation_palettes[name] = colors
+        local animation_themes = {}
+        for name, colors in pairs(pride_flag_themes) do
+            animation_themes[name] = colors
         end
-        for name, colors in pairs(national_flag_palettes) do
-            animation_palettes[name] = colors
+        for name, colors in pairs(national_flag_themes) do
+            animation_themes[name] = colors
         end
-        for name, colors in pairs(seasonal_color_palettes) do
-            animation_palettes[name] = colors
+        for name, colors in pairs(seasonal_color_themes) do
+            animation_themes[name] = colors
         end
-        for name, colors in pairs(natural_palettes) do
-            animation_palettes[name] = colors
+        for name, colors in pairs(natural_themes) do
+            animation_themes[name] = colors
         end
-        for name, colors in pairs(railway_company_palettes) do
-            animation_palettes[name] = colors
+        for name, colors in pairs(railway_company_themes) do
+            animation_themes[name] = colors
         end
 
         ---@type string[]
         local animation_names = {}
-        for name, _ in pairs(animation_palettes) do
+        for name, _ in pairs(animation_themes) do
             table.insert(animation_names, name)
         end
 
         ---@type string[]
         local pride_flag_names = {}
-        for name, _ in pairs(pride_flag_palettes) do
+        for name, _ in pairs(pride_flag_themes) do
             table.insert(pride_flag_names, name)
         end
 
         ---@type string[]
         local national_flag_names = {}
-        for name, _ in pairs(national_flag_palettes) do
+        for name, _ in pairs(national_flag_themes) do
             table.insert(national_flag_names, name)
         end
 
         ---@type string[]
         local seasonal_color_names = {}
-        for name, _ in pairs(seasonal_color_palettes) do
+        for name, _ in pairs(seasonal_color_themes) do
             table.insert(seasonal_color_names, name)
         end
 
         ---@type string[]
-        local natural_palette_names = {}
-        for name, _ in pairs(natural_palettes) do
-            table.insert(natural_palette_names, name)
+        local natural_theme_names = {}
+        for name, _ in pairs(natural_themes) do
+            table.insert(natural_theme_names, name)
         end
 
         ---@type string[]
-        local railway_palette_names = {}
-        for name, _ in pairs(railway_company_palettes) do
-            table.insert(railway_palette_names, name)
+        local railway_theme_names = {}
+        for name, _ in pairs(railway_company_themes) do
+            table.insert(railway_theme_names, name)
         end
 
         --- @type {string: Color|string}
@@ -731,13 +731,13 @@ local simulation_script = [[
             [defines.train_state.wait_station] = false,
         }
 
-        local random_palette_names = {
+        local random_theme_names = {
             ["random all"] = animation_names,
             ["random pride"] = pride_flag_names,
             ["random country"] = national_flag_names,
             ["random seasonal"] = seasonal_color_names,
-            ["random natural"] = natural_palette_names,
-            ["random railway"] = railway_palette_names
+            ["random natural"] = natural_theme_names,
+            ["random railway"] = railway_theme_names
         }
 
         local sin = math.sin
@@ -751,15 +751,15 @@ local simulation_script = [[
         local draw_light = rendering.draw_light
         local draw_sprite = rendering.draw_sprite
 
-        -- gets a random color palette within mod setting restrictions
+        -- gets a random color theme within mod setting restrictions
         ---@param mod_settings mod_settings
         ---@return Color.0|Color.1[]?
-        local function get_random_palette(mod_settings)
-            local palette_name = mod_settings.palette
-            local random_palette_name = random_palette_names[palette_name] and
-            random_palette_names[palette_name][random(#random_palette_names[palette_name])] or nil
-            local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
-            return random_palette
+        local function get_random_theme(mod_settings)
+            local theme_name = mod_settings.theme
+            local random_theme_name = random_theme_names[theme_name] and
+            random_theme_names[theme_name][random(#random_theme_names[theme_name])] or nil
+            local random_theme = random_theme_name and animation_themes[random_theme_name] or nil
+            return random_theme
         end
 
         -- add static data to the active_trains table to reduce lookup time
@@ -767,15 +767,15 @@ local simulation_script = [[
         ---@param train LuaTrain
         ---@return train_data
         local function create_train_data(mod_settings, train)
-            local random_palette = get_random_palette(mod_settings)
+            local random_theme = get_random_theme(mod_settings)
             return {
                 surface_index = train.carriages[1].surface_index,
                 train = train,
                 id = train.id,
                 front_stock = train.front_stock,
                 back_stock = train.back_stock,
-                random_animation_colors = random_palette,
-                random_animation_colors_count = random_palette and #random_palette,
+                random_animation_colors = random_theme,
+                random_animation_colors_count = random_theme and #random_theme,
                 adjusted_length = mod_settings.length + ((#train.carriages - 1) * 30)
             }
         end
@@ -784,7 +784,7 @@ local simulation_script = [[
         ---@return mod_settings
         local function get_mod_settings()
             local settings = settings.global
-            local palette_name = settings["train-trails-palette"].value
+            local theme_name = settings["train-trails-theme"].value
             ---@type mod_settings
             return {
                 sprite = trail_types.sprite[settings["train-trails-color-and-glow"].value],
@@ -796,11 +796,11 @@ local simulation_script = [[
                 passengers_only = settings["train-trails-passengers-only"].value,
                 default_color = default_chat_colors[settings["train-trails-default-color"].value],
                 frequency = speeds[settings["train-trails-speed"].value],
-                amplitude = original_palettes[palette_name] and original_palettes[palette_name].amplitude,
-                center = original_palettes[palette_name] and original_palettes[palette_name].center,
-                animation_colors = animation_palettes[palette_name],
-                animation_color_count = animation_palettes[palette_name] and #animation_palettes[palette_name],
-                palette = palette_name,
+                amplitude = original_themes[theme_name] and original_themes[theme_name].amplitude,
+                center = original_themes[theme_name] and original_themes[theme_name].center,
+                animation_colors = animation_themes[theme_name],
+                animation_color_count = animation_themes[theme_name] and #animation_themes[theme_name],
+                theme = theme_name,
             }
         end
 
@@ -994,12 +994,12 @@ local simulation_script = [[
     ::end_of_train_trails_script::
 ]]
 
-for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
-    if main_menu_simulation then
-        if main_menu_simulation.update then
-            main_menu_simulation.update = main_menu_simulation.update .. simulation_script
-        else
-            main_menu_simulation.update = simulation_script
-        end
-    end
-end
+-- for _, main_menu_simulation in pairs(data.raw["utility-constants"]["default"].main_menu_simulations) do
+--     if main_menu_simulation then
+--         if main_menu_simulation.update then
+--             main_menu_simulation.update = main_menu_simulation.update .. simulation_script
+--         else
+--             main_menu_simulation.update = simulation_script
+--         end
+--     end
+-- end

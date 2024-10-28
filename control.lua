@@ -5,19 +5,19 @@ Train Trails control script © 2023 by asher_sky is licensed under Attribution-N
 
 local constants = require("constants")
 local speeds = constants.speeds
-local original_palettes = constants.original_palettes
-local animation_palettes = constants.animation_palettes
+local original_themes = constants.original_themes
+local animation_themes = constants.animation_themes
 local default_chat_colors = constants.default_chat_colors
 local balance_to_ticks = constants.balance_to_ticks
 local trail_types = constants.trail_types
 local active_states = constants.active_states
-local random_palette_names = {
+local random_theme_names = {
     ["random all"] = constants.animation_names,
     ["random pride"] = constants.pride_flag_names,
     ["random country"] = constants.national_flag_names,
     ["random seasonal"] = constants.seasonal_color_names,
-    ["random natural"] = constants.natural_palette_names,
-    ["random railway"] = constants.railway_palette_names
+    ["random natural"] = constants.natural_theme_names,
+    ["random railway"] = constants.railway_theme_names
 }
 
 local sin = math.sin
@@ -31,28 +31,28 @@ local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
--- gets a random color palette within mod setting restrictions
+-- gets a random color theme within mod setting restrictions
 ---@return Color?
-local function get_random_palette()
+local function get_random_theme()
     local mod_settings = storage.settings
-    local palette_name = mod_settings.palette
-    local random_palette_name = random_palette_names[palette_name] and random_palette_names[palette_name][random(#random_palette_names[palette_name])] or nil
-    local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
-    return random_palette
+    local theme_name = mod_settings.theme
+    local random_theme_name = random_theme_names[theme_name] and random_theme_names[theme_name][random(#random_theme_names[theme_name])] or nil
+    local random_theme = random_theme_name and animation_themes[random_theme_name] or nil
+    return random_theme
 end
 
 -- add static data to the active_trains table to reduce lookup time
 ---@param train LuaTrain
 local function add_active_train(train)
-    local random_palette = get_random_palette()
+    local random_theme = get_random_theme()
     storage.active_trains[train.id] = {
         surface_index = train.carriages[1].surface_index,
         train = train,
         id = train.id,
         front_stock = train.front_stock,
         back_stock = train.back_stock,
-        random_animation_colors = random_palette,
-        random_animation_colors_count = random_palette and #random_palette,
+        random_animation_colors = random_theme,
+        random_animation_colors_count = random_theme and #random_theme,
         adjusted_length = storage.settings.length + ((#train.carriages - 1) * 30)
     }
 end
@@ -92,7 +92,7 @@ local function initialize_settings()
     storage.active_trains = storage.active_trains or {} ---@type table<uint, train_data>
     storage.distance_counters = storage.distance_counters or {} ---@type table<uint, number>
     local mod_settings = settings.global
-    local palette_name = mod_settings["train-trails-palette"].value --[[@as string]]
+    local theme_name = mod_settings["train-trails-theme"].value --[[@as string]]
     ---@type mod_settings
     storage.settings = {
         sprite = trail_types.sprite[ mod_settings["train-trails-color-and-glow"].value --[[@as string]] ],
@@ -104,11 +104,11 @@ local function initialize_settings()
         passengers_only = mod_settings["train-trails-passengers-only"].value --[[@as boolean]],
         default_color = default_chat_colors[ mod_settings["train-trails-default-color"].value --[[@as string]] ],
         frequency = speeds[ mod_settings["train-trails-speed"].value --[[@as string]] ],
-        amplitude = original_palettes[palette_name] and original_palettes[palette_name].amplitude,
-        center = original_palettes[palette_name] and original_palettes[palette_name].center,
-        animation_colors = animation_palettes[palette_name],
-        animation_color_count = animation_palettes[palette_name] and #animation_palettes[palette_name],
-        palette = palette_name,
+        amplitude = original_themes[theme_name] and original_themes[theme_name].amplitude,
+        center = original_themes[theme_name] and original_themes[theme_name].center,
+        animation_colors = animation_themes[theme_name],
+        animation_color_count = animation_themes[theme_name] and #animation_themes[theme_name],
+        theme = theme_name,
     }
 end
 
@@ -312,6 +312,6 @@ end
 ---@field center float?
 ---@field animation_colors Color[]?
 ---@field animation_color_count integer?
----@field palette string
+---@field theme string
 
 ---@alias train_data {surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: uint}
