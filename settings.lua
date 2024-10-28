@@ -1,5 +1,5 @@
 
-local trainTrailsColor = {
+local train_trails_color = {
     type = "bool-setting",
     name = "train-trails-color",
     setting_type = "runtime-global",
@@ -7,7 +7,7 @@ local trainTrailsColor = {
     default_value = true
 }
 
-local trainTrailsGlow = {
+local train_trails_glow = {
     type = "bool-setting",
     name = "train-trails-glow",
     setting_type = "runtime-global",
@@ -15,7 +15,7 @@ local trainTrailsGlow = {
     default_value = true
 }
 
-local trainTrailsPassengersOnly = {
+local train_trails_passengers_only = {
     type = "bool-setting",
     name = "train-trails-passengers-only",
     setting_type = "runtime-global",
@@ -23,7 +23,7 @@ local trainTrailsPassengersOnly = {
     default_value = false
 }
 
-local trainTrailsColorAndGLow = {
+local train_trails_color_and_glow = {
     type = "string-setting",
     name = "train-trails-color-and-glow",
     setting_type = "runtime-global",
@@ -37,7 +37,7 @@ local trainTrailsColorAndGLow = {
     }
 }
 
-local trainTrailsScale = {
+local train_trails_scale = {
     type = "string-setting",
     name = "train-trails-scale",
     setting_type = "runtime-global",
@@ -56,7 +56,7 @@ local trainTrailsScale = {
     }
 }
 
-local trainTrailsLength = {
+local train_trails_length = {
     type = "string-setting",
     name = "train-trails-length",
     setting_type = "runtime-global",
@@ -75,7 +75,7 @@ local trainTrailsLength = {
     }
 }
 
-local trainTrailsColorSync = {
+local train_trails_color_sync = {
     type = "string-setting",
     name = "train-trails-color-type",
     setting_type = "runtime-global",
@@ -87,7 +87,7 @@ local trainTrailsColorSync = {
     }
 }
 
-local trainTrailsDefaultTrailColor = {
+local train_trails_default_trail_color = {
     type = "string-setting",
     name = "train-trails-default-color",
     setting_type = "runtime-global",
@@ -112,7 +112,7 @@ local trainTrailsDefaultTrailColor = {
     }
 }
 
-local trainTrailsPalette = {
+local train_trails_palette = {
     type = "string-setting",
     name = "train-trails-palette",
     setting_type = "runtime-global",
@@ -222,7 +222,7 @@ local trainTrailsPalette = {
     }
 }
 
-local trainTrailsSpeed = {
+local train_trails_speed = {
     type = "string-setting",
     name = "train-trails-speed",
     setting_type = "runtime-global",
@@ -237,7 +237,7 @@ local trainTrailsSpeed = {
     }
 }
 
-local trainTrailsBalance = {
+local train_trails_balance = {
     type = "string-setting",
     name = "train-trails-balance",
     setting_type = "runtime-global",
@@ -253,15 +253,15 @@ local trainTrailsBalance = {
 }
 
 data:extend({
-    -- trainTrailsColor,
-    -- trainTrailsGlow,
-    trainTrailsColorAndGLow,
-    trainTrailsPassengersOnly,
-    trainTrailsScale,
-    trainTrailsLength,
-    trainTrailsColorSync,
-    trainTrailsPalette,
-    trainTrailsSpeed,
-    trainTrailsBalance,
-    trainTrailsDefaultTrailColor
+    -- train_trails_color,
+    -- train_trails_glow,
+    train_trails_color_and_glow,
+    train_trails_passengers_only,
+    train_trails_scale,
+    train_trails_length,
+    train_trails_color_sync,
+    train_trails_palette,
+    train_trails_speed,
+    train_trails_balance,
+    train_trails_default_trail_color
 })
