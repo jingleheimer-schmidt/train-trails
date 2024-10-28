@@ -2,6 +2,20 @@
 Version: 1.0.0
 Date: ????
   Changes:
+    - added support for Factorio 2.0
+    - slightly lowered the intensity of trail glow
+  Locale:
+    - added Catalan (ca) locale from Crowdin
+    - added Czech (cs) locale from Crowdin
+    - added German (de) locale from Crowdin
+    - added French (fr) locale from Crowdin
+    - added Italian (it) locale from Crowdin
+    - added Polish (pl) locale from Crowdin
+    - added Brazilian Portuguese (pt-BR) locale from Crowdin
+    - added Russian (ru) locale from Crowdin
+    - added Swedish (sv-SE) locale from Crowdin
+    - added Turkish (tr) locale from Crowdin
+    - added Ukrainian (uk) locale from Crowdin
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.15
 Date: 01AUG2023
