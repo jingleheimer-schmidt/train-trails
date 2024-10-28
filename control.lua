@@ -195,7 +195,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     local position = stock.position
     local surface = train_data.surface_index
     local length = train_data.adjusted_length
-    local scale = mod_settings.scale * max(abs(speed * 0.75), 0.75)
+    local scale = mod_settings.scale * max(abs(speed), 0.75)
 
     if mod_settings.sprite then
         draw_sprite {
