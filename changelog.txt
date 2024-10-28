@@ -4,7 +4,11 @@ Date: 28OCT2024
   Changes:
     - added support for Factorio 2.0
     - slightly lowered the intensity of trail glow
+    - changed trail rendering limit maximum from 1 to 0.75 tiles
+    - updated main menu integration to use .mods instead of .update
+    - updated description
   Locale:
+    - renamed color palette to color theme
     - added Catalan (ca) locale from Crowdin
     - added Czech (cs) locale from Crowdin
     - added German (de) locale from Crowdin
