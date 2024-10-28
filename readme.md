@@ -7,10 +7,10 @@ This mod adds colorful glowing trails to trains as they drive around
 - Size and Length of the trail can be changed in mod settings
 - Trail color can either sync to the train or use one of over 70 animated color themes
 - Fully compatible with multiplayer, modded trains, and the space age expansion
-- Passenger mode toggle: only draws trails for trains with with players in them
+- Passenger mode toggle: only draws trails for trains with players in them
 - Includes main menu background simulation integration that reflects the current active mod settings
 - Four performance modes to balance visual quality and game performance: beautiful, pretty, balanced, and efficient
-- Optimized for minimal UPS impact. Trains trails mod should have little to no noticible impact on game performance. Trails are only rendered for active trains on visible surfaces, and rendering is tightly controlled to minimize draw calls, reduce render preparation time, and GPU load.
+- Optimized for minimal UPS impact. The mod should have little to no noticeable impact on game performance; trails are only rendered for active trains on visible surfaces, and rendering is tightly controlled to minimize draw calls and reduce render preparation time and overall GPU load.
 
 ---------------
 # Companion Mods
