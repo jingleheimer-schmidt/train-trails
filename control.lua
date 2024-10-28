@@ -115,12 +115,9 @@ local function initialize_settings()
 end
 
 local function reset_active_trains()
-    for _, surface in pairs(game.surfaces) do
-        for _, train in pairs(game.train_manager.get_trains { surface = surface }) do
-            if active_states[train.state] then
-                add_active_train(train)
-            end
-        end
+    local trains = game.train_manager.get_trains { is_moving = true }
+    for _, train in pairs(trains) do
+        add_active_train(train)
     end
 end
 
