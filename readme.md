@@ -26,6 +26,12 @@ and is recommended with:
 [Vibrant Trains](https://mods.factorio.com/mod/vibrant-trains)
 
 ---------------------
+# Translation
+Help translate Train Trails to more languages: https://crowdin.com/project/factorio-mods-localization
+Currently available locale:
+🇺🇸 English (en), 🇪🇸 Catalan (ca), 🇨🇿 Czech (cs), 🇩🇪 German (de), 🇫🇷 French (fr), 🇮🇹 Italian (it), 🇵🇱 Polish (pl), 🇧🇷 Brazilian Portuguese (pt-BR), 🇷🇺 Russian (ru), 🇸🇪 Swedish (sv-SE), 🇹🇷 Turkish (tr), 🇺🇦 Ukrainian (uk)
+
+---------------------
 # Compatibility
 There are currently no known mod compatibility issues. To report a compatibility issue, please make a post on the discussion page.
 When the [Automatic Train Painter](https://mods.factorio.com/mod/Automatic_Train_Painter) mod is also active, Train Trails sets the default value of "Unpainted locomotive color" to empty. 
