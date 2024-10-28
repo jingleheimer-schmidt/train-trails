@@ -194,7 +194,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
     local position = stock.position
     local surface = train_data.surface_index
     local length = train_data.adjusted_length
-    local scale = mod_settings.scale * max(abs(speed), 0.66)
+    local scale = mod_settings.scale * max(abs(speed * 0.75), 0.75)
 
     if mod_settings.sprite then
         draw_sprite {
@@ -214,7 +214,7 @@ local function draw_trail_segment(event_tick, mod_settings, train_data, speed)
             target = position,
             surface = surface,
             color = color,
-            intensity = .175,
+            intensity = .125,
             scale = scale * 1.75,
             render_layer = "light-effect",
             time_to_live = length,
@@ -234,7 +234,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
     local distance_counters = storage.distance_counters
     local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
 
-    if tiles_since_last_trail >= 1 then
+    if tiles_since_last_trail >= 0.75 then
         draw_trail_segment(event_tick, mod_settings, train_data, speed)
         tiles_since_last_trail = 0
     end
