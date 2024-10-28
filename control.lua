@@ -34,7 +34,7 @@ local draw_sprite = rendering.draw_sprite
 -- gets a random color palette within mod setting restrictions
 ---@return Color.0|Color.1[]?
 local function get_random_palette()
-    local mod_settings = global.settings
+    local mod_settings = storage.settings
     local palette_name = mod_settings.palette
     local random_palette_name = random_palette_names[palette_name] and random_palette_names[palette_name][random(#random_palette_names[palette_name])] or nil
     local random_palette = random_palette_name and animation_palettes[random_palette_name] or nil
@@ -45,7 +45,7 @@ end
 ---@param train LuaTrain
 local function add_active_train(train)
     local random_palette = get_random_palette()
-    global.active_trains[train.id] = {
+    storage.active_trains[train.id] = {
         surface_index = train.carriages[1].surface_index,
         train = train,
         id = train.id,
@@ -53,13 +53,13 @@ local function add_active_train(train)
         back_stock = train.back_stock,
         random_animation_colors = random_palette,
         random_animation_colors_count = random_palette and #random_palette,
-        adjusted_length = global.settings.length + ((#train.carriages - 1) * 30)
+        adjusted_length = storage.settings.length + ((#train.carriages - 1) * 30)
     }
 end
 
 ---@param train LuaTrain
 local function remove_active_train(train)
-    global.active_trains[train.id] = nil
+    storage.active_trains[train.id] = nil
 end
 
 -- add new trains to the active_trains table when they are created
@@ -89,12 +89,12 @@ script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
-    global.active_trains = global.active_trains or {} ---@type table<uint, train_data>
-    global.distance_counters = global.distance_counters or {} ---@type table<uint, number>
+    storage.active_trains = storage.active_trains or {} ---@type table<uint, train_data>
+    storage.distance_counters = storage.distance_counters or {} ---@type table<uint, number>
     local settings = settings.global
     local palette_name = settings["train-trails-palette"].value --[[@as string]]
     ---@type mod_settings
-    global.settings = {
+    storage.settings = {
         sprite = trail_types.sprite[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
         light = trail_types.light[ settings["train-trails-color-and-glow"].value --[[@as string]] ],
         length = tonumber(settings["train-trails-length"].value) --[[@as 15|30|60|90|120|180|210|300|600]],
@@ -232,7 +232,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
     if speed == 0 then return end
 
     local train_id = train_data.id
-    local distance_counters = global.distance_counters
+    local distance_counters = storage.distance_counters
     local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
 
     if tiles_since_last_trail >= 1 then
@@ -240,7 +240,7 @@ local function draw_normalized_trail_segment(event_tick, mod_settings, train_dat
         tiles_since_last_trail = 0
     end
 
-    global.distance_counters[train_id] = tiles_since_last_trail
+    storage.distance_counters[train_id] = tiles_since_last_trail
 end
 
 -- create a lookup table of surfaces that players can see
@@ -261,7 +261,7 @@ local function draw_trails(event_tick, mod_settings)
     local light = mod_settings.light
     if not (sprite or light) then return end
 
-    local active_train_datas = global.active_trains
+    local active_train_datas = storage.active_trains
     if not active_train_datas then return end
 
     if mod_settings.passengers_only then
@@ -280,14 +280,14 @@ local function draw_trails(event_tick, mod_settings)
                 draw_normalized_trail_segment(event_tick, mod_settings, train_data)
             end
         else
-            global.active_trains[train_id] = nil
+            storage.active_trains[train_id] = nil
         end
     end
 end
 
 ---@param event EventData.on_tick
 local function on_tick(event)
-    local mod_settings = global.settings
+    local mod_settings = storage.settings
     local event_tick = event.tick
     if event_tick % mod_settings.balance == 0 then
         draw_trails(event_tick, mod_settings)

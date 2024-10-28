@@ -921,7 +921,7 @@ local simulation_script = [[
             if speed == 0 then return end
 
             local train_id = train_data.id
-            local distance_counters = global.distance_counters or {}
+            local distance_counters = storage.distance_counters or {}
             local tiles_since_last_trail = (distance_counters[train_id] or 0) + abs(speed * mod_settings.balance)
 
             if tiles_since_last_trail >= 1 / 3 then
@@ -929,7 +929,7 @@ local simulation_script = [[
                 tiles_since_last_trail = 0
             end
 
-            global.distance_counters[train_id] = tiles_since_last_trail
+            storage.distance_counters[train_id] = tiles_since_last_trail
         end
 
         -- create a lookup table of surfaces that players can see
@@ -950,11 +950,11 @@ local simulation_script = [[
             local light = mod_settings.light
             if not (sprite or light) then return end
 
-            global.active_train_datas = global.active_train_datas or get_active_trains(mod_settings)
-            local active_train_datas = global.active_train_datas
+            storage.active_train_datas = storage.active_train_datas or get_active_trains(mod_settings)
+            local active_train_datas = storage.active_train_datas
             if not active_train_datas then return end
 
-            global.distance_counters = global.distance_counters or {}
+            storage.distance_counters = storage.distance_counters or {}
 
             if mod_settings.passengers_only then
                 for _, player in pairs(game.connected_players) do
@@ -972,7 +972,7 @@ local simulation_script = [[
                     if not visible_surfaces[train_data.surface_index] then break end
                     draw_normalized_trail_segment(event_tick, mod_settings, train_data)
                 else
-                    global.active_trains[train_id] = nil
+                    storage.active_trains[train_id] = nil
                 end
             end
         end
