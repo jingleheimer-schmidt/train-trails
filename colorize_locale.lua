@@ -1,11 +1,11 @@
 
 local constants = require("constants")
-local palettes = constants.original_palettes
-local pride_flag_palettes = constants.pride_flag_palettes
-local national_flag_palettes = constants.national_flag_palettes
-local seasonal_color_palettes = constants.seasonal_color_palettes
-local natural_palettes = constants.natural_palettes
-local railway_company_palettes = constants.railway_company_palettes
+local themes = constants.original_themes
+local pride_flag_themes = constants.pride_flag_themes
+local national_flag_themes = constants.national_flag_themes
+local seasonal_color_themes = constants.seasonal_color_themes
+local natural_themes = constants.natural_themes
+local railway_company_themes = constants.railway_company_themes
 
 local function capitalize_each_word(setting_name)
     local result = ""
@@ -15,14 +15,14 @@ local function capitalize_each_word(setting_name)
     return result:sub(1, -2)
 end
 
-local function colorize(inputString, colorize_palette)
+local function colorize(inputString, colorize_theme)
     local result = ""
-    local paletteSize = #colorize_palette
+    local themeSize = #colorize_theme
     local inputLength = #inputString
 
     for i = 1, inputLength do
         local character = inputString:sub(i, i)
-        local color = colorize_palette[math.ceil((i / inputLength) * paletteSize)]
+        local color = colorize_theme[math.ceil((i / inputLength) * themeSize)]
 
         if color then
             result = result .. string.format("[color=%f,%f,%f]%s[/color]", color.r, color.g, color.b, character)
@@ -34,16 +34,16 @@ local function colorize(inputString, colorize_palette)
     return result
 end
 
-local setting_name = "train-trails-palette"
+local setting_name = "train-trails-theme"
 local allowed_values = data.raw["string-setting"][setting_name].allowed_values
 local allowed_value_locales = {}
 
 for _, setting_value in pairs(allowed_values) do
-    local pride_flag = pride_flag_palettes[setting_value]
-    local country_flag = national_flag_palettes[setting_value]
-    local seasonal = seasonal_color_palettes[setting_value]
-    local natural = natural_palettes[setting_value]
-    local railway = railway_company_palettes[setting_value]
+    local pride_flag = pride_flag_themes[setting_value]
+    local country_flag = national_flag_themes[setting_value]
+    local seasonal = seasonal_color_themes[setting_value]
+    local natural = natural_themes[setting_value]
+    local railway = railway_company_themes[setting_value]
 
     local canvas = "|||||||||||||||"
     local colors = pride_flag or country_flag or seasonal or natural or railway

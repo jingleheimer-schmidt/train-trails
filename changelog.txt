@@ -1,4 +1,26 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 28OCT2024
+  Changes:
+    - added support for Factorio 2.0
+    - slightly lowered the intensity of trail glow
+    - changed trail rendering limit maximum from 1 to 0.75 tiles
+    - updated main menu integration to use .mods instead of .update
+    - updated description
+  Locale:
+    - renamed color palette to color theme
+    - added Catalan (ca) locale from Crowdin
+    - added Czech (cs) locale from Crowdin
+    - added German (de) locale from Crowdin
+    - added French (fr) locale from Crowdin
+    - added Italian (it) locale from Crowdin
+    - added Polish (pl) locale from Crowdin
+    - added Brazilian Portuguese (pt-BR) locale from Crowdin
+    - added Russian (ru) locale from Crowdin
+    - added Swedish (sv-SE) locale from Crowdin
+    - added Turkish (tr) locale from Crowdin
+    - added Ukrainian (uk) locale from Crowdin
+---------------------------------------------------------------------------------------------------
 Version: 0.0.15
 Date: 01AUG2023
   Bugfixes:
