@@ -293,9 +293,7 @@ local function on_tick(event)
     end
 end
 
-if not script.active_mods["trains-rights"] then
-    script.on_event(defines.events.on_tick, on_tick)
-end
+script.on_event(defines.events.on_tick, on_tick)
 
 ---@class mod_settings
 ---@field sprite boolean
