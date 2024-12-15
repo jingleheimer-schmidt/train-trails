@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.0
+Date: 14DEC2024
+  Changes:
+    - added interpolation between colors in the animated color themes
+  Bugfixes:
+    - fixed that trails were only drawn for trains on players physical surface
+  Locale:
+    - Updated German (de) locale from Crowdin
+    - updated Russian (ru) locale from Crowdin
+    - updated Ukrainian (uk) locale from Crowdin
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 28OCT2024
   Changes:

@@ -148,8 +148,38 @@ local function get_rainbow_color(created_tick, mod_settings, train_data)
             a = 255,
         }
     elseif animation_colors then
-        local index = floor(modifier % (mod_settings.animation_color_count or train_data.random_animation_colors_count)) + 1
-        return animation_colors[index]
+        -- Handle stepwise themes
+        local sharpness = 0.8
+        local count = #animation_colors
+        if count == 0 then
+            return { 1, 1, 1 } -- Default to white if the theme is empty
+        end
+
+        -- Determine the current base and next indices
+        local base_index = floor(modifier % count) + 1
+        local next_index = (base_index % count) + 1
+
+        -- Time within the current step (0 to 1)
+        local step_time = modifier % 1
+
+        -- Adjust interpolation timing based on sharpness
+        local t
+        if step_time < sharpness then
+            t = 0 -- Hold the base color
+        else
+            t = (step_time - sharpness) / (1 - sharpness) -- Smoothly interpolate at the end
+        end
+
+        -- Base and next colors
+        local base_color = animation_colors[base_index]
+        local next_color = animation_colors[next_index]
+
+        -- Interpolate only when transitioning
+        return {
+            r = base_color.r * (1 - t) + next_color.r * t,
+            g = base_color.g * (1 - t) + next_color.g * t,
+            b = base_color.b * (1 - t) + next_color.b * t,
+        }
     else
         return { 1, 1, 1 }
     end
@@ -248,7 +278,7 @@ end
 local function get_visible_surfaces()
     local visible_surfaces = {}
     for _, player in pairs(game.connected_players) do
-        visible_surfaces[player.physical_surface_index] = true
+        visible_surfaces[player.surface_index] = true
     end
     return visible_surfaces
 end
