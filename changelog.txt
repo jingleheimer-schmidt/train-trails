@@ -3,6 +3,10 @@ Version: 1.1.0
 Date: ????
   Changes:
     - added interpolation between colors in the animated color themes
+  Locale:
+    - Updated German (de) locale from Crowdin
+    - updated Russian (ru) locale from Crowdin
+    - updated Ukrainian (uk) locale from Crowdin
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 28OCT2024
