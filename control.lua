@@ -278,7 +278,7 @@ end
 local function get_visible_surfaces()
     local visible_surfaces = {}
     for _, player in pairs(game.connected_players) do
-        visible_surfaces[player.physical_surface_index] = true
+        visible_surfaces[player.surface_index] = true
     end
     return visible_surfaces
 end
