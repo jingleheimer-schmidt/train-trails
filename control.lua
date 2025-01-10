@@ -96,6 +96,7 @@ local function initialize_settings()
     storage.distance_counters = storage.distance_counters or {}
     local mod_settings = settings.global
     local theme_name = mod_settings["train-trails-theme"].value --[[@as string]]
+    local default_u_loco_color_hex = script.active_mods["Automatic_Train_Painter"] and mod_settings["u-loco"].value --[[@as string?]]
     ---@type mod_settings
     storage.settings = {
         sprite = trail_types.sprite[ mod_settings["train-trails-color-and-glow"].value --[[@as string]] ],
@@ -112,6 +113,7 @@ local function initialize_settings()
         animation_colors = animation_themes[theme_name],
         animation_color_count = animation_themes[theme_name] and #animation_themes[theme_name],
         theme = theme_name,
+        default_u_loco_color = default_u_loco_color_hex and util.color(default_u_loco_color_hex)
     }
 end
 
@@ -185,6 +187,19 @@ local function get_rainbow_color(created_tick, mod_settings, train_data)
     end
 end
 
+---@param color1 Color
+---@param color2 Color
+---@return boolean
+local function compare_colors(color1, color2)
+    local r1 = color1.r or color1[1]
+    local g1 = color1.g or color1[2]
+    local b1 = color1.b or color1[3]
+    local r2 = color2.r or color2[1]
+    local g2 = color2.g or color2[2]
+    local b2 = color2.b or color2[3]
+    return r1 == r2 and g1 == g2 and b1 == b2
+end
+
 -- get the color for a given trail
 ---@param event_tick uint
 ---@param mod_settings mod_settings
@@ -199,6 +214,10 @@ local function get_trail_color(event_tick, mod_settings, train_data, stock)
         return get_rainbow_color(event_tick, mod_settings, train_data)
     elseif color_type == "train" then
         local color = stock.color
+        local u_loco_color = mod_settings.default_u_loco_color
+        if color and u_loco_color and compare_colors(color, u_loco_color) then
+            color = nil
+        end
 
         if color then
             return color
@@ -342,5 +361,6 @@ script.on_event(defines.events.on_tick, on_tick)
 ---@field animation_colors Color[]?
 ---@field animation_color_count integer?
 ---@field theme string
+---@field default_u_loco_color Color?
 
 ---@alias train_data {surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: uint}
