@@ -10,5 +10,9 @@
     "factorio_version": "2.0",
     "dependencies": [
         "base"
-    ]
+    ],
+    "package": {
+        "sync_portal_details": true,
+        "readme": "readme.md"
+    }
 }
