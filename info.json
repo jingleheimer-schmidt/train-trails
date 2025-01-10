@@ -6,7 +6,7 @@
     "author": "asher_sky",
     "contact": "",
     "homepage": "",
-    "description": "Trains create colorful glowing trails wherever they go \n\nVery configurable",
+    "description": "Trains create colorful glowing trails wherever they go",
     "factorio_version": "2.0",
     "dependencies": [
         "base"
