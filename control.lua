@@ -145,11 +145,12 @@ local function hex_to_color(hex)
         b = tonumber(c3 .. c3, 16)
         color = { ['r'] = r, ['g'] = g, ['b'] = b, ['a'] = 127 }
     end
-
-    color['r'] = color['r'] / 255
-    color['g'] = color['g'] / 255
-    color['b'] = color['b'] / 255
-    color['a'] = color['a'] / 255
+    if color then
+        color['r'] = color['r'] / 255
+        color['g'] = color['g'] / 255
+        color['b'] = color['b'] / 255
+        color['a'] = color['a'] / 255
+    end
 
     return color
 end
