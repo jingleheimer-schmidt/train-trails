@@ -7,7 +7,7 @@ Version: 1.1.1
 Date: 2025-01-14
   Changes:
     - trains with a color matching the value of the unpainted locomotive color mod setting from Automatic Train Painter mod will be treated as unpainted and will generate trails according to the Default Trail Color mod setting
-    - added /reset-train-colors and /reset-station-colors commands to reset all train and station colors to the default color (nil)
+    - added /reset-train-colors, /reset-station-colors, and reset-destination-color-sync commands
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 14DEC2024
