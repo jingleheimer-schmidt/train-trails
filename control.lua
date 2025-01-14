@@ -245,12 +245,12 @@ end
 ---@param color2 Color
 ---@return boolean
 local function compare_colors(color1, color2)
-    local r1 = color1.r or color1[1]
-    local g1 = color1.g or color1[2]
-    local b1 = color1.b or color1[3]
-    local r2 = color2.r or color2[1]
-    local g2 = color2.g or color2[2]
-    local b2 = color2.b or color2[3]
+    local r1 = math.floor((color1.r or color1[1]) * 255)
+    local g1 = math.floor((color1.g or color1[2]) * 255)
+    local b1 = math.floor((color1.b or color1[3]) * 255)
+    local r2 = math.floor((color2.r or color2[1]) * 255)
+    local g2 = math.floor((color2.g or color2[2]) * 255)
+    local b2 = math.floor((color2.b or color2[3]) * 255)
     return r1 == r2 and g1 == g2 and b1 == b2
 end
 
