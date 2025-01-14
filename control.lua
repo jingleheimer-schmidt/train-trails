@@ -167,7 +167,7 @@ local function initialize_settings()
         animation_colors = animation_themes[theme_name],
         animation_color_count = animation_themes[theme_name] and #animation_themes[theme_name],
         theme = theme_name,
-        default_u_loco_color = default_u_loco_color_hex and util.color(default_u_loco_color_hex)
+        default_u_loco_color = default_u_loco_color_hex and hex_to_color(default_u_loco_color_hex)
     }
 end
 
