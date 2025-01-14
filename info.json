@@ -1,14 +1,18 @@
 
 {
     "name": "train-trails",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "title": "Train Trails",
     "author": "asher_sky",
     "contact": "",
     "homepage": "",
-    "description": "Trains create colorful glowing trails wherever they go \n\nVery configurable",
+    "description": "Trains create colorful glowing trails wherever they go",
     "factorio_version": "2.0",
     "dependencies": [
         "base"
-    ]
+    ],
+    "package": {
+        "sync_portal_details": true,
+        "readme": "readme.md"
+    }
 }

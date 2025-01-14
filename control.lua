@@ -31,6 +31,35 @@ local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
+commands.add_command("reset-train-colors", { "command-help.reset-train-colors" }, function()
+    for _, force in pairs(game.forces) do
+        for _, train in pairs(game.train_manager.get_trains { force = force }) do
+            for _, stock in pairs(train.carriages) do
+                stock.color = nil
+            end
+        end
+    end
+end)
+commands.add_command("reset-station-colors", { "command-help.reset-station-colors" }, function()
+    for _, force in pairs(game.forces) do
+        for _, station in pairs(game.train_manager.get_train_stops { force = force }) do
+            station.color = nil
+        end
+    end
+end)
+commands.add_command("reset-destination-color-sync", { "command-help.reset-destination-color-sync" }, function(param)
+    local sync = param.parameter == "true" and true or param.parameter == "false" and false
+    if sync == true or sync == false then
+        for _, force in pairs(game.forces) do
+            for _, train in pairs(game.train_manager.get_trains { force = force }) do
+                for _, stock in pairs(train.carriages) do
+                    stock.copy_color_from_train_stop = sync
+                end
+            end
+        end
+    end
+end)
+
 -- gets a random color theme within mod setting restrictions
 ---@return Color?
 local function get_random_theme()
@@ -88,6 +117,44 @@ end
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
+-- convert a hex color to a factorio color
+-- copy-pasted from Automatic_Train_Painter, licensed under MIT
+---@param hex string
+---@return Color
+local function hex_to_color(hex)
+    local color
+    local name
+    local r, g, b, c1, c2, c3
+    if string.len(hex) ~= 6 and string.len(hex) ~= 3 and string.len(hex) ~= 0 then
+        game.print({ "error-message.color-length-error", name, string.len(hex) })
+        return { r = 1, g = 1, b = 1, a = 1 }
+    end
+
+    if string.len(hex) == 6 then
+        c1, c2, c3 = hex:match('(..)(..)(..)')
+        r = tonumber(c1, 16)
+        g = tonumber(c2, 16)
+        b = tonumber(c3, 16)
+        color = { ['r'] = r, ['g'] = g, ['b'] = b, ['a'] = 127 }
+    end
+
+    if string.len(hex) == 3 then
+        c1, c2, c3 = hex:match('(.)(.)(.)')
+        r = tonumber(c1 .. c1, 16)
+        g = tonumber(c2 .. c2, 16)
+        b = tonumber(c3 .. c3, 16)
+        color = { ['r'] = r, ['g'] = g, ['b'] = b, ['a'] = 127 }
+    end
+    if color then
+        color['r'] = color['r'] / 255
+        color['g'] = color['g'] / 255
+        color['b'] = color['b'] / 255
+        color['a'] = color['a'] / 255
+    end
+
+    return color
+end
+
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
     ---@type table<uint, train_data>
@@ -96,6 +163,7 @@ local function initialize_settings()
     storage.distance_counters = storage.distance_counters or {}
     local mod_settings = settings.global
     local theme_name = mod_settings["train-trails-theme"].value --[[@as string]]
+    local default_u_loco_color_hex = script.active_mods["Automatic_Train_Painter"] and mod_settings["u-loco"].value --[[@as string?]]
     ---@type mod_settings
     storage.settings = {
         sprite = trail_types.sprite[ mod_settings["train-trails-color-and-glow"].value --[[@as string]] ],
@@ -112,6 +180,7 @@ local function initialize_settings()
         animation_colors = animation_themes[theme_name],
         animation_color_count = animation_themes[theme_name] and #animation_themes[theme_name],
         theme = theme_name,
+        default_u_loco_color = default_u_loco_color_hex and hex_to_color(default_u_loco_color_hex)
     }
 end
 
@@ -185,6 +254,19 @@ local function get_rainbow_color(created_tick, mod_settings, train_data)
     end
 end
 
+---@param color1 Color
+---@param color2 Color
+---@return boolean
+local function compare_colors(color1, color2)
+    local r1 = math.floor((color1.r or color1[1]) * 255)
+    local g1 = math.floor((color1.g or color1[2]) * 255)
+    local b1 = math.floor((color1.b or color1[3]) * 255)
+    local r2 = math.floor((color2.r or color2[1]) * 255)
+    local g2 = math.floor((color2.g or color2[2]) * 255)
+    local b2 = math.floor((color2.b or color2[3]) * 255)
+    return r1 == r2 and g1 == g2 and b1 == b2
+end
+
 -- get the color for a given trail
 ---@param event_tick uint
 ---@param mod_settings mod_settings
@@ -199,6 +281,10 @@ local function get_trail_color(event_tick, mod_settings, train_data, stock)
         return get_rainbow_color(event_tick, mod_settings, train_data)
     elseif color_type == "train" then
         local color = stock.color
+        local u_loco_color = mod_settings.default_u_loco_color
+        if color and u_loco_color and compare_colors(color, u_loco_color) then
+            color = nil
+        end
 
         if color then
             return color
@@ -342,5 +428,6 @@ script.on_event(defines.events.on_tick, on_tick)
 ---@field animation_colors Color[]?
 ---@field animation_color_count integer?
 ---@field theme string
+---@field default_u_loco_color Color?
 
 ---@alias train_data {surface_index: uint, train: LuaTrain, id: uint, front_stock: LuaEntity?, back_stock: LuaEntity?, random_animation_colors: Color[]?, random_animation_colors_count: integer?, adjusted_length: uint}
