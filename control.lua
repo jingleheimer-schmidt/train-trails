@@ -31,6 +31,23 @@ local pi_4 = 4 * math.pi / 3
 local draw_light = rendering.draw_light
 local draw_sprite = rendering.draw_sprite
 
+commands.add_command("reset-train-colors", { "command-help.reset-train-colors" }, function()
+    for _, force in pairs(game.forces) do
+        for _, train in pairs(game.train_manager.get_trains { force = force }) do
+            for _, stock in pairs(train.carriages) do
+                stock.color = nil
+            end
+        end
+    end
+end)
+commands.add_command("reset-station-colors", { "command-help.reset-station-colors" }, function()
+    for _, force in pairs(game.forces) do
+        for _, station in pairs(game.train_manager.get_train_stops { force = force }) do
+            station.color = nil
+        end
+    end
+end)
+
 -- gets a random color theme within mod setting restrictions
 ---@return Color?
 local function get_random_theme()
