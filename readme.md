@@ -38,5 +38,5 @@ When [Automatic Train Painter](https://mods.factorio.com/mod/Automatic_Train_Pai
 
 ----------------------------
 # License
-Train Trails © 2024 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International.
+Train Trails © 2022-2025 by asher_sky is licensed under Attribution-NonCommercial-ShareAlike 4.0 International.
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
