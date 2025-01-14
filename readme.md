@@ -34,7 +34,7 @@ Currently available locale:
 ---------------------
 # Compatibility
 There are currently no known mod compatibility issues. To report a compatibility issue, please make a post on the discussion page.
-When the [Automatic Train Painter](https://mods.factorio.com/mod/Automatic_Train_Painter) mod is also active, Train Trails sets the default value of "Unpainted locomotive color" to empty. 
+When [Automatic Train Painter](https://mods.factorio.com/mod/Automatic_Train_Painter) is also active, Train Trails sets the default value of "Unpainted locomotive color" to empty. When not empty, the value is used considered "no color" by the Default Train Color setting.
 
 ----------------------------
 # License
