@@ -105,6 +105,43 @@ end
 script.on_event(defines.events.on_train_created, on_train_created)
 script.on_event(defines.events.on_train_changed_state, on_train_changed_state)
 
+-- convert a hex color to a factorio color
+-- copy-pasted from Automatic_Train_Painter, licensed under MIT
+---@param hex string
+---@return Color
+local function hex_to_color(hex)
+    local color
+    local name
+    local r, g, b, c1, c2, c3
+    if string.len(hex) ~= 6 and string.len(hex) ~= 3 and string.len(hex) ~= 0 then
+        game.print({ "error-message.color-length-error", name, string.len(hex) })
+        return { r = 1, g = 1, b = 1, a = 1 }
+    end
+
+    if string.len(hex) == 6 then
+        c1, c2, c3 = hex:match('(..)(..)(..)')
+        r = tonumber(c1, 16)
+        g = tonumber(c2, 16)
+        b = tonumber(c3, 16)
+        color = { ['r'] = r, ['g'] = g, ['b'] = b, ['a'] = 127 }
+    end
+
+    if string.len(hex) == 3 then
+        c1, c2, c3 = hex:match('(.)(.)(.)')
+        r = tonumber(c1 .. c1, 16)
+        g = tonumber(c2 .. c2, 16)
+        b = tonumber(c3 .. c3, 16)
+        color = { ['r'] = r, ['g'] = g, ['b'] = b, ['a'] = 127 }
+    end
+
+    color['r'] = color['r'] / 255
+    color['g'] = color['g'] / 255
+    color['b'] = color['b'] / 255
+    color['a'] = color['a'] / 255
+
+    return color
+end
+
 -- save mod settings to global to reduce lookup time
 local function initialize_settings()
     ---@type table<uint, train_data>
