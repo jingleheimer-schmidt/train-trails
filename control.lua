@@ -47,6 +47,18 @@ commands.add_command("reset-station-colors", { "command-help.reset-station-color
         end
     end
 end)
+commands.add_command("reset-destination-color-sync", { "command-help.reset-destination-color-sync" }, function(param)
+    local sync = param.parameter == "true" and true or param.parameter == "false" and false
+    if sync == true or sync == false then
+        for _, force in pairs(game.forces) do
+            for _, train in pairs(game.train_manager.get_trains { force = force }) do
+                for _, stock in pairs(train.carriages) do
+                    stock.copy_color_from_train_stop = sync
+                end
+            end
+        end
+    end
+end)
 
 -- gets a random color theme within mod setting restrictions
 ---@return Color?
